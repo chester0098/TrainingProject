@@ -1,5 +1,8 @@
 package com.fadineg.trainingproject.first.tasks;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 /**
  * Набор тренингов по работе с примитивными типами java.
  * <p>
@@ -17,8 +20,8 @@ public class ElementaryTraining {
      * @return среднее значение для введенных чисел
      */
     public double averageValue(int firstValue, int secondValue) {
-        //TODO: implement it
-        return 0;
+
+        return (double) (firstValue + secondValue) / 2;
     }
 
     /**
@@ -30,9 +33,9 @@ public class ElementaryTraining {
      * @param thirdValue  возвести в квадрат
      * @return сумма новых трех чисел
      */
-    public double complicatedAmount(int firstValue, int secondValue, int thirdValue) {
-        //TODO: implement it
-        return 0;
+    public int complicatedAmount(int firstValue, int secondValue, int thirdValue) {
+
+        return (firstValue*2) + (secondValue - 3) + (thirdValue*thirdValue);
     }
 
     /**
@@ -44,7 +47,11 @@ public class ElementaryTraining {
      * @return новое значение
      */
     public int changeValue(int value) {
-        //TODO: implement it
+        if (value>3){
+            value+=10;
+        }
+        else value-=10;
+
         return value;
     }
 
@@ -59,8 +66,24 @@ public class ElementaryTraining {
      * @return новое число
      */
     public int swapNumbers(int value) {
-        //TODO: implement it
-        return 0;
+        if (value<10  && value>-10 || value>99999) return value;
+
+        ArrayList<Integer> nums = new ArrayList<>();
+        while (value != 0) {
+            nums.add(value % 10);
+            value /= 10;
+        }
+        int x = nums.get(0);
+        nums.set(0, nums.get(nums.size()-1));
+        nums.set(nums.size()-1, x);
+
+        x = 1;
+        for (int i = 0; i<nums.size();i++){
+            value += nums.get(i)*x;
+            x*=10;
+        }
+
+        return value;
     }
 
     /**
@@ -74,7 +97,21 @@ public class ElementaryTraining {
      * @return новое число
      */
     public int zeroEvenNumber(int value) {
-        //TODO: implement it
-        return 0;
+        if (value<10  && value>-10 || value>99999) return value;
+
+        ArrayList<Integer> nums = new ArrayList<>();
+        while (value != 0) {
+            nums.add(value % 10);
+            value /= 10;
+        }
+
+        int x = 1;
+        for (int i = 0; i<nums.size();i++){
+            if (nums.get(i)%2 == 0 & i != nums.size()-1)
+                nums.set(i, 0);
+        value += nums.get(i)*x;
+        x*=10;
+        }
+        return value;
     }
 }
