@@ -1,4 +1,18 @@
 package com.fadineg.trainingproject.second.tasks;
+
+import org.junit.Test;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Comparator;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Scanner;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 /**
  * Набор заданий по работе с классами в java.
  * <p>
