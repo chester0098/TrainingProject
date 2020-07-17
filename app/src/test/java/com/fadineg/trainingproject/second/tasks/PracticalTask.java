@@ -33,7 +33,7 @@ public interface PracticalTask {
     /*
       II
       Условия: есть начальная позиция на двумерной плоскости,
-      можно осуществлять последовательность шагов по четырем направлениям up, down, left, right.
+      можно осуществлять последовательность шагов по четырем направлениям UP, DOWN, LEFT, RIGHT.
       Размерность каждого шага равна 1.
       Задание:
       1.Создать enum Directions с возможными направлениями движения
@@ -44,52 +44,52 @@ public interface PracticalTask {
       3.Создать метод, осуществляющий несколько переходов от первоначальной координаты и
       выводящий координату после каждого перехода. Для этого внутри метода следует определить
       переменную location с начальными координатами (0,0) и массив направлений,
-      содержащий элементы [up, up, left, down, left, down, down, right, right, down, right], и програмно
+      содержащий элементы [UP, UP, LEFT, DOWN, LEFT, DOWN, DOWN, RIGHT, RIGHT, DOWN, RIGHT], и програмно
       вычислить какие будут координаты у переменной location после выполнения этой последовательности шагов.
       Для вычисленеия результата каждого перемещения следует использовать созданный ранее метод перемещения
       на один шаг.
      */
 
     public enum Directions {
-        up,
-        down,
-        left,
-        right;
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT;
 
         public static void main(String[] args) {
 
             Point location = new Point();
 
-            Directions arg = down;
+            Directions arg = DOWN;
             arg.shift(location, arg);
             System.out.println(location.x + "," + location.y);
 
             location.x = 0;
             location.y = 0;
 
-            Directions[] list = {up, up, left, down, left, down, down, right, right, down, right};
+            Directions[] list = {UP, UP, LEFT, DOWN, LEFT, DOWN, DOWN, RIGHT, RIGHT, DOWN, RIGHT};
             for (Directions d : list) {
                 arg.shift(location, d);
             }
             System.out.println(location.x + "," + location.y);
         }
 
-        public Point shift(Point p, Directions arg) {
+        public Point shift(Point point, Directions arg) {
             switch (arg) {
-                case up:
-                    p.y += 1;
+                case UP:
+                    point.y += 1;
                     break;
-                case down:
-                    p.y -= 1;
+                case DOWN:
+                    point.y -= 1;
                     break;
-                case left:
-                    p.x -= 1;
+                case LEFT:
+                    point.x -= 1;
                     break;
-                case right:
-                    p.x += 1;
+                case RIGHT:
+                    point.x += 1;
                     break;
             }
-            return p;
+            return point;
         }
     }
 

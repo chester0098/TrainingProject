@@ -28,16 +28,13 @@ public class CollectionsBlock<T extends Comparable> {
      * @throws NullPointerException если один из параметров null
      */
     public List<T> collectionTask0(List<T> firstList, List<T> secondList) {
-
-        try {
-            List<T> finalList = new ArrayList<>(firstList);
-            finalList.addAll(secondList);
-            Collections.sort(finalList, Collections.reverseOrder());
-            return finalList;
-        } catch (NullPointerException e) {
+        if (firstList == null || secondList == null)
             throw new NullPointerException();
-        }
 
+        List<T> finalList = new ArrayList<>(firstList);
+        finalList.addAll(secondList);
+        Collections.sort(finalList, Collections.reverseOrder());
+        return finalList;
     }
 
     /**
@@ -48,17 +45,15 @@ public class CollectionsBlock<T extends Comparable> {
      * @throws NullPointerException если один из параметров null
      */
     public List<T> collectionTask1(List<T> inputList) {
-        try {
-            List<T> outputList = new ArrayList<>();
-            for (int i = 0; i < inputList.size(); i++) {
-                outputList.add(inputList.get(i));
-                outputList.addAll(inputList.subList(0, i));
-            }
-            return outputList;
-        } catch (NullPointerException e) {
-            throw new  NullPointerException();
-        }
+        if (inputList == null)
+            throw new NullPointerException();
 
+        List<T> outputList = new ArrayList<>();
+        for (int i = 0; i < inputList.size(); i++) {
+            outputList.add(inputList.get(i));
+            outputList.addAll(inputList.subList(0, i));
+        }
+        return outputList;
     }
 
     /**
@@ -70,21 +65,14 @@ public class CollectionsBlock<T extends Comparable> {
      * @throws NullPointerException если один из параметров null
      */
     public boolean collectionTask2(List<T> firstList, List<T> secondList) {
+        if (firstList == null || secondList == null)
+            throw new NullPointerException();
 
-
-        try {
-            List<T> newFirst = new ArrayList<>(firstList);
-            List<T> newSecond = new ArrayList<>(secondList);
-            newFirst.removeAll(secondList);
-            newSecond.removeAll(firstList);
-            return newFirst.size() == 0 & newSecond.size() == 0;
-        }
-        catch (NullPointerException e){
-            throw  new NullPointerException();
-        }
-
-
-
+        List<T> newFirst = new ArrayList<>(firstList);
+        List<T> newSecond = new ArrayList<>(secondList);
+        newFirst.removeAll(secondList);
+        newSecond.removeAll(firstList);
+        return newFirst.size() == 0 & newSecond.size() == 0;
     }
 
     /**
@@ -100,11 +88,9 @@ public class CollectionsBlock<T extends Comparable> {
      */
     public List<T> collectionTask3(List<T> inputList, int n) {
 
-        try {
-            Collections.rotate(inputList, n);
-        } catch (NullPointerException e) {
+        if (inputList == null)
             throw new NullPointerException();
-        }
+        Collections.rotate(inputList, n);
         return inputList;
     }
 
@@ -123,16 +109,14 @@ public class CollectionsBlock<T extends Comparable> {
     public List<String> collectionTask4(List<String> inputList, @NonNull String a,
                                         @NonNull String b) {
         int i;
-        try {
-            while( (i = inputList.indexOf(a)) > -1) {
-                inputList.set(i, b);
-            }
-        } catch (NullPointerException e) {
+        if (a == null || b == null || inputList == null)
             throw new NullPointerException();
+        while ((i = inputList.indexOf(a)) > -1) {
+            inputList.set(i, b);
         }
         return inputList;
     }
-    }
+}
     /*
   Задание подразумевает создание класса(ов) для выполнения задачи.
   Дан список студентов. Элемент списка содержит фамилию, имя, отчество, год рождения,
@@ -142,5 +126,5 @@ public class CollectionsBlock<T extends Comparable> {
   Определите самого старшего студента и самого младшего студентов.
   Для каждой группы найдите лучшего с точки зрения успеваемости студента.
  */
-    //Задание находится в папке collections_task_last
+//Задание находится в папке collections_task_last
 

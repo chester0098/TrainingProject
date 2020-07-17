@@ -31,13 +31,13 @@ public class Orders {
         System.out.println("Введите вашу фамилию");
         buyer.setFamily(in.next());
         System.out.println("Введите id продукта который хотите купить" + '\n');
-        int i = 0;
+        int count = 0;
         for (Product p : productList) {
-            System.out.println("id:" + i + " " + p.toString());
-            i++;
+            System.out.println("id:" + count + " " + p.toString());
+            count++;
         }
-        i = in.nextInt();
-        buyer.setProductBuy(productList.get(i));
+        int productId = in.nextInt();
+        buyer.setProductBuy(productList.get(productId));
         System.out.println("Сколько денег платите:");
         buyer.setTransferredMoney(in.nextDouble());
         buyer.setBlackList(false);

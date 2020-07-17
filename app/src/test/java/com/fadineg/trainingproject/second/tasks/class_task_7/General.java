@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class General {
     private Scanner in;
     private Orders orders;
+    int count;
 
     public General() {
         in = new Scanner(System.in);
@@ -70,33 +71,33 @@ public class General {
     }
 
     public void showOrders() {
-        int i = 0;
+        count = 0;
         for (Buyer b : orders.orders) {
-            System.out.println('\n' + "id:" + i + " " + b.toString());
-            i++;
+            System.out.println('\n' + "id:" + count + " " + b.toString());
+            count++;
         }
     }
     public void showProductList(){
-        int i = 0;
+        count = 0;
         for (Product p : orders.productList) {
-            System.out.println("id:" + i + " " + p.toString());
-            i++;
+            System.out.println("id:" + count + " " + p.toString());
+            count++;
         }
     }
 
     public void addToBlackList() {
-        int i = 0;
+        count = 0;
         for (Buyer b : orders.orders) {
-            System.out.println('\n' + "id:" + i + " " + b.toString());
-            i++;
+            System.out.println('\n' + "id:" + count + " " + b.toString());
+            count++;
         }
         System.out.println('\n' + "Введите id пользователя, которого хотите добавить в черный список:");
-        i = in.nextInt();
-        if (i < 0 || i > orders.orders.size()) {
+        int userId = in.nextInt();
+        if (userId < 0 || userId > orders.orders.size()) {
             System.out.println("Пользователя с таким id не существует");
             addToBlackList();
         }
-        orders.orders.get(i).setBlackList(true);
+        orders.orders.get(userId).setBlackList(true);
 
         sellerMenu();
     }

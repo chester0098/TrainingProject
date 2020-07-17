@@ -38,8 +38,8 @@ public class Time {
                 + "5.Изменение времени полностью" + '\n'
                 + "6.Завершить программу" + '\n');
         Scanner in = new Scanner(System.in);
-        int i = in.nextInt();
-        switch (i) {
+        int menuId = in.nextInt();
+        switch (menuId) {
             case 1:
                 currentTime();
                 break;

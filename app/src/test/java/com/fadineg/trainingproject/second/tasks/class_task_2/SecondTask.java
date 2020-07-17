@@ -38,8 +38,9 @@ public class SecondTask {
     }
 
     private void mix() {
+        int j;
         for (int i = x - 1; i >= 1; i--) {
-            int j = (int) (Math.random() * x);
+            j = (int) (Math.random() * x);
             int temp = list.get(j);
             list.set(j, list.get(i));
             list.set(i, temp);

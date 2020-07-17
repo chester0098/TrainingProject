@@ -35,7 +35,7 @@ public class ElementaryTraining {
      */
     public int complicatedAmount(int firstValue, int secondValue, int thirdValue) {
 
-        return (firstValue*2) + (secondValue - 3) + (thirdValue*thirdValue);
+        return (firstValue * 2) + (secondValue - 3) + (thirdValue * thirdValue);
     }
 
     /**
@@ -47,10 +47,9 @@ public class ElementaryTraining {
      * @return новое значение
      */
     public int changeValue(int value) {
-        if (value>3){
-            value+=10;
-        }
-        else value-=10;
+        if (value > 3) {
+            value += 10;
+        } else value -= 10;
 
         return value;
     }
@@ -66,7 +65,7 @@ public class ElementaryTraining {
      * @return новое число
      */
     public int swapNumbers(int value) {
-        if (value<10  && value>-10 || value>99999) return value;
+        if (value < 10 && value > -10 || value > 99999) return value;
 
         ArrayList<Integer> nums = new ArrayList<>();
         while (value != 0) {
@@ -74,13 +73,13 @@ public class ElementaryTraining {
             value /= 10;
         }
         int x = nums.get(0);
-        nums.set(0, nums.get(nums.size()-1));
-        nums.set(nums.size()-1, x);
+        nums.set(0, nums.get(nums.size() - 1));
+        nums.set(nums.size() - 1, x);
 
         x = 1;
-        for (int i = 0; i<nums.size();i++){
-            value += nums.get(i)*x;
-            x*=10;
+        for (int i = 0; i < nums.size(); i++) {
+            value += nums.get(i) * x;
+            x *= 10;
         }
 
         return value;
@@ -97,7 +96,7 @@ public class ElementaryTraining {
      * @return новое число
      */
     public int zeroEvenNumber(int value) {
-        if (value<10  && value>-10 || value>99999) return value;
+        if (value < 10 && value > -10 || value > 99999) return value;
 
         ArrayList<Integer> nums = new ArrayList<>();
         while (value != 0) {
@@ -106,11 +105,11 @@ public class ElementaryTraining {
         }
 
         int x = 1;
-        for (int i = 0; i<nums.size();i++){
-            if (nums.get(i)%2 == 0 & i != nums.size()-1)
+        for (int i = 0; i < nums.size(); i++) {
+            if (nums.get(i) % 2 == 0 & i != nums.size() - 1)
                 nums.set(i, 0);
-        value += nums.get(i)*x;
-        x*=10;
+            value += nums.get(i) * x;
+            x *= 10;
         }
         return value;
     }
