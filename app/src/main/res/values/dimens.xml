@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="splashScreen_logo_width">245dp</dimen>
+    <dimen name="splashScreen_logo_height">73dp</dimen>
+    <dimen name="splashScreen_logo_marginTop">154dp</dimen>
+
+    <dimen name="splashScreen_progressBar_width">38dp</dimen>
+    <dimen name="splashScreen_progressBar_height">38dp</dimen>
+    <dimen name="splashScreen_progressBar_marginTop">83dp</dimen>
+
+    <dimen name="splashScreen_tvLoading_width">68dp</dimen>
+    <dimen name="splashScreen_tvLoading_height">20dp</dimen>
+    <dimen name="splashScreen_tvLoading_marginTop">20dp</dimen>
+
+    <dimen name="splashScreen_logo_mss_width">116dp</dimen>
+    <dimen name="splashScreen_logo_mss_height">16dp</dimen>
+    <dimen name="splashScreen_logo_mss_marginBottom">40dp</dimen>
+    <dimen name="splashScreen_logo_mss_marginTop">124dp</dimen>
+
+    <dimen name="layout_marginTop">1dp</dimen>
+    <dimen name="profile_guideline_begin">20dp</dimen>
+    <dimen name="profile_tv_userName_marginTop">20dp</dimen>
+    <dimen name="profile_tv_title_dateOfBirth_marginTop">16dp</dimen>
+    <dimen name="profile_tv_title_fieldOfActivity_marginTop">34dp</dimen>
+    <dimen name="profile_tv_receivePush_marginTop">52dp</dimen>
+    <dimen name="profile_tv_receivePush_marginBottom">18dp</dimen>
+    <dimen name="profile_switch_push_marginEnd">26dp</dimen>
+    <dimen name="profile_tv_title_yourFriends_marginTop">20dp</dimen>
+    <dimen name="profile_ll_friend1_marginTop">16dp</dimen>
+    <dimen name="profile_tv_friend_marginStart">20dp</dimen>
+    <dimen name="profile_ll_friend_marginTop">10dp</dimen>
+    <dimen name="profile_ll_friend3_marginBottom">20dp</dimen>
+    <dimen name="profile_iv_friend_widthAndHeight">48dp</dimen>
+
+    <dimen name="profile_btn_logOut_width">166dp</dimen>
+    <dimen name="profile_btn_logOut_height">36dp</dimen>
+    <dimen name="profile_btn_logOut_marginTop">20dp</dimen>
+    <dimen name="profile_btn_logOut_marginBottom">38dp</dimen>
+</resources>
