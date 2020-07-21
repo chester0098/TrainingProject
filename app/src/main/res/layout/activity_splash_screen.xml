@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/splash_screen_background">
+
+    <ImageView
+        android:id="@+id/splashScreen_logo"
+        android:layout_width="@dimen/splashScreen_logo_width"
+        android:layout_height="@dimen/splashScreen_logo_height"
+        android:layout_marginTop="@dimen/splashScreen_logo_marginTop"
+        android:contentDescription="@string/splashScreen_logo_description"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_logo_splash_screen" />
+
+    <ProgressBar
+        android:id="@+id/splashScreen_progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="@dimen/splashScreen_progressBar_width"
+        android:layout_height="@dimen/splashScreen_progressBar_height"
+        android:layout_marginTop="@dimen/splashScreen_progressBar_marginTop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/splashScreen_logo" />
+
+    <TextView
+        android:id="@+id/splashScreen_tv_loading"
+        style="@style/TextStyle_SplashScreen"
+        android:layout_width="@dimen/splashScreen_tvLoading_width"
+        android:layout_height="@dimen/splashScreen_tvLoading_height"
+        android:layout_marginTop="@dimen/splashScreen_tvLoading_marginTop"
+        android:text="@string/splashScreen_tvLoading"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/splashScreen_progressBar" />
+
+    <ImageView
+        android:id="@+id/splashScreen_logo_mss"
+        android:layout_width="@dimen/splashScreen_logo_mss_width"
+        android:layout_height="@dimen/splashScreen_logo_mss_height"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/splashScreen_logo_mss_marginBottom"
+        android:contentDescription="@string/splashScreen_logo_mss_description"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_logo_mss" />
+</androidx.constraintlayout.widget.ConstraintLayout>
