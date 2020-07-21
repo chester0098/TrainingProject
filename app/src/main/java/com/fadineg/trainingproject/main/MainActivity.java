@@ -1,4 +1,4 @@
-package com.fadineg.trainingproject;
+package com.fadineg.trainingproject.main;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,10 +8,12 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.fadineg.trainingproject.profile.ProfileFragment;
+import com.fadineg.trainingproject.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
-    BottomNavigationView bottomNavigationView;
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,21 +28,21 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         bottomNavigationView.getMenu().findItem(item.getItemId()).setChecked(true);
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.bnv_profile:
-                loadFragment(new Profile());
+                loadFragment(new ProfileFragment());
                 break;
             case R.id.bnv_history:
-
+                //будет реализовано позднее
                 break;
             case R.id.bnv_help:
-
+                //будет реализовано позднее
                 break;
             case R.id.bnv_search:
-
+                //будет реализовано позднее
                 break;
             case R.id.bnv_news:
-
+                //будет реализовано позднее
                 break;
         }
         return false;

@@ -1,9 +1,12 @@
-package com.fadineg.trainingproject;
+package com.fadineg.trainingproject.splash;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import com.fadineg.trainingproject.R;
+import com.fadineg.trainingproject.main.MainActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -15,14 +18,9 @@ public class SplashActivity extends AppCompatActivity {
         finish();
     }
 
-    private void startMainActivity(){
+    private void startMainActivity() {
         Intent intent = new Intent(SplashActivity.this, MainActivity.class);
         startActivity(intent);
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-
-    }
 }
