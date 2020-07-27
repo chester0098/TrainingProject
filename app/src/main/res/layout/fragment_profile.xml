@@ -41,12 +41,11 @@
             <ImageView
                 android:id="@+id/profile_iv_userPhoto"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="@dimen/profile_iv_userPhoto_height"
                 android:scaleType="centerCrop"
-                android:src="@drawable/image_man"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"/>
 
 
             <androidx.constraintlayout.widget.Guideline
@@ -132,7 +131,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="@dimen/profile_line1_marginTop"
-                android:background="@color/profile_background"
+                android:background="@color/background"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/profile_tv_receivePush" />
@@ -197,7 +196,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="@dimen/profile_line2_marginTop"
-                android:background="@color/profile_background"
+                android:background="@color/background"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/profile_tv_friend3" />
