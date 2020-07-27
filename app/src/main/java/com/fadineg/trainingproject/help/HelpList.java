@@ -27,7 +27,7 @@ class Help {
         this.categoryImage = categoryImage;
     }
 
-    public String getCategoryText() {
+    String getCategoryText() {
         return categoryText;
     }
 
@@ -35,7 +35,7 @@ class Help {
         this.categoryText = categoryText;
     }
 
-    public Integer getCategoryImage() {
+    Integer getCategoryImage() {
         return categoryImage;
     }
 

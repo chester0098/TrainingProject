@@ -24,7 +24,7 @@ import java.io.File;
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
     static final int REQUEST_TAKE_PHOTO = 1;
     private BottomNavigationView bottomNavigationView;
-    ProfileFragment profileFragment;
+    private ProfileFragment profileFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -18,7 +18,7 @@ import java.util.List;
 public class EventsRecyclerAdapter extends RecyclerView.Adapter<EventsRecyclerAdapter.ViewHolder> {
     private List<String> eventsList;
 
-    public EventsRecyclerAdapter(List<String> nkoList) {
+    EventsRecyclerAdapter(List<String> nkoList) {
         this.eventsList = nkoList;
     }
 
