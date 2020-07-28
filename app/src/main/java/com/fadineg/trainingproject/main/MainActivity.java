@@ -5,24 +5,43 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.fadineg.trainingproject.help.HelpFragment;
 import com.fadineg.trainingproject.profile.ProfileFragment;
 import com.fadineg.trainingproject.R;
+import com.fadineg.trainingproject.search.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.io.File;
+
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+    public static final int REQUEST_TAKE_PHOTO = 1;
+    public static final String FILES_DIR = "Pictures";
+    public static final String FILE_NAME = "temp.jpg";
+
     private BottomNavigationView bottomNavigationView;
+    private ProfileFragment profileFragment;
+    private HelpFragment helpFragment;
+    private SearchFragment searchFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        profileFragment = new ProfileFragment();
+        helpFragment = new HelpFragment();
+        searchFragment = new SearchFragment();
+
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
-        bottomNavigationView.setSelectedItemId(R.id.bnv_profile);
-        bottomNavigationView.getMenu().findItem(R.id.bnv_profile).setChecked(true);
+        bottomNavigationView.setSelectedItemId(R.id.bnv_help);
+        bottomNavigationView.getMenu().findItem(R.id.bnv_help).setChecked(true);
     }
 
     @Override
@@ -30,16 +49,16 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottomNavigationView.getMenu().findItem(item.getItemId()).setChecked(true);
         switch (item.getItemId()) {
             case R.id.bnv_profile:
-                loadFragment(new ProfileFragment());
+                loadFragment(profileFragment);
                 break;
             case R.id.bnv_history:
                 //будет реализовано позднее
                 break;
             case R.id.bnv_help:
-                //будет реализовано позднее
+                loadFragment(helpFragment);
                 break;
             case R.id.bnv_search:
-                //будет реализовано позднее
+                loadFragment(searchFragment);
                 break;
             case R.id.bnv_news:
                 //будет реализовано позднее
@@ -53,4 +72,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         ft.replace(R.id.fl_content, fragment);
         ft.commit();
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_TAKE_PHOTO) {
+            String path = getExternalFilesDir(FILES_DIR) + File.separator + FILE_NAME;
+            Bitmap mBitmap = BitmapFactory.decodeFile(path);
+            profileFragment.setImageFromCamera(mBitmap);
+        }
+    }
+
 }

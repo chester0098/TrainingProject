@@ -4,7 +4,9 @@
     <dimen name="text_11">11sp</dimen>
     <dimen name="text_14">14sp</dimen>
     <dimen name="text_12">12sp</dimen>
+    <dimen name="text_15">15sp</dimen>
     <dimen name="text_16">16sp</dimen>
+    <dimen name="text_22">22sp</dimen>
     <dimen name="text_24">24sp</dimen>
 
     <dimen name="splashScreen_logo_width">245dp</dimen>
@@ -43,4 +45,35 @@
     <dimen name="profile_btn_logOut_height">36dp</dimen>
     <dimen name="profile_btn_logOut_marginTop">20dp</dimen>
     <dimen name="profile_btn_logOut_marginBottom">38dp</dimen>
+    <dimen name="profile_iv_userPhoto_height">220dp</dimen>
+    
+    <dimen name="choose_photo_marginStart">24dp</dimen>
+    <dimen name="choose_photo_marginTop">32dp</dimen>
+    <dimen name="take_photo_marginStart">24dp</dimen>
+    <dimen name="take_photo_marginTop">44dp</dimen>
+    <dimen name="take_photo_marginEnd">68dp</dimen>
+    <dimen name="delete_marginStart">24dp</dimen>
+    <dimen name="delete_marginTop">44dp</dimen>
+    <dimen name="dialog_drawblePadding">24dp</dimen>
+    <dimen name="delete_marginBotoom">28dp</dimen>
+    
+    <dimen name="help_tv_choose_marginTop">19dp</dimen>
+    <dimen name="help_rv_width">340dp</dimen>
+    <dimen name="help_rv_marginTop">16dp</dimen>
+    <dimen name="events_tv_keywords_marginStart">20dp</dimen>
+    <dimen name="events_tv_keywords_marginTop">20dp</dimen>
+    <dimen name="events_tv_searchingResults_marginStart">20dp</dimen>
+    <dimen name="events_rv_marginTop">20dp</dimen>
+    <dimen name="events_rv_paddingStart">20dp</dimen>
+
+    <dimen name="rv_help_margin">4dp</dimen>
+    <dimen name="rv_help_image_width">120dp</dimen>
+    <dimen name="rv_help_image_height">80dp</dimen>
+    <dimen name="rv_help_image_marginHorizontal">24dp</dimen>
+    <dimen name="rv_help_image_marginTop">12dp</dimen>
+    <dimen name="rv_help_category_marginVertical">12dp</dimen>
+    <dimen name="rv_search_tv_title_marginTop">18dp</dimen>
+    <dimen name="rv_search_tv_title_marginBottom">18dp</dimen>
+    <dimen name="rv_search_iv_marginEnd">8dp</dimen>
+    <dimen name="CardSearchView_margin">8dp</dimen>
 </resources>

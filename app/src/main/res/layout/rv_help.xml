@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/light_grey"
+    android:layout_margin="@dimen/rv_help_margin">
+
+
+    <ImageView
+        android:id="@+id/rv_help_image"
+        android:layout_width="@dimen/rv_help_image_width"
+        android:layout_height="@dimen/rv_help_image_height"
+        app:srcCompat="@drawable/children"
+        android:layout_marginHorizontal="@dimen/rv_help_image_marginHorizontal"
+        android:layout_marginTop="@dimen/rv_help_image_marginTop"/>
+
+    <TextView
+        android:id="@+id/rv_help_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tool:text="Дети"
+        android:layout_marginVertical="@dimen/rv_help_category_marginVertical"
+        android:layout_gravity="center"
+        android:fontFamily="@font/officina_sans_extra_bold_scc"
+        android:textSize="@dimen/text_15"
+        android:textColor="@color/light_olive_green"/>
+</LinearLayout>

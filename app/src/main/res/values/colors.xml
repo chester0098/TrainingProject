@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#51842b</color>
     <color name="colorAccent">#03DAC5</color>
 
-    <color name="profile_background">#aabbbb</color>
+    <color name="background">#aabbbb</color>
     <color name="splash_screen_background">#eff3f6</color>
     <color name="splashScreen_colorText">#b3000000</color>
     <color name="colorText">#de000000</color>
@@ -14,10 +14,11 @@
     <color name="bnv_checked">#7db354</color>
     <color name="bnv_unchecked">#66000000</color>
 
+    <color name="macaroni_and_cheese">#f2b630</color>
+
 
     //пока что не используются
     <color name="melon">#fe7460</color>
-    <color name="macaroni_and_cheese">#f2b630</color>
     <color name="blue_grey">#627f8f</color>
     <color name="grey">#94998a</color>
     <color name="black__54">#8a000000</color>

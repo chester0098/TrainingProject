@@ -11,9 +11,9 @@
     <string name="bnv_title_history">История</string>
     <string name="bnv_title_profile">Профиль</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="action_edit_title">Редактировать</string>
+
     <string name="profile_toolbar_title">Профиль</string>
     <string name="profile_userName">Константинов Денис</string>
     <string name="profile_dateOfBirth">Дата рождения</string>
@@ -26,5 +26,24 @@
     <string name="profile_friend2">Евгений Александров</string>
     <string name="profile_friend3">Виктор Кузнецов</string>
     <string name="profile_logOut">Выйти из аккаунта</string>
+
+    <string name="choose_photo">Выбрать фото</string>
+    <string name="take_photo">Сделать снимок</string>
+    <string name="delete">Удалить</string>
+
+    <string name="help_toolbar_title">Помочь</string>
+    <string name="help_tv_choose">Выберите категорию помощи</string>
+    <string name="events_tv_keywords">Ключевые слова: мастер-класс, помощь</string>
+    <string name="events_tv_searchingResults">Результаты поиска: 109 мероприятий</string>
+    <string name="searchView_queryHint">Введите название организации</string>
+
+    <string name="helpList_category_children">Дети</string>
+    <string name="helpList_category_adults">Взрослые</string>
+    <string name="helpList_category_elderly">Пожилые</string>
+    <string name="helpList_category_animals">Животные</string>
+    <string name="helpList_category_event">Мероприятия</string>
+
+    <string name="pageTitle1">По мероприятиям</string>
+    <string name="pageTitle2">По НКО</string>
 
 </resources>

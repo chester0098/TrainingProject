@@ -57,5 +57,21 @@
         <item name="android:textColor">@color/splashScreen_colorText</item>
     </style>
 
+    <style name="TabLayoutStyle" parent="Widget.Design.TabLayout">
+        <item name="tabTextAppearance">@style/TabTextAppearanceStyle</item>
+    </style>
+
+    <style name="TabTextAppearanceStyle" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+        <item name="fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">@dimen/text_14</item>
+    </style>
+
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="fontFamily">@font/roboto_regular</item>
+        <item name="android:textSize">@dimen/text_14</item>
+        <item name="android:textColorHint">@color/colorTitleText</item>
+    </style>
+
 
 </resources>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical"
+    tools:context=".search.SearchFragment">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/CardSearchView_margin"
+        android:layout_marginTop="@dimen/CardSearchView_margin"
+        android:background="@drawable/search_background">
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchView"
+            style="@style/SearchViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:queryBackground="@drawable/search_background"
+            app:queryHint="@string/searchView_queryHint"
+            app:searchIcon="@drawable/ic_search_hint"
+            app:voiceIcon="@drawable/ic_mic" />
+
+    </androidx.cardview.widget.CardView>
+
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/search_tabLayout"
+        style="@style/TabLayoutStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        app:tabIndicatorColor="@color/macaroni_and_cheese"
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextColor="@color/white_70" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/search_viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white" />
+
+
+</LinearLayout>
