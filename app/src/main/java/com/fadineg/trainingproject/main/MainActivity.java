@@ -20,26 +20,14 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.io.File;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
-    static final int REQUEST_TAKE_PHOTO = 1;
-    static final String FILES_DIR = "Pictures";
-    static final String FILE_NAME = "temp.jpg";
+    public static final int REQUEST_TAKE_PHOTO = 1;
+    public static final String FILES_DIR = "Pictures";
+    public static final String FILE_NAME = "temp.jpg";
 
     private BottomNavigationView bottomNavigationView;
     private ProfileFragment profileFragment;
     private HelpFragment helpFragment;
     private SearchFragment searchFragment;
-
-    public String request_file_dir() {
-        return FILES_DIR;
-    }
-
-    public String request_file_name() {
-        return FILE_NAME;
-    }
-
-    public int request_take_photo() {
-        return REQUEST_TAKE_PHOTO;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

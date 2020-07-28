@@ -49,7 +49,6 @@ public class ChangeDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        MainActivity mainActivity = new MainActivity();
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_fragment_change, null);
@@ -67,13 +66,12 @@ public class ChangeDialogFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                File file = new File(getContext().getExternalFilesDir(mainActivity.request_file_dir()),
-                        mainActivity.request_file_name());
+                File file = new File(getContext().getExternalFilesDir(MainActivity.FILES_DIR),
+                        MainActivity.FILE_NAME);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(getContext(),
                         getActivity().getPackageName() + FILE_PROVIDER, file));
-                getActivity().startActivityForResult(intent, mainActivity.request_take_photo());
+                getActivity().startActivityForResult(intent, MainActivity.REQUEST_TAKE_PHOTO);
                 dismiss();
-
             }
         });
 
