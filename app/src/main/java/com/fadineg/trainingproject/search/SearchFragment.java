@@ -4,6 +4,8 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
@@ -20,8 +22,12 @@ public class SearchFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_search, container, false);
+        return inflater.inflate(R.layout.fragment_search, container, false);
+    }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         SearchViewPagerAdapter mFragmentAdapter = new SearchViewPagerAdapter(getChildFragmentManager(), getContext());
         ViewPager mViewPager = view.findViewById(R.id.search_viewPager);
         TabLayout mTabLayout = view.findViewById(R.id.search_tabLayout);
@@ -35,8 +41,5 @@ public class SearchFragment extends Fragment {
         searchView.setIconifiedByDefault(false);
         searchView.setIconified(false);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
-
-        return view;
     }
-
 }

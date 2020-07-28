@@ -2,7 +2,6 @@ package com.fadineg.trainingproject.main;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -10,7 +9,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 
 import com.fadineg.trainingproject.help.HelpFragment;
@@ -23,10 +21,25 @@ import java.io.File;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
     static final int REQUEST_TAKE_PHOTO = 1;
+    static final String FILES_DIR = "Pictures";
+    static final String FILE_NAME = "temp.jpg";
+
     private BottomNavigationView bottomNavigationView;
     private ProfileFragment profileFragment;
     private HelpFragment helpFragment;
     private SearchFragment searchFragment;
+
+    public String request_file_dir() {
+        return FILES_DIR;
+    }
+
+    public String request_file_name() {
+        return FILE_NAME;
+    }
+
+    public int request_take_photo() {
+        return REQUEST_TAKE_PHOTO;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,8 +89,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_TAKE_PHOTO) {
-            String _path = getExternalFilesDir("Pictures") + File.separator + "temp.jpg";
-            Bitmap mBitmap = BitmapFactory.decodeFile(_path);
+            String path = getExternalFilesDir(FILES_DIR) + File.separator + FILE_NAME;
+            Bitmap mBitmap = BitmapFactory.decodeFile(path);
             profileFragment.setImageFromCamera(mBitmap);
         }
     }

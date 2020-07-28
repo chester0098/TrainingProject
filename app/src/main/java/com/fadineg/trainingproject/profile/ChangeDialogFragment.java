@@ -16,10 +16,12 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.DialogFragment;
 
 import com.fadineg.trainingproject.R;
+import com.fadineg.trainingproject.main.MainActivity;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,7 +35,7 @@ import static com.fadineg.trainingproject.R.drawable.image_user;
 
 public class ChangeDialogFragment extends DialogFragment {
     private CDFListener listener;
-    private static final int REQUEST_TAKE_PHOTO = 1;
+    private static final String FILE_PROVIDER = ".fileprovider";
 
     public interface CDFListener {
         void action(int data);
@@ -47,6 +49,7 @@ public class ChangeDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        MainActivity mainActivity = new MainActivity();
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_fragment_change, null);
@@ -64,9 +67,11 @@ public class ChangeDialogFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                File file = new File(getContext().getExternalFilesDir("Pictures"), "temp.jpg");
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(getContext(), getActivity().getPackageName() + ".fileprovider", file));
-                getActivity().startActivityForResult(intent, REQUEST_TAKE_PHOTO);
+                File file = new File(getContext().getExternalFilesDir(mainActivity.request_file_dir()),
+                        mainActivity.request_file_name());
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(getContext(),
+                        getActivity().getPackageName() + FILE_PROVIDER, file));
+                getActivity().startActivityForResult(intent, mainActivity.request_take_photo());
                 dismiss();
 
             }
@@ -84,6 +89,9 @@ public class ChangeDialogFragment extends DialogFragment {
         return builder.create();
     }
 
-
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
 }
 

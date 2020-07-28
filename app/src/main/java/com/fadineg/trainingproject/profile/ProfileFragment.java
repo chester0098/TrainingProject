@@ -1,41 +1,34 @@
 package com.fadineg.trainingproject.profile;
 
-import android.app.Activity;
-import android.app.Dialog;
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.appcompat.widget.AppCompatTextView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.fadineg.trainingproject.R;
-
-import java.io.File;
-
 import static com.fadineg.trainingproject.R.*;
-import static com.fadineg.trainingproject.R.drawable.ic_logo_splash_screen;
 import static com.fadineg.trainingproject.R.drawable.image_man;
-import static com.fadineg.trainingproject.R.drawable.image_user;
 
 
 public class ProfileFragment extends Fragment {
     private ImageView userPhoto;
+    static final String PHOTO_FRAGMENT_TAG = "PhotoFragmentDialog";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(layout.fragment_profile, container, false);
+        return inflater.inflate(layout.fragment_profile, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         userPhoto = view.findViewById(id.profile_iv_userPhoto);
         userPhoto.setImageResource(image_man);
         ChangeDialogFragment changeDialogFragment = new ChangeDialogFragment();
@@ -45,12 +38,11 @@ public class ProfileFragment extends Fragment {
                 changeDialogFragment.setDialogListener(data -> {
                     userPhoto.setImageResource(data);
                 });
-                changeDialogFragment.show(getActivity().getSupportFragmentManager(), "PhotoFragmentDialog");
+                changeDialogFragment.show(getChildFragmentManager(), PHOTO_FRAGMENT_TAG);
             }
         });
 
         setHasOptionsMenu(true);
-        return view;
     }
 
     public void setImageFromCamera(Bitmap bitmap) {

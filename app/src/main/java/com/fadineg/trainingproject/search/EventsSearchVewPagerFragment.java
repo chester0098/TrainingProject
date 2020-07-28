@@ -2,6 +2,8 @@ package com.fadineg.trainingproject.search;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,16 +23,18 @@ public class EventsSearchVewPagerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_events_vew_pager, container, false);
+    }
 
-        View view = inflater.inflate(R.layout.fragment_events_vew_pager, container, false);
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         RecyclerView rvSearch = view.findViewById(R.id.events_rv);
         rvSearch.setHasFixedSize(true);
         rvSearch.setLayoutManager(new LinearLayoutManager(getActivity()));
         EventsRecyclerAdapter adapter = new EventsRecyclerAdapter(createdEventsList());
         rvSearch.setAdapter(adapter);
-        return view;
     }
-
 
     private List<String> createdEventsList() {
         List<String> eventsList = new ArrayList<>();
