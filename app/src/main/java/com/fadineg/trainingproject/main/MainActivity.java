@@ -25,17 +25,22 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     static final int REQUEST_TAKE_PHOTO = 1;
     private BottomNavigationView bottomNavigationView;
     private ProfileFragment profileFragment;
+    private HelpFragment helpFragment;
+    private SearchFragment searchFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        profileFragment = new ProfileFragment();
+        helpFragment = new HelpFragment();
+        searchFragment = new SearchFragment();
+
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.bnv_help);
         bottomNavigationView.getMenu().findItem(R.id.bnv_help).setChecked(true);
-
-        profileFragment = new ProfileFragment();
     }
 
     @Override
@@ -49,10 +54,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 //будет реализовано позднее
                 break;
             case R.id.bnv_help:
-                loadFragment(new HelpFragment());
+                loadFragment(helpFragment);
                 break;
             case R.id.bnv_search:
-                loadFragment(new SearchFragment());
+                loadFragment(searchFragment);
                 break;
             case R.id.bnv_news:
                 //будет реализовано позднее

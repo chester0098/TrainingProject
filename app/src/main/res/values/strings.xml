@@ -37,4 +37,13 @@
     <string name="events_tv_searchingResults">Результаты поиска: 109 мероприятий</string>
     <string name="searchView_queryHint">Введите название организации</string>
 
+    <string name="helpList_category_children">Дети</string>
+    <string name="helpList_category_adults">Взрослые</string>
+    <string name="helpList_category_elderly">Пожилые</string>
+    <string name="helpList_category_animals">Животные</string>
+    <string name="helpList_category_event">Мероприятия</string>
+
+    <string name="pageTitle1">По мероприятиям</string>
+    <string name="pageTitle2">По НКО</string>
+
 </resources>
