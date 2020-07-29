@@ -58,6 +58,9 @@ public class ChangeDialogFragment extends DialogFragment {
         view.findViewById(R.id.choose_photo).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                getActivity().startActivityForResult(intent, MainActivity.REQUEST_CHOOSE_PHOTO);
                 dismiss();
             }
         });

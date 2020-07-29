@@ -46,4 +46,8 @@
     <string name="pageTitle1">По мероприятиям</string>
     <string name="pageTitle2">По НКО</string>
 
+    <string name="news_toolbar_title">Новости</string>
+    <string name="action_filter_title">Фильтр</string>
+
+
 </resources>

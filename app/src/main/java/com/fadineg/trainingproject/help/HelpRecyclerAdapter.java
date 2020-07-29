@@ -1,6 +1,5 @@
 package com.fadineg.trainingproject.help;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +24,7 @@ public class HelpRecyclerAdapter extends RecyclerView.Adapter<HelpRecyclerAdapte
     @NotNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_help, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_help_item, parent, false);
         return new ViewHolder(v);
     }
 
