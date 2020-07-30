@@ -27,7 +27,9 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/news_rv"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/rv_news_margin"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

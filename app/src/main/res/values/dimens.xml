@@ -76,4 +76,16 @@
     <dimen name="rv_search_tv_title_marginBottom">18dp</dimen>
     <dimen name="rv_search_iv_marginEnd">8dp</dimen>
     <dimen name="CardSearchView_margin">8dp</dimen>
+    <dimen name="rv_news_margin">8dp</dimen>
+    <dimen name="rv_news_card_cornerRadius">2dp</dimen>
+    <dimen name="rv_news_image_height">222dp</dimen>
+    <dimen name="rv_news_image_margin">4dp</dimen>
+    <dimen name="rv_news_title_marginHorizontal">38dp</dimen>
+    <dimen name="rv_news_title_marginTop">208dp</dimen>
+    <dimen name="rv_news_description_marginHorizontal">26dp</dimen>
+    <dimen name="rv_news_linearDate_marginTop">16dp</dimen>
+    <dimen name="imageViewCalendar_paddingVertical">4dp</dimen>
+    <dimen name="rv_news_date_marginStart">5dp</dimen>
+    <dimen name="rv_news_description_marginTop">10dp</dimen>
+    <dimen name="filters_margin">20dp</dimen>
 </resources>

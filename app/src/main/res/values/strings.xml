@@ -48,6 +48,10 @@
 
     <string name="news_toolbar_title">Новости</string>
     <string name="action_filter_title">Фильтр</string>
+    <string name="write_us"><u>Напишите нам</u></string>
+    <string name="filters_tv_chooseCategory">Категории помощи</string>
+    <string name="filters_tv_toolbar_title">Фильтр</string>
+    <string name="newsDescription_tv_writeUs"><u>Перейти на сайт организации</u></string>
 
 
 </resources>

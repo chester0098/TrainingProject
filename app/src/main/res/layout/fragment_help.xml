@@ -9,7 +9,7 @@
     android:background="@color/white">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_actionbar"
+        android:id="@+id/profile_toolbar"
         app:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:layout_width="match_parent"
         android:layout_height="?android:actionBarSize"

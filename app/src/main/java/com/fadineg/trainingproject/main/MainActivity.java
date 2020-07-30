@@ -10,12 +10,16 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.fadineg.trainingproject.help.HelpFragment;
+import com.fadineg.trainingproject.news.Filters;
 import com.fadineg.trainingproject.news.FiltersFragment;
+import com.fadineg.trainingproject.news.JsonInArray;
+import com.fadineg.trainingproject.news.News;
 import com.fadineg.trainingproject.news.NewsFragment;
 import com.fadineg.trainingproject.profile.ProfileFragment;
 import com.fadineg.trainingproject.R;
@@ -26,6 +30,10 @@ import com.jakewharton.threetenabp.AndroidThreeTen;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
     public static final int REQUEST_TAKE_PHOTO = 1;
@@ -38,6 +46,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private HelpFragment helpFragment;
     private SearchFragment searchFragment;
     private NewsFragment newsFragment;
+
+    List<Filters> filtersList = new ArrayList<>();
+    List<News> newsList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +65,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.bnv_help);
         bottomNavigationView.getMenu().findItem(R.id.bnv_help).setChecked(true);
+        JsonInArray jsonInArray = new JsonInArray();
+        filtersList.addAll(jsonInArray.filtersPars(getApplicationContext()));
+        newsList.addAll(jsonInArray.newsPars(getApplicationContext()));
     }
 
     @Override
@@ -91,6 +105,35 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         ft.commit();
     }
 
+    public List<Filters> getFiltersList() {
+        Log.i("main", "getFiltersList");
+        return filtersList;
+    }
+
+    public void setFiltersList(List<Filters> filtersList) {
+        Log.i("main", "setFiltersList");
+        this.filtersList = filtersList;
+    }
+
+    public void updateNewsAdapter(){
+        Log.i("main", "updateNewsAdapter");
+        newsFragment.updateNewsList();
+    }
+
+    public List<News> getNewsList() {
+        Set<News> set=new LinkedHashSet<>();
+        for (News news : newsList) {
+            for (int i = 0; i < news.getFilters().size(); i++) {
+                for (Filters filters : filtersList) {
+                    if (filters.getSwitch_check() && filters.getCategory()
+                            .equals(news.getFilters().get(i).getCategory())) {
+                        set.add(news);
+                    }
+                }
+            }
+        }
+        return new ArrayList<>(set);
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -99,8 +142,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             String path = getExternalFilesDir(FILES_DIR) + File.separator + FILE_NAME;
             Bitmap takenImage = BitmapFactory.decodeFile(path);
             profileFragment.setImageFromCamera(takenImage);
-        }
-        else if(requestCode == REQUEST_CHOOSE_PHOTO){
+        } else if (requestCode == REQUEST_CHOOSE_PHOTO) {
             try {
                 Uri imageUri = data.getData();
                 InputStream imageStream = getContentResolver().openInputStream(imageUri);

@@ -1,8 +1,10 @@
 package com.fadineg.trainingproject.news;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -10,6 +12,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fadineg.trainingproject.R;
+import com.fadineg.trainingproject.main.MainActivity;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -17,9 +20,15 @@ import java.util.List;
 
 public class FiltersRecyclerAdapter extends RecyclerView.Adapter<FiltersRecyclerAdapter.ViewHolder> {
     private List<Filters> filtersList;
+    private Context context;
 
-    FiltersRecyclerAdapter(List<Filters> filtersList) {
+    FiltersRecyclerAdapter(List<Filters> filtersList, Context context) {
         this.filtersList = filtersList;
+        this.context = context;
+    }
+
+    List<Filters> getFiltersList() {
+        return filtersList;
     }
 
     @NotNull
@@ -34,6 +43,12 @@ public class FiltersRecyclerAdapter extends RecyclerView.Adapter<FiltersRecycler
         final Filters filters = filtersList.get(position);
         holder.category.setText(filters.getCategory());
         holder.aSwitch.setChecked(filters.getSwitch_check());
+
+        holder.aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                filtersList.get(position).setSwitch_check(isChecked);
+            }
+        });
     }
 
 
