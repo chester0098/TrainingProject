@@ -10,14 +10,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.fadineg.trainingproject.help.HelpFragment;
 import com.fadineg.trainingproject.news.Filters;
-import com.fadineg.trainingproject.news.FiltersFragment;
 import com.fadineg.trainingproject.news.JsonInArray;
 import com.fadineg.trainingproject.news.News;
 import com.fadineg.trainingproject.news.NewsFragment;
@@ -47,8 +43,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private SearchFragment searchFragment;
     private NewsFragment newsFragment;
 
-    List<Filters> filtersList = new ArrayList<>();
-    List<News> newsList = new ArrayList<>();
+    private List<Filters> filtersList = new ArrayList<>();
+    private List<News> newsList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,22 +102,19 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     public List<Filters> getFiltersList() {
-        Log.i("main", "getFiltersList");
         return filtersList;
     }
 
     public void setFiltersList(List<Filters> filtersList) {
-        Log.i("main", "setFiltersList");
         this.filtersList = filtersList;
     }
 
-    public void updateNewsAdapter(){
-        Log.i("main", "updateNewsAdapter");
+    public void updateNewsAdapter() {
         newsFragment.updateNewsList();
     }
 
     public List<News> getNewsList() {
-        Set<News> set=new LinkedHashSet<>();
+        Set<News> set = new LinkedHashSet<>();
         for (News news : newsList) {
             for (int i = 0; i < news.getFilters().size(); i++) {
                 for (Filters filters : filtersList) {

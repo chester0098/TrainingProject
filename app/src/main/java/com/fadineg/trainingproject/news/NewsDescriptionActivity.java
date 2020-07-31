@@ -34,7 +34,7 @@ public class NewsDescriptionActivity extends AppCompatActivity {
         TextView address = findViewById(R.id.newsDescription_tv_address);
         TextView phone = findViewById(R.id.newsDescription_tv_phone);
         ImageView img = findViewById(R.id.newsDescription_iv_img1);
-        TextView description = findViewById(R.id.newsDescription_tv_descriprion);
+        TextView description = findViewById(R.id.newsDescription_tv_description);
         toolbarTitle.setSelected(true);
 
         Intent intent = getIntent();

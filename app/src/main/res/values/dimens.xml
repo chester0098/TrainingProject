@@ -3,6 +3,7 @@
     <dimen name="text_21">21sp</dimen>
     <dimen name="text_11">11sp</dimen>
     <dimen name="text_14">14sp</dimen>
+    <dimen name="text_10">10sp</dimen>
     <dimen name="text_12">12sp</dimen>
     <dimen name="text_15">15sp</dimen>
     <dimen name="text_16">16sp</dimen>
@@ -72,10 +73,12 @@
     <dimen name="rv_help_image_marginHorizontal">24dp</dimen>
     <dimen name="rv_help_image_marginTop">12dp</dimen>
     <dimen name="rv_help_category_marginVertical">12dp</dimen>
+
     <dimen name="rv_search_tv_title_marginTop">18dp</dimen>
     <dimen name="rv_search_tv_title_marginBottom">18dp</dimen>
     <dimen name="rv_search_iv_marginEnd">8dp</dimen>
     <dimen name="CardSearchView_margin">8dp</dimen>
+
     <dimen name="rv_news_margin">8dp</dimen>
     <dimen name="rv_news_card_cornerRadius">2dp</dimen>
     <dimen name="rv_news_image_height">222dp</dimen>
@@ -87,5 +90,29 @@
     <dimen name="imageViewCalendar_paddingVertical">4dp</dimen>
     <dimen name="rv_news_date_marginStart">5dp</dimen>
     <dimen name="rv_news_description_marginTop">10dp</dimen>
+
     <dimen name="filters_margin">20dp</dimen>
+    <dimen name="rv_filters_switch_marginEnd">16dp</dimen>
+
+    <dimen name="newsDescription_bottomBarPadding">7dp</dimen>
+    <dimen name="newsDescription_friends_padding">20dp</dimen>
+    <dimen name="newsDescription_friends_marginTop">30dp</dimen>
+    <dimen name="newsDescription_tv_writeUs_marginTop">20dp</dimen>
+    <dimen name="newsDescription_tv_description_marginTop">32dp</dimen>
+    <dimen name="newsDescription_tv_description_marginEnd">20dp</dimen>
+    <dimen name="newsDescription_iv_img1_height">158dp</dimen>
+    <dimen name="newsDescription_iv_img1_marginTop">20dp</dimen>
+    <dimen name="newsDescription_iv_img1_marginEnd">10dp</dimen>
+    <dimen name="newsDescription_tv_write_marginStart">6dp</dimen>
+    <dimen name="newsDescription_tv_mail_marginStart">10dp</dimen>
+    <dimen name="newsDescription_tv_mail_marginTop">15dp</dimen>
+    <dimen name="newsDescription_tv_phone_marginStart">10dp</dimen>
+    <dimen name="newsDescription_tv_phone_marginTop">15dp</dimen>
+    <dimen name="newsDescription_tv_address_marginStart">10dp</dimen>
+    <dimen name="newsDescription_tv_address_marginTop">16dp</dimen>
+    <dimen name="newsDescription_tv_fund_marginTop">8dp</dimen>
+    <dimen name="newsDescription_tv_date_marginStart">5dp</dimen>
+    <dimen name="newsDescription_iv_calendar_marginTop">10dp</dimen>
+    <dimen name="newsDescription_title_marginTop">20dp</dimen>
+    <dimen name="newsDescription_title_marginEnd">106dp</dimen>
 </resources>

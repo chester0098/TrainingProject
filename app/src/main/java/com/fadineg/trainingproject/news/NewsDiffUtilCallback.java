@@ -8,7 +8,7 @@ public class NewsDiffUtilCallback extends DiffUtil.Callback {
     private final List<News> oldList;
     private final List<News> newList;
 
-    public NewsDiffUtilCallback(List<News> oldList, List<News> newList) {
+    NewsDiffUtilCallback(List<News> oldList, List<News> newList) {
         this.oldList = oldList;
         this.newList = newList;
     }
