@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.fadineg.trainingproject.R;
-import com.fadineg.trainingproject.main.MainActivity;
 
 import java.util.List;
 
@@ -24,14 +23,14 @@ public class FiltersFragment extends Fragment {
     private List<Filters> filters;
     private NewsProvider newsProvider;
 
-    FiltersFragment(List<Filters> filters) {
+    public FiltersFragment(List<Filters> filters) {
         this.filters = filters;
     }
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        newsProvider = (NewsProvider) this.getActivity();
+        newsProvider = (NewsProvider) context;
     }
 
     @Override

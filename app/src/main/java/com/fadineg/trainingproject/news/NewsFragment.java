@@ -38,7 +38,7 @@ public class NewsFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        newsProvider = (NewsProvider) this.getActivity();
+        newsProvider = (NewsProvider) context;
     }
 
     @Override
@@ -50,7 +50,7 @@ public class NewsFragment extends Fragment {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.action_filter) {
-                    newsProvider.addFragment(new FiltersFragment(newsProvider.getFiltersList()));
+                    newsProvider.openFilters();
                 }
                 return false;
             }

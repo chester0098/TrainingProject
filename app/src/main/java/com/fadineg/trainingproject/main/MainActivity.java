@@ -14,6 +14,7 @@ import android.view.MenuItem;
 
 import com.fadineg.trainingproject.help.HelpFragment;
 import com.fadineg.trainingproject.news.Filters;
+import com.fadineg.trainingproject.news.FiltersFragment;
 import com.fadineg.trainingproject.news.JsonInArray;
 import com.fadineg.trainingproject.news.News;
 import com.fadineg.trainingproject.news.NewsFragment;
@@ -97,9 +98,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     @Override
-    public void addFragment(Fragment fragment) {
+    public void openFilters() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.fl_content, fragment).addToBackStack(null);
+        ft.replace(R.id.fl_content, new FiltersFragment(getFiltersList())).addToBackStack(null);
         ft.commit();
     }
 

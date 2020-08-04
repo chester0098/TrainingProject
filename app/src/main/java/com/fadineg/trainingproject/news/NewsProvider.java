@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface NewsProvider {
 
-    public void addFragment(Fragment fragment);
+    public void openFilters();
 
     public List<Filters> getFiltersList();
 
