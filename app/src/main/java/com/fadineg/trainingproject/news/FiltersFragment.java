@@ -22,7 +22,7 @@ import java.util.List;
 
 public class FiltersFragment extends Fragment {
     private List<Filters> filters;
-    private MainActivity mainActivity;
+    private NewsProvider newsProvider;
 
     FiltersFragment(List<Filters> filters) {
         this.filters = filters;
@@ -31,7 +31,7 @@ public class FiltersFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        mainActivity = (MainActivity) this.getActivity();
+        newsProvider = (NewsProvider) this.getActivity();
     }
 
     @Override
@@ -58,8 +58,8 @@ public class FiltersFragment extends Fragment {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.action_check) {
-                    mainActivity.setFiltersList(filtersRecyclerAdapter.getFiltersList());
-                    mainActivity.updateNewsAdapter();
+                    newsProvider.setFiltersList(filtersRecyclerAdapter.getFiltersList());
+                    newsProvider.updateNewsAdapter();
                     getActivity().onBackPressed();
                 }
                 return false;

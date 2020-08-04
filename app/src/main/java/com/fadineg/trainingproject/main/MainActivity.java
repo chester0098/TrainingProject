@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         ft.commit();
     }
 
+    @Override
     public void addFragment(Fragment fragment) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.fl_content, fragment).addToBackStack(null);
@@ -108,11 +109,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         return filtersList;
     }
 
+    @Override
     public void setFiltersList(List<Filters> filtersList) {
         this.filtersList = filtersList;
     }
 
-
+    @Override
     public void updateNewsAdapter() {
         newsFragment.updateNewsList(getNewsList());
     }
