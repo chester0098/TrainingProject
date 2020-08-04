@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".news.NewsDescriptionActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/newsDescription_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:actionBarSize"
+        android:background="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:menu="@menu/activity_news_description_toolbar"
+        app:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
+        <TextView
+            android:id="@+id/newsDescr_tv_toolbar_title"
+            style="@style/ToolBar_TitleTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ellipsize="marquee"
+            android:singleLine="true"
+            tools:text="Спонсоры отремонтируют
+школу-интернат" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="@dimen/profile_guideline_begin" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="@dimen/profile_guideline_begin" />
+
+            <TextView
+                android:id="@+id/newsDescription_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/newsDescription_title_marginTop"
+                android:layout_marginEnd="@dimen/newsDescription_title_marginEnd"
+                android:fontFamily="@font/officina_sans_extra_bold_scc"
+                android:lineSpacingExtra="@dimen/text_10"
+                android:textColor="@color/blue_grey"
+                android:textSize="@dimen/text_21"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Спонсоры отремонтируют
+школу-интернат" />
+
+            <ImageView
+                android:id="@+id/newsDescription_iv_calendar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/newsDescription_iv_calendar_marginTop"
+                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintTop_toBottomOf="@+id/newsDescription_title"
+                app:srcCompat="@drawable/ic_calendar_grey" />
+
+            <TextView
+                android:id="@+id/newsDescription_tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/newsDescription_tv_date_marginStart"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/text_12"
+                app:layout_constraintBottom_toBottomOf="@+id/newsDescription_iv_calendar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/newsDescription_iv_calendar"
+                app:layout_constraintTop_toTopOf="@+id/newsDescription_iv_calendar"
+                tools:text="Осталось 13 дней (21.09 – 20.10)" />
+
+            <TextView
+                android:id="@+id/newsDescription_tv_fund"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/newsDescription_tv_fund_marginTop"
+                android:textColor="@color/black___60"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintTop_toBottomOf="@+id/newsDescription_iv_calendar"
+                tools:text="Благотворительный Фонд «Счастливый Мир»" />
+
+            <ImageView
+                android:id="@+id/newsDescription_iv_nav"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/newsDescription_tv_address"
+                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintTop_toTopOf="@+id/newsDescription_tv_address"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/ic_nav" />
+
+            <TextView
+                android:id="@+id/newsDescription_tv_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/newsDescription_tv_address_marginStart"
+                android:layout_marginTop="@dimen/newsDescription_tv_address_marginTop"
+                android:textColor="@color/colorText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/newsDescription_iv_nav"
+                app:layout_constraintTop_toBottomOf="@+id/newsDescription_tv_fund"
+                tools:text="Санкт-Петербург, Кирочная улица, \n
+д. 50А, каб. 208" />
+
+            <ImageView
+                android:id="@+id/newsDescription_iv_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/newsDescription_tv_phone"
+                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintTop_toTopOf="@+id/newsDescription_tv_phone"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/ic_phone" />
+
+            <TextView
+                android:id="@+id/newsDescription_tv_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/newsDescription_tv_phone_marginStart"
+                android:layout_marginTop="@dimen/newsDescription_tv_phone_marginTop"
+                android:textColor="@color/colorText"
+                app:layout_constraintStart_toEndOf="@+id/newsDescription_iv_phone"
+                app:layout_constraintTop_toBottomOf="@+id/newsDescription_tv_address"
+                tools:text="+7 (937) 037 37-73 \n+7 (937) 016 16-16" />
+
+            <ImageView
+                android:id="@+id/newsDescription_iv_mail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/newsDescription_tv_mail"
+                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintTop_toTopOf="@+id/newsDescription_tv_mail"
+                app:srcCompat="@drawable/ic_mail" />
+
+            <TextView
+                android:id="@+id/newsDescription_tv_mail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/newsDescription_tv_mail_marginStart"
+                android:layout_marginTop="@dimen/newsDescription_tv_mail_marginTop"
+                android:text="@string/newsDescription_tv_mail"
+                android:textColor="@color/colorText"
+                app:layout_constraintStart_toEndOf="@+id/newsDescription_iv_mail"
+                app:layout_constraintTop_toBottomOf="@+id/newsDescription_tv_phone" />
+
+            <TextView
+                android:id="@+id/newsDescription_tv_write"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/newsDescription_tv_write_marginStart"
+                android:autoLink="web"
+                android:text="@string/write_us"
+                android:textColor="@color/colorPrimary"
+                app:layout_constraintBottom_toBottomOf="@+id/newsDescription_tv_mail"
+                app:layout_constraintStart_toEndOf="@+id/newsDescription_tv_mail"
+                app:layout_constraintTop_toTopOf="@+id/newsDescription_tv_mail" />
+
+            <ImageView
+                android:id="@+id/newsDescription_iv_img1"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/newsDescription_iv_img1_height"
+                android:layout_marginTop="@dimen/newsDescription_iv_img1_marginTop"
+                android:layout_marginEnd="@dimen/newsDescription_iv_img1_marginEnd"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toStartOf="@+id/newsDescription_iv_img2"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintTop_toBottomOf="@+id/newsDescription_iv_mail"
+                app:srcCompat="@drawable/cardimage_1" />
+
+            <ImageView
+                android:id="@+id/newsDescription_iv_img2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="@+id/newsDescription_iv_img1"
+                app:layout_constraintEnd_toStartOf="@+id/guideline3"
+                app:layout_constraintTop_toTopOf="@+id/newsDescription_iv_img1"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/cardimage_2" />
+
+            <ImageView
+                android:id="@+id/newsDescription_iv_img3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="@+id/newsDescription_iv_img1"
+                app:layout_constraintEnd_toStartOf="@+id/guideline3"
+                app:layout_constraintStart_toEndOf="@+id/newsDescription_iv_img1"
+                app:layout_constraintTop_toTopOf="@+id/newsDescription_iv_img1"
+                app:layout_constraintVertical_bias="1.0"
+                app:srcCompat="@drawable/cardimage_3" />
+
+            <TextView
+                android:id="@+id/newsDescription_tv_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/newsDescription_tv_description_marginTop"
+                android:layout_marginEnd="@dimen/newsDescription_tv_description_marginEnd"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintTop_toBottomOf="@+id/newsDescription_iv_img1"
+                tools:text="Участники и болельщики смогли весело и активно провести время на «Петербургском благотворительном марафоне» и при этом финансово поучаствовать в помощи детям.\n\nПри этом финансово поучаствовать в помощи детям. При этом финансово поучаствовать в помощи детям." />
+
+            <TextView
+                android:id="@+id/newsDescription_tv_writeUs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/newsDescription_tv_writeUs_marginTop"
+                android:text="@string/newsDescription_tv_writeUs"
+                android:textColor="@color/colorPrimary"
+                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintTop_toBottomOf="@+id/newsDescription_tv_description" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/newsDescription_friends_marginTop"
+                android:background="@color/light_grey_two"
+                android:gravity="start"
+                android:orientation="horizontal"
+                android:paddingVertical="@dimen/newsDescription_friends_padding"
+                android:paddingStart="@dimen/newsDescription_friends_padding"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/newsDescription_tv_writeUs">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/photo_1" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/photo_2" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/photo_3" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/photo_4" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/photo_5" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/newsDescription_friends" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/off_white"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_shirt"
+                    android:drawablePadding="@dimen/newsDescription_bottomBarPadding"
+                    android:gravity="center"
+                    android:textColor="@color/black___40"
+                    android:text="@string/newsDescription_bottomButton1"
+                    android:textSize="@dimen/text_10" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/separator_2" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.7"
+                    android:drawableTop="@drawable/ic_hands"
+                    android:drawablePadding="@dimen/newsDescription_bottomBarPadding"
+                    android:gravity="center"
+                    android:textColor="@color/black___40"
+                    android:text="@string/newsDescription_bottomButton2"
+                    android:textSize="@dimen/text_10" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/separator_2" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_tools"
+                    android:drawablePadding="@dimen/newsDescription_bottomBarPadding"
+                    android:gravity="center"
+                    android:textColor="@color/black___40"
+                    android:text="@string/newsDescription_bottomButton3"
+                    android:textSize="@dimen/text_10" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/separator_2" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_shirt"
+                    android:drawablePadding="@dimen/newsDescription_bottomBarPadding"
+                    android:gravity="center"
+                    android:textColor="@color/black___40"
+                    android:text="@string/newsDescription_bottomButton4"
+                    android:textSize="@dimen/text_10" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</LinearLayout>

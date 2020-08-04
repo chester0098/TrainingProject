@@ -46,4 +46,20 @@
     <string name="pageTitle1">По мероприятиям</string>
     <string name="pageTitle2">По НКО</string>
 
+    <string name="news_toolbar_title">Новости</string>
+    <string name="action_filter_title">Фильтр</string>
+    <string name="write_us"><u>Напишите нам</u></string>
+    <string name="filters_tv_chooseCategory">Категории помощи</string>
+    <string name="filters_tv_toolbar_title">Фильтр</string>
+    <string name="newsDescription_tv_writeUs"><u>Перейти на сайт организации</u></string>
+    <string name="newsDescription_tv_mail">У вас есть вопросы?</string>
+    <string name="newsDescription_bottomButton1">Помочь\nвещами</string>
+    <string name="newsDescription_bottomButton2">Стать\nволонтером</string>
+    <string name="newsDescription_bottomButton3">Проф.\nпомощь</string>
+    <string name="newsDescription_bottomButton4">Помочь\nденьгами</string>
+    <string name="newsDescription_friends">+102</string>
+    <string name="Left">Осталось</string>
+    <string name="days">дней (</string>
+
+
 </resources>
