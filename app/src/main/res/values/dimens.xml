@@ -115,4 +115,5 @@
     <dimen name="newsDescription_iv_calendar_marginTop">10dp</dimen>
     <dimen name="newsDescription_title_marginTop">20dp</dimen>
     <dimen name="newsDescription_title_marginEnd">106dp</dimen>
+    <dimen name="lineHeight_20">20sp</dimen>
 </resources>

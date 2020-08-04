@@ -5,14 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fadineg.trainingproject.R;
-import com.fadineg.trainingproject.main.MainActivity;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -42,11 +40,11 @@ public class FiltersRecyclerAdapter extends RecyclerView.Adapter<FiltersRecycler
     public void onBindViewHolder(@NotNull final FiltersRecyclerAdapter.ViewHolder holder, final int position) {
         final Filters filters = filtersList.get(position);
         holder.category.setText(filters.getCategory());
-        holder.aSwitch.setChecked(filters.getSwitch_check());
+        holder.aSwitch.setChecked(filters.getSwitchCheck());
 
         holder.aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                filtersList.get(position).setSwitch_check(isChecked);
+                filtersList.get(position).setSwitchCheck(isChecked);
             }
         });
     }

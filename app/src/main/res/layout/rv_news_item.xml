@@ -76,7 +76,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageViewDecore"
-            app:lineHeight="20sp"
+            app:lineHeight="@dimen/lineHeight_20"
             tools:text="Дубовская школа-интернат для детей с ограниченными возможностями здоровья стала первой в области …" />
 
 

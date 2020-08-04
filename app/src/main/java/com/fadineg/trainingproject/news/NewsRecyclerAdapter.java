@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListUpdateCallback;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fadineg.trainingproject.R;
@@ -29,6 +31,13 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
     private List<News> newsList;
     private Context context;
     private static final String DEF_TYPE = "drawable";
+    public static final String EXTRA_TITLE = "Title";
+    public static final String EXTRA_FUND = "Fund";
+    public static final String EXTRA_ADDRESS = "Address";
+    public static final String EXTRA_PHONE = "Phone";
+    public static final String EXTRA_IMAGE = "Image";
+    public static final String EXTRA_DESCRIPTION = "Description";
+    public static final String EXTRA_DATE = "Date";
 
     NewsRecyclerAdapter(List<News> helpList, Context context) {
         this.newsList = helpList;
@@ -76,13 +85,13 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, NewsDescriptionActivity.class);
-                intent.putExtra("Title", news.getTitle());
-                intent.putExtra("Fund", news.getFund_name());
-                intent.putExtra("Address", news.getAddress());
-                intent.putExtra("Phone", news.getPhone());
-                intent.putExtra("Image", imageId);
-                intent.putExtra("Description", news.getDescription());
-                intent.putExtra("Date", finalDate);
+                intent.putExtra(EXTRA_TITLE, news.getTitle());
+                intent.putExtra(EXTRA_FUND, news.getFund_name());
+                intent.putExtra(EXTRA_ADDRESS, news.getAddress());
+                intent.putExtra(EXTRA_PHONE, news.getPhone());
+                intent.putExtra(EXTRA_IMAGE, imageId);
+                intent.putExtra(EXTRA_DESCRIPTION, news.getDescription());
+                intent.putExtra(EXTRA_DATE, finalDate);
                 context.startActivity(intent);
             }
         });
@@ -101,9 +110,17 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
         LocalDate localDateEnd = LocalDate.parse(dateEnd, dtfOld);
         int days = (int) ChronoUnit.DAYS.between(LocalDate.now(), localDateEnd);
 
-        return "Осталось " + days + " дней ("
+        return context.getString(R.string.Left) + " " + days + " " + context.getString(R.string.days)
                 + dtfNew.format(localDateStart) + " - "
                 + dtfNew.format(localDateEnd) + ")";
+    }
+
+    void updateNewsList(List<News> updatedNewsList) {
+        NewsDiffUtilCallback newsDiffUtilCallback =
+                new NewsDiffUtilCallback(getNewsList(), updatedNewsList);
+        DiffUtil.DiffResult newsDiffResult = DiffUtil.calculateDiff(newsDiffUtilCallback);
+        setNewsList(updatedNewsList);
+        newsDiffResult.dispatchUpdatesTo(this);
     }
 
 

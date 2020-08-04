@@ -2,11 +2,11 @@ package com.fadineg.trainingproject.news;
 
 public class Filters {
     private String category;
-    private Boolean switch_check;
+    private Boolean switchCheck;
 
-    public Filters(String category, Boolean switch_check){
+    public Filters(String category, Boolean switchCheck) {
         this.category = category;
-        this.switch_check = switch_check;
+        this.switchCheck = switchCheck;
     }
 
     public String getCategory() {
@@ -17,11 +17,11 @@ public class Filters {
         this.category = category;
     }
 
-    public Boolean getSwitch_check() {
-        return switch_check;
+    public Boolean getSwitchCheck() {
+        return switchCheck;
     }
 
-    public void setSwitch_check(Boolean switch_check) {
-        this.switch_check = switch_check;
+    public void setSwitchCheck(Boolean switchCheck) {
+        this.switchCheck = switchCheck;
     }
 }

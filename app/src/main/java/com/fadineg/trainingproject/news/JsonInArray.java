@@ -42,7 +42,7 @@ public class JsonInArray {
 
         List<Filters> filters = gson.fromJson(jsonFileString, listFiltersType);
         for (Filters f: filters){
-            f.setSwitch_check(true);
+            f.setSwitchCheck(true);
         }
         return filters;
     }

@@ -1,5 +1,6 @@
 package com.fadineg.trainingproject.news;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,7 +19,9 @@ import android.view.ViewGroup;
 import com.fadineg.trainingproject.R;
 import com.fadineg.trainingproject.main.MainActivity;
 
-public class NewsFragment extends Fragment {
+import java.util.List;
+
+public class NewsFragment extends Fragment implements NewsProvider {
     private MainActivity mainActivity;
     private NewsRecyclerAdapter newsRecyclerAdapter;
 
@@ -35,33 +38,45 @@ public class NewsFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
         mainActivity = (MainActivity) this.getActivity();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
         Toolbar toolbar = view.findViewById(R.id.news_toolbar);
+
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.action_filter) {
-                    mainActivity.addFragment(new FiltersFragment());
+                    mainActivity.addFragment(new FiltersFragment(getFiltersList()));
                 }
                 return false;
             }
         });
+
         RecyclerView newsRv = view.findViewById(R.id.news_rv);
         newsRv.setLayoutManager(new LinearLayoutManager(getActivity()));
-        newsRecyclerAdapter = new NewsRecyclerAdapter(mainActivity.getNewsList(),getContext());
+        newsRecyclerAdapter = new NewsRecyclerAdapter(getNewsList(), getContext());
         newsRv.setAdapter(newsRecyclerAdapter);
-
-        super.onViewCreated(view, savedInstanceState);
     }
 
-    public void updateNewsList(){
-        NewsDiffUtilCallback newsDiffUtilCallback =
-                new NewsDiffUtilCallback(newsRecyclerAdapter.getNewsList(), mainActivity.getNewsList());
-        DiffUtil.DiffResult newsDiffResult = DiffUtil.calculateDiff(newsDiffUtilCallback);
 
-        newsRecyclerAdapter.setNewsList(mainActivity.getNewsList());
-        newsDiffResult.dispatchUpdatesTo(newsRecyclerAdapter);
+    public void updateNewsList(List<News> updatedList) {
+        newsRecyclerAdapter.updateNewsList(updatedList);
+    }
+
+    @Override
+    public List<Filters> getFiltersList() {
+        return mainActivity.getFiltersList();
+    }
+
+    @Override
+    public List<News> getNewsList() {
+        return mainActivity.getNewsList();
     }
 }

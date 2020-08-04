@@ -1,5 +1,6 @@
 package com.fadineg.trainingproject.news;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,10 +18,22 @@ import android.view.ViewGroup;
 import com.fadineg.trainingproject.R;
 import com.fadineg.trainingproject.main.MainActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class FiltersFragment extends Fragment {
+    private List<Filters> filters;
+    private MainActivity mainActivity;
+
+    FiltersFragment(List<Filters> filters) {
+        this.filters = filters;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mainActivity = (MainActivity) this.getActivity();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -30,8 +43,6 @@ public class FiltersFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        MainActivity mainActivity = (MainActivity) this.getActivity();
-        List<Filters> filters = new ArrayList<>(mainActivity.getFiltersList());
 
         RecyclerView recyclerView = view.findViewById(R.id.filters_rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -41,12 +52,7 @@ public class FiltersFragment extends Fragment {
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.filters_toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_back_24dp);
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
 
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override

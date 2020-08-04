@@ -17,6 +17,7 @@ import com.fadineg.trainingproject.news.Filters;
 import com.fadineg.trainingproject.news.JsonInArray;
 import com.fadineg.trainingproject.news.News;
 import com.fadineg.trainingproject.news.NewsFragment;
+import com.fadineg.trainingproject.news.NewsProvider;
 import com.fadineg.trainingproject.profile.ProfileFragment;
 import com.fadineg.trainingproject.R;
 import com.fadineg.trainingproject.search.SearchFragment;
@@ -31,7 +32,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, NewsProvider {
     public static final int REQUEST_TAKE_PHOTO = 1;
     public static final int REQUEST_CHOOSE_PHOTO = 2;
     public static final String FILES_DIR = "Pictures";
@@ -101,6 +102,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         ft.commit();
     }
 
+
+    @Override
     public List<Filters> getFiltersList() {
         return filtersList;
     }
@@ -109,16 +112,18 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         this.filtersList = filtersList;
     }
 
+
     public void updateNewsAdapter() {
-        newsFragment.updateNewsList();
+        newsFragment.updateNewsList(getNewsList());
     }
 
+    @Override
     public List<News> getNewsList() {
         Set<News> set = new LinkedHashSet<>();
         for (News news : newsList) {
             for (int i = 0; i < news.getFilters().size(); i++) {
                 for (Filters filters : filtersList) {
-                    if (filters.getSwitch_check() && filters.getCategory()
+                    if (filters.getSwitchCheck() && filters.getCategory()
                             .equals(news.getFilters().get(i).getCategory())) {
                         set.add(news);
                     }

@@ -58,6 +58,8 @@
     <string name="newsDescription_bottomButton3">Проф.\nпомощь</string>
     <string name="newsDescription_bottomButton4">Помочь\nденьгами</string>
     <string name="newsDescription_friends">+102</string>
+    <string name="Left">Осталось</string>
+    <string name="days">дней (</string>
 
 
 </resources>

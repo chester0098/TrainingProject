@@ -20,12 +20,7 @@ public class NewsDescriptionActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.newsDescription_toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_back_24dp);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
         TextView toolbarTitle = findViewById(R.id.newsDescr_tv_toolbar_title);
         TextView title = findViewById(R.id.newsDescription_title);
@@ -39,14 +34,14 @@ public class NewsDescriptionActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        toolbarTitle.setText(intent.getStringExtra("Title"));
-        title.setText(intent.getStringExtra("Title"));
-        fund.setText(intent.getStringExtra("Fund"));
-        date.setText(intent.getStringExtra("Date"));
-        address.setText(intent.getStringExtra("Address"));
-        phone.setText(intent.getStringExtra("Phone"));
-        img.setImageResource(intent.getIntExtra("Image", 0));
-        description.setText(intent.getStringExtra("Description"));
+        toolbarTitle.setText(intent.getStringExtra(NewsRecyclerAdapter.EXTRA_TITLE));
+        title.setText(intent.getStringExtra(NewsRecyclerAdapter.EXTRA_TITLE));
+        fund.setText(intent.getStringExtra(NewsRecyclerAdapter.EXTRA_FUND));
+        date.setText(intent.getStringExtra(NewsRecyclerAdapter.EXTRA_DATE));
+        address.setText(intent.getStringExtra(NewsRecyclerAdapter.EXTRA_ADDRESS));
+        phone.setText(intent.getStringExtra(NewsRecyclerAdapter.EXTRA_PHONE));
+        img.setImageResource(intent.getIntExtra(NewsRecyclerAdapter.EXTRA_IMAGE, 0));
+        description.setText(intent.getStringExtra(NewsRecyclerAdapter.EXTRA_DESCRIPTION));
 
     }
 }

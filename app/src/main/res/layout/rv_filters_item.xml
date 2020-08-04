@@ -14,13 +14,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/rv_search_tv_title_marginTop"
         android:layout_marginBottom="@dimen/rv_search_tv_title_marginBottom"
-        tools:text="Пример"
         android:textSize="@dimen/text_16"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/rv_filters_switch"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Пример" />
 
     <Switch
         android:id="@+id/rv_filters_switch"
