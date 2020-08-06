@@ -23,11 +23,16 @@ import com.fadineg.trainingproject.profile.ProfileFragment;
 import com.fadineg.trainingproject.R;
 import com.fadineg.trainingproject.search.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.jakewharton.threetenabp.AndroidThreeTen;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -38,6 +43,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public static final int REQUEST_CHOOSE_PHOTO = 2;
     public static final String FILES_DIR = "Pictures";
     public static final String FILE_NAME = "temp.jpg";
+    public static final String NEWS_KEY = "News";
+    public static final String FILTERS_KEY = "Filters";
+    public static final String ITEM_ID_KEY = "ItemId";
 
     private BottomNavigationView bottomNavigationView;
     private ProfileFragment profileFragment;
@@ -45,14 +53,24 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private SearchFragment searchFragment;
     private NewsFragment newsFragment;
 
+    private Type listNewsType;
+    private Type listFiltersType;
+
+    int itemId;
+
     private List<Filters> filtersList = new ArrayList<>();
     private List<News> newsList = new ArrayList<>();
+    Gson gson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         AndroidThreeTen.init(this);
+
+        listNewsType = new TypeToken<List<News>>() { }.getType();
+        listFiltersType = new TypeToken<List<Filters>>() { }.getType();
+        gson = new Gson();
 
         profileFragment = new ProfileFragment();
         helpFragment = new HelpFragment();
@@ -63,13 +81,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.bnv_help);
         bottomNavigationView.getMenu().findItem(R.id.bnv_help).setChecked(true);
-        JsonInArray jsonInArray = new JsonInArray();
-        filtersList.addAll(jsonInArray.filtersPars(getApplicationContext()));
-        newsList.addAll(jsonInArray.newsPars(getApplicationContext()));
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        itemId = item.getItemId();
         bottomNavigationView.getMenu().findItem(item.getItemId()).setChecked(true);
         switch (item.getItemId()) {
             case R.id.bnv_profile:
@@ -91,6 +107,27 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         return false;
     }
 
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        Gson gson = new Gson();
+
+        outState.putString(NEWS_KEY, gson.toJson(newsList, listNewsType));
+        outState.putString(FILTERS_KEY, gson.toJson(filtersList, listFiltersType));
+        outState.putInt(ITEM_ID_KEY, itemId);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        setNewsList(gson.fromJson(savedInstanceState.getString(NEWS_KEY), listNewsType));
+        setFiltersList(gson.fromJson(savedInstanceState.getString(FILTERS_KEY), listFiltersType));
+        bottomNavigationView.setSelectedItemId(savedInstanceState.getInt(ITEM_ID_KEY));
+
+    }
+
     public void loadFragment(Fragment fragment) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.fl_content, fragment);
@@ -100,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     public void openFilters() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.fl_content, new FiltersFragment(getFiltersList())).addToBackStack(null);
+        ft.replace(R.id.fl_content, new FiltersFragment()).addToBackStack(null);
         ft.commit();
     }
 
@@ -122,6 +159,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     @Override
     public List<News> getNewsList() {
+
+        if (filtersList.size() == 0) return newsList;
+
         Set<News> set = new LinkedHashSet<>();
         for (News news : newsList) {
             for (int i = 0; i < news.getFilters().size(); i++) {
@@ -134,6 +174,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             }
         }
         return new ArrayList<>(set);
+    }
+
+    @Override
+    public void setNewsList(List<News> newsList) {
+        this.newsList = newsList;
     }
 
     @Override
