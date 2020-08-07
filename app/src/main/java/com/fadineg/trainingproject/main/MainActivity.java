@@ -15,7 +15,6 @@ import android.view.MenuItem;
 import com.fadineg.trainingproject.help.HelpFragment;
 import com.fadineg.trainingproject.news.Filters;
 import com.fadineg.trainingproject.news.FiltersFragment;
-import com.fadineg.trainingproject.news.JsonInArray;
 import com.fadineg.trainingproject.news.News;
 import com.fadineg.trainingproject.news.NewsFragment;
 import com.fadineg.trainingproject.news.NewsProvider;
@@ -26,8 +25,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jakewharton.threetenabp.AndroidThreeTen;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -68,8 +65,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         setContentView(R.layout.activity_main);
         AndroidThreeTen.init(this);
 
-        listNewsType = new TypeToken<List<News>>() { }.getType();
-        listFiltersType = new TypeToken<List<Filters>>() { }.getType();
+        listNewsType = new TypeToken<List<News>>() {
+        }.getType();
+        listFiltersType = new TypeToken<List<Filters>>() {
+        }.getType();
         gson = new Gson();
 
         profileFragment = new ProfileFragment();
@@ -110,8 +109,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-
-        Gson gson = new Gson();
 
         outState.putString(NEWS_KEY, gson.toJson(newsList, listNewsType));
         outState.putString(FILTERS_KEY, gson.toJson(filtersList, listFiltersType));

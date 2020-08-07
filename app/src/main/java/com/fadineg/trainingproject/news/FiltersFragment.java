@@ -96,7 +96,7 @@ public class FiltersFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (newsProvider.getFiltersList().isEmpty()){
+        if (newsProvider.getFiltersList().isEmpty()) {
 
             Intent filtersServiceIntent = new Intent(getActivity(), FiltersService.class);
             context.startService(filtersServiceIntent);
@@ -108,15 +108,14 @@ public class FiltersFragment extends Fragment {
 
             chooseCategoryTv.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);
-        }
-        else {
+        } else {
             filtersRecyclerAdapter = new FiltersRecyclerAdapter(newsProvider.getFiltersList(), context);
             filtersRv.setAdapter(filtersRecyclerAdapter);
         }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(FiltersBus filtersBus){
+    public void onEvent(FiltersBus filtersBus) {
         newsProvider.setFiltersList(filtersBus.getFiltersList());
 
         filtersRecyclerAdapter = new FiltersRecyclerAdapter(newsProvider.getFiltersList(), context);

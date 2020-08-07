@@ -9,9 +9,10 @@ import com.fadineg.trainingproject.news.JsonInArray;
 import org.greenrobot.eventbus.EventBus;
 
 public class FiltersService extends IntentService {
+    static final String SERVICE_NAME = "filtersService";
 
     public FiltersService() {
-        super("filtersService");
+        super(SERVICE_NAME);
     }
 
     @Override

@@ -10,9 +10,10 @@ import com.fadineg.trainingproject.news.eventBus.NewsBus;
 import org.greenrobot.eventbus.EventBus;
 
 public class NewsService extends IntentService {
+    static final String SERVICE_NAME = "newsService";
 
     public NewsService() {
-        super("newsService");
+        super(SERVICE_NAME);
     }
 
     @Override

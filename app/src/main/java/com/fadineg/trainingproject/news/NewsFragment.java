@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -94,7 +93,7 @@ public class NewsFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        if (newsProvider.getNewsList().isEmpty()){
+        if (newsProvider.getNewsList().isEmpty()) {
 
             NewsParsingTask jsonParsingTask = new NewsParsingTask(context);
             jsonParsingTask.execute();
@@ -105,8 +104,7 @@ public class NewsFragment extends Fragment {
             executor.execute(newsPars);
 
             progressBar.setVisibility(View.VISIBLE);
-        }
-        else {
+        } else {
             newsRv.setLayoutManager(new LinearLayoutManager(context));
             newsRecyclerAdapter = new NewsRecyclerAdapter(newsProvider.getNewsList(), context);
             newsRv.setAdapter(newsRecyclerAdapter);
@@ -118,7 +116,7 @@ public class NewsFragment extends Fragment {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(NewsBus newsBus){
+    public void onEvent(NewsBus newsBus) {
         newsProvider.setNewsList(newsBus.getNewsList());
 
         newsRv.setLayoutManager(new LinearLayoutManager(context));
