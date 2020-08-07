@@ -14,6 +14,8 @@ public interface NewsProvider {
 
     public List<News> getNewsList();
 
+    public void setNewsList(List<News> newsList);
+
     public void updateNewsAdapter();
 
 }

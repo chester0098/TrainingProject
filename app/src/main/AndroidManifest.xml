@@ -15,7 +15,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".news.NewsDescriptionActivity"></activity>
+        <service
+            android:name=".news.intentService.NewsService"
+            android:exported="false"></service>
+        <service
+            android:name=".news.intentService.FiltersService"
+            android:exported="false"></service>
+
+        <activity android:name=".news.NewsDescriptionActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
