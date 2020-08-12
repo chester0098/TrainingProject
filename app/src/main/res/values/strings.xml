@@ -60,6 +60,19 @@
     <string name="newsDescription_friends">+102</string>
     <string name="Left">Осталось</string>
     <string name="days">дней (</string>
+    <string name="authorization_toolbar_title">Авторизация</string>
+    <string name="ForgotPassword"><u>Забыли пароль?</u></string>
+    <string name="singUp"><u>Регистрация</u></string>
+    <string name="authorization_text1">Для участия в мероприятиях войдите\n в приложение через социальные сети</string>
+    <string name="authorization_text2">Или авторизуйтесь через приложение</string>
+    <string name="authorization_tv_email">E-mail</string>
+    <string name="authorization_et_email_hint">Введите e-mail</string>
+    <string name="authorization_tv_password">Пароль</string>
+    <string name="authorization_et_password_hint">Введите пароль</string>
+    <string name="authorization_btn_join">ВОЙТИ</string>
+    <string name="plug_text1">Напишите в строке поиска название\n мероприятия или ключевые слова.</string>
+    <string name="plug_text2">Например,</string>
+    <string name="plug_text3"><u>мастер-класс, помощь</u></string>
 
 
 </resources>
