@@ -32,30 +32,13 @@ import io.reactivex.rxjava3.observers.DisposableObserver;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class SearchFragment extends Fragment {
-    private SearchProvider searchProvider;
-    private Context context;
     private SearchView searchView;
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
     private SearchViewPagerAdapter mFragmentAdapter;
-    private Handler mainHandler;
-    private Runnable page1update;
-    private Runnable page2update;
+    private String searchViewString = "";
 
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        this.context = context;
-        searchProvider = (SearchProvider) context;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setRetainInstance(true);
-
-    }
+    private static final String SEARCH_STRING_KEY = "SearchString";
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
@@ -65,13 +48,17 @@ public class SearchFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        searchProvider.setTabPosition(mTabLayout.getSelectedTabPosition());
+        outState.putString(SEARCH_STRING_KEY, searchViewString);
         super.onSaveInstanceState(outState);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        if (savedInstanceState != null) {
+            searchViewString = savedInstanceState.getString(SEARCH_STRING_KEY);
+        }
 
         mFragmentAdapter = new SearchViewPagerAdapter(getChildFragmentManager(), getContext());
 
@@ -93,10 +80,8 @@ public class SearchFragment extends Fragment {
         mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                if (tab.getPosition() == 0)
-                    searchView.setQuery(searchProvider.getSearchViewPage1(), false);
-                else
-                    searchView.setQuery(searchProvider.getSearchViewPage2(), false);
+                searchView.setQuery("", false);
+                searchView.setQuery(searchViewString, false);
             }
 
             @Override
@@ -116,43 +101,25 @@ public class SearchFragment extends Fragment {
     public void onResume() {
         super.onResume();
         searchViewSubscribe();
+        searchView.setQuery(searchViewString, false);
 
-        if (searchProvider.getTabPosition() == 0) {
-            searchView.setQuery(searchProvider.getSearchViewPage1(), false);
-            mainHandler.post(page1update);
-        } else {
-            searchView.setQuery(searchProvider.getSearchViewPage2(), false);
-            mainHandler.post(page2update);
-        }
-
-        mTabLayout.getTabAt(searchProvider.getTabPosition()).select();
+        mTabLayout.setupWithViewPager(mViewPager);
     }
 
     private void searchViewSubscribe() {
-        mainHandler = new Handler(context.getMainLooper());
-        page1update = () -> {
-            mFragmentAdapter.getPage1().updateRecyclerAdapter(searchProvider.getSearchViewPage1());
-
-        };
-        page2update = () -> {
-            mFragmentAdapter.getPage2().updateRecyclerAdapter(searchProvider.getSearchViewPage2());
-        };
-
-
         Observable<String> searchViewObservable = RxSearchView.searchViewObservable(searchView);
 
         searchViewObservable.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .debounce(500, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableObserver<String>() {
                     @Override
                     public void onNext(@io.reactivex.rxjava3.annotations.NonNull String s) {
+                        searchViewString = s;
                         if (mViewPager.getCurrentItem() == 0) {
-                            searchProvider.setSearchViewPage1(s);
-                            mainHandler.post(page1update);
+                            mFragmentAdapter.getPage1().updateRecyclerAdapter(searchViewString);
                         } else {
-                            searchProvider.setSearchViewPage2(s);
-                            mainHandler.post(page2update);
+                            mFragmentAdapter.getPage2().updateRecyclerAdapter(searchViewString);
                         }
                     }
 
@@ -167,5 +134,4 @@ public class SearchFragment extends Fragment {
                     }
                 });
     }
-
 }

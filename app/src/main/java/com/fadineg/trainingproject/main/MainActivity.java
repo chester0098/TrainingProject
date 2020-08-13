@@ -21,7 +21,6 @@ import com.fadineg.trainingproject.news.NewsProvider;
 import com.fadineg.trainingproject.profile.ProfileFragment;
 import com.fadineg.trainingproject.R;
 import com.fadineg.trainingproject.search.SearchFragment;
-import com.fadineg.trainingproject.search.SearchProvider;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -36,7 +35,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, NewsProvider, SearchProvider {
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, NewsProvider {
     public static final int REQUEST_TAKE_PHOTO = 1;
     public static final int REQUEST_CHOOSE_PHOTO = 2;
     public static final String FILES_DIR = "Pictures";
@@ -44,9 +43,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public static final String NEWS_KEY = "News";
     public static final String FILTERS_KEY = "Filters";
     public static final String ITEM_ID_KEY = "ItemId";
-    public static final String SEARCH_PAGE1_KEY = "SearchStringPage1";
-    public static final String SEARCH_PAGE2_KEY = "SearchStringPage2";
-    public static final String TAB_POSITION_KEY = "TabPosition";
 
     private BottomNavigationView bottomNavigationView;
     private ProfileFragment profileFragment;
@@ -58,10 +54,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private Type listFiltersType;
 
     int itemId;
-
-    private String searchViewPage1 = "";
-    private String searchViewPage2 = "";
-    private int tabPosition = 0;
 
     private List<Filters> filtersList = new ArrayList<>();
     private List<News> newsList = new ArrayList<>();
@@ -124,9 +116,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         outState.putString(NEWS_KEY, gson.toJson(newsList, listNewsType));
         outState.putString(FILTERS_KEY, gson.toJson(filtersList, listFiltersType));
         outState.putInt(ITEM_ID_KEY, itemId);
-        outState.putString(SEARCH_PAGE1_KEY, searchViewPage1);
-        outState.putString(SEARCH_PAGE2_KEY, searchViewPage2);
-        outState.putInt(TAB_POSITION_KEY, tabPosition);
     }
 
     @Override
@@ -136,12 +125,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         setNewsList(gson.fromJson(savedInstanceState.getString(NEWS_KEY), listNewsType));
         setFiltersList(gson.fromJson(savedInstanceState.getString(FILTERS_KEY), listFiltersType));
 
-        bottomNavigationView.setSelectedItemId(savedInstanceState.getInt(ITEM_ID_KEY));
-
-        setSearchViewPage1(savedInstanceState.getString(SEARCH_PAGE1_KEY));
-        setSearchViewPage2(savedInstanceState.getString(SEARCH_PAGE2_KEY));
-        setTabPosition(savedInstanceState.getInt(TAB_POSITION_KEY));
-
+        bottomNavigationView.getMenu().findItem(savedInstanceState.getInt(ITEM_ID_KEY)).setChecked(true);
     }
 
     public void loadFragment(Fragment fragment) {
@@ -215,35 +199,5 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             }
 
         }
-    }
-
-    @Override
-    public int getTabPosition() {
-        return tabPosition;
-    }
-
-    @Override
-    public void setTabPosition(int tabPosition) {
-        this.tabPosition = tabPosition;
-    }
-
-    @Override
-    public String getSearchViewPage1() {
-        return searchViewPage1;
-    }
-
-    @Override
-    public void setSearchViewPage1(String searchViewPage1) {
-        this.searchViewPage1 = searchViewPage1;
-    }
-
-    @Override
-    public String getSearchViewPage2() {
-        return searchViewPage2;
-    }
-
-    @Override
-    public void setSearchViewPage2(String searchViewPage2) {
-        this.searchViewPage2 = searchViewPage2;
     }
 }

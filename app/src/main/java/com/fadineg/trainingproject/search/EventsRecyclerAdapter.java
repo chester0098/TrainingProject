@@ -77,7 +77,7 @@ public class EventsRecyclerAdapter extends RecyclerView.Adapter<EventsRecyclerAd
         newsDiffResult.dispatchUpdatesTo(this);
     }
 
-    void getFilteredResults(String constraint) {
+    void filterResults(String constraint) {
         List<News> results = new ArrayList<>();
         for (News news : eventsList) {
             if (news.getTitle().toLowerCase().contains(constraint)) {

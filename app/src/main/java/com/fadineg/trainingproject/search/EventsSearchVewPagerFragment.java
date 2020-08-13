@@ -62,17 +62,13 @@ public class EventsSearchVewPagerFragment extends Fragment {
         rvSearch.setAdapter(adapter);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
 
     void updateRecyclerAdapter(String newString) {
         if (newString.equals(""))
             plug.setVisibility(View.VISIBLE);
         else {
             plug.setVisibility(View.GONE);
-            adapter.getFilteredResults(newString);
+            adapter.filterResults(newString);
         }
     }
 

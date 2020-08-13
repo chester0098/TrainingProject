@@ -63,24 +63,22 @@ public class AuthorizationActivity extends AppCompatActivity {
             }
         });
 
-        observable.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableObserver<Boolean>() {
-                    @Override
-                    public void onNext(@NonNull Boolean aBoolean) {
-                        updateButton(aBoolean);
-                    }
+        observable.subscribe(new DisposableObserver<Boolean>() {
+            @Override
+            public void onNext(@NonNull Boolean aBoolean) {
+                updateButton(aBoolean);
+            }
 
-                    @Override
-                    public void onError(@NonNull Throwable e) {
+            @Override
+            public void onError(@NonNull Throwable e) {
 
-                    }
+            }
 
-                    @Override
-                    public void onComplete() {
+            @Override
+            public void onComplete() {
 
-                    }
-                });
+            }
+        });
     }
 
     public void updateButton(boolean valid) {
