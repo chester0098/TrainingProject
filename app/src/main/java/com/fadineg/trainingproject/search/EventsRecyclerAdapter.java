@@ -1,11 +1,8 @@
 package com.fadineg.trainingproject.search;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.DiffUtil;
@@ -30,11 +27,11 @@ public class EventsRecyclerAdapter extends RecyclerView.Adapter<EventsRecyclerAd
         this.updatedEventList = nkoList;
     }
 
-    public List<News> getUpdatedEventList() {
+    private List<News> getUpdatedEventList() {
         return updatedEventList;
     }
 
-    public void setUpdatedEventList(List<News> updatedEventList) {
+    private void setUpdatedEventList(List<News> updatedEventList) {
         this.updatedEventList = updatedEventList;
     }
 

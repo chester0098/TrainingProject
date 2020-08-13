@@ -31,14 +31,6 @@ public class SearchViewPagerAdapter extends FragmentPagerAdapter {
         page2 = new EventsSearchVewPagerFragment();
     }
 
-    public EventsSearchVewPagerFragment getPage1() {
-        return page1;
-    }
-
-    public EventsSearchVewPagerFragment getPage2() {
-        return page2;
-    }
-
     @NotNull
     @Override
     public Fragment getItem(int position) {

@@ -4,26 +4,21 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.fadineg.trainingproject.R;
 import com.fadineg.trainingproject.news.JsonInArray;
-import com.fadineg.trainingproject.news.NewsProvider;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import io.reactivex.rxjava3.core.Observable;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 public class EventsSearchVewPagerFragment extends Fragment {
     private Context context;
@@ -31,15 +26,21 @@ public class EventsSearchVewPagerFragment extends Fragment {
     private ConstraintLayout plug;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setRetainInstance(true);
-    }
-
-    @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         this.context = context;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -62,13 +63,13 @@ public class EventsSearchVewPagerFragment extends Fragment {
         rvSearch.setAdapter(adapter);
     }
 
-
-    void updateRecyclerAdapter(String newString) {
-        if (newString.equals(""))
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(SearchStringBus searchStringBus) {
+        if (searchStringBus.getSearchString().equals(""))
             plug.setVisibility(View.VISIBLE);
         else {
             plug.setVisibility(View.GONE);
-            adapter.filterResults(newString);
+            adapter.filterResults(searchStringBus.getSearchString());
         }
     }
 

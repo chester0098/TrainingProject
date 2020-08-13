@@ -2,26 +2,21 @@ package com.fadineg.trainingproject.search;
 
 import android.app.SearchManager;
 import android.content.Context;
-import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
-import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TableLayout;
 
 import com.fadineg.trainingproject.R;
 import com.google.android.material.tabs.TabLayout;
 
+import org.greenrobot.eventbus.EventBus;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.TimeUnit;
@@ -35,7 +30,6 @@ public class SearchFragment extends Fragment {
     private SearchView searchView;
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
-    private SearchViewPagerAdapter mFragmentAdapter;
     private String searchViewString = "";
 
     private static final String SEARCH_STRING_KEY = "SearchString";
@@ -60,7 +54,7 @@ public class SearchFragment extends Fragment {
             searchViewString = savedInstanceState.getString(SEARCH_STRING_KEY);
         }
 
-        mFragmentAdapter = new SearchViewPagerAdapter(getChildFragmentManager(), getContext());
+        SearchViewPagerAdapter mFragmentAdapter = new SearchViewPagerAdapter(getChildFragmentManager(), getContext());
 
         mViewPager = view.findViewById(R.id.search_viewPager);
         mTabLayout = view.findViewById(R.id.search_tabLayout);
@@ -77,24 +71,6 @@ public class SearchFragment extends Fragment {
         mViewPager.setAdapter(mFragmentAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
 
-        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                searchView.setQuery("", false);
-                searchView.setQuery(searchViewString, false);
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-
     }
 
     @Override
@@ -102,7 +78,7 @@ public class SearchFragment extends Fragment {
         super.onResume();
         searchViewSubscribe();
         searchView.setQuery(searchViewString, false);
-
+        EventBus.getDefault().post(new SearchStringBus(searchViewString));
         mTabLayout.setupWithViewPager(mViewPager);
     }
 
@@ -116,11 +92,7 @@ public class SearchFragment extends Fragment {
                     @Override
                     public void onNext(@io.reactivex.rxjava3.annotations.NonNull String s) {
                         searchViewString = s;
-                        if (mViewPager.getCurrentItem() == 0) {
-                            mFragmentAdapter.getPage1().updateRecyclerAdapter(searchViewString);
-                        } else {
-                            mFragmentAdapter.getPage2().updateRecyclerAdapter(searchViewString);
-                        }
+                        EventBus.getDefault().post(new SearchStringBus(searchViewString));
                     }
 
                     @Override
