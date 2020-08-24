@@ -1,9 +1,10 @@
 package com.fadineg.trainingproject.search;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,46 +14,63 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.fadineg.trainingproject.R;
+import com.fadineg.trainingproject.news.JsonInArray;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 public class EventsSearchVewPagerFragment extends Fragment {
+    private Context context;
+    private EventsRecyclerAdapter adapter;
+    private ConstraintLayout plug;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         return inflater.inflate(R.layout.fragment_events_vew_pager, container, false);
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        plug = view.findViewById(R.id.search_plug);
+
+        JsonInArray jsonInArray = new JsonInArray();
+
         RecyclerView rvSearch = view.findViewById(R.id.events_rv);
-        rvSearch.setHasFixedSize(true);
         rvSearch.setLayoutManager(new LinearLayoutManager(getActivity()));
-        EventsRecyclerAdapter adapter = new EventsRecyclerAdapter(createdEventsList());
+        adapter = new EventsRecyclerAdapter(jsonInArray.newsPars(context));
         rvSearch.setAdapter(adapter);
     }
 
-    private List<String> createdEventsList() {
-        List<String> eventsList = new ArrayList<>();
-        char[] chars = "abcdefghijklmnopqrstuvwxyz".toCharArray();
-        int length;
-        StringBuilder sb;
-        char c;
-        Random random = new Random();
-
-        for (int i = 0; i < 5; i++) {
-            length = (int) (5 + (Math.random() * 15));
-            sb = new StringBuilder(length);
-            for (int j = 0; j < length; j++) {
-                c = chars[random.nextInt(chars.length)];
-                sb.append(c);
-            }
-            eventsList.add(sb.toString());
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(SearchStringBus searchStringBus) {
+        if (searchStringBus.getSearchString().equals(""))
+            plug.setVisibility(View.VISIBLE);
+        else {
+            plug.setVisibility(View.GONE);
+            adapter.filterResults(searchStringBus.getSearchString());
         }
-        return eventsList;
     }
+
 }

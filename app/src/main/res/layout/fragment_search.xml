@@ -12,8 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/CardSearchView_margin"
-        android:layout_marginTop="@dimen/CardSearchView_margin"
-        android:background="@drawable/search_background">
+        android:layout_marginTop="@dimen/CardSearchView_margin">
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/searchView"
@@ -44,6 +43,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white" />
-
 
 </LinearLayout>

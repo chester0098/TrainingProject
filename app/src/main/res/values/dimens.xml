@@ -116,4 +116,14 @@
     <dimen name="newsDescription_title_marginTop">20dp</dimen>
     <dimen name="newsDescription_title_marginEnd">106dp</dimen>
     <dimen name="lineHeight_20">20sp</dimen>
+    <dimen name="authorization_text1_marginTop">40dp</dimen>
+    <dimen name="authorization_icon_marginTop">20dp</dimen>
+    <dimen name="authorization_icon_margin">40dp</dimen>
+    <dimen name="authorization_text2_marginTop">40dp</dimen>
+    <dimen name="authorization_tv_email_marginTop">20dp</dimen>
+    <dimen name="authorization_tv_password_marginTop">20dp</dimen>
+    <dimen name="authorization_btn_join_marginTop">20dp</dimen>
+    <dimen name="authorization_forgot_password_marginTop">20dp</dimen>
+    <dimen name="authorization_singUp_marginTop">20dp</dimen>
+    <dimen name="plug_iv_marginTop">53dp</dimen>
 </resources>

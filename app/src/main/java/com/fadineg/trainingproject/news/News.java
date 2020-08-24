@@ -87,7 +87,7 @@ public class News implements Serializable {
         this.date_end = date_end;
     }
 
-    String getTitle() {
+    public String getTitle() {
         return title;
     }
 

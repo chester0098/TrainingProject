@@ -78,8 +78,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
-        bottomNavigationView.setSelectedItemId(R.id.bnv_help);
-        bottomNavigationView.getMenu().findItem(R.id.bnv_help).setChecked(true);
+        if (savedInstanceState == null) {
+            bottomNavigationView.setSelectedItemId(R.id.bnv_help);
+            bottomNavigationView.getMenu().findItem(R.id.bnv_help).setChecked(true);
+        }
+
     }
 
     @Override
@@ -121,8 +124,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         setNewsList(gson.fromJson(savedInstanceState.getString(NEWS_KEY), listNewsType));
         setFiltersList(gson.fromJson(savedInstanceState.getString(FILTERS_KEY), listFiltersType));
-        bottomNavigationView.setSelectedItemId(savedInstanceState.getInt(ITEM_ID_KEY));
 
+        bottomNavigationView.getMenu().findItem(savedInstanceState.getInt(ITEM_ID_KEY)).setChecked(true);
     }
 
     public void loadFragment(Fragment fragment) {
