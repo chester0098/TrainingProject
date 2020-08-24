@@ -1,7 +1,6 @@
 package com.fadineg.trainingproject.news;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,9 +17,10 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.fadineg.trainingproject.R;
-import com.fadineg.trainingproject.news.asyncTask.NewsParsingTask;
 import com.fadineg.trainingproject.news.eventBus.NewsBus;
-import com.fadineg.trainingproject.news.intentService.NewsService;
+import com.fadineg.trainingproject.news.model.Articles;
+import com.fadineg.trainingproject.news.retrofit.ApiService;
+import com.fadineg.trainingproject.news.retrofit.RetrofitClient;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -29,12 +29,16 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.List;
 import java.util.concurrent.Executor;
 
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+
 public class NewsFragment extends Fragment {
     private NewsRecyclerAdapter newsRecyclerAdapter;
     private NewsProvider newsProvider;
     private RecyclerView newsRv;
     private ProgressBar progressBar;
     private Context context;
+    private ApiService apiService;
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,6 +75,7 @@ public class NewsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         Toolbar toolbar = view.findViewById(R.id.news_toolbar);
         newsRv = view.findViewById(R.id.news_rv);
 
@@ -95,23 +100,26 @@ public class NewsFragment extends Fragment {
 
         if (newsProvider.getNewsList().isEmpty()) {
 
-            NewsParsingTask jsonParsingTask = new NewsParsingTask(context);
+            /*NewsParsingTask jsonParsingTask = new NewsParsingTask(context);
             jsonParsingTask.execute();
 
             Intent newsServiceIntent = new Intent(getActivity(), NewsService.class);
             context.startService(newsServiceIntent);
 
-            executor.execute(newsPars);
+            executor.execute(newsPars);*/
+
+            RetrofitClient retrofitClient = new RetrofitClient();
+            retrofitClient.downloadData(context);
 
             progressBar.setVisibility(View.VISIBLE);
         } else {
             newsRv.setLayoutManager(new LinearLayoutManager(context));
-            newsRecyclerAdapter = new NewsRecyclerAdapter(newsProvider.getNewsList(), context);
+            newsRecyclerAdapter = new NewsRecyclerAdapter(newsProvider.getArticlesList(), context);
             newsRv.setAdapter(newsRecyclerAdapter);
         }
     }
 
-    public void updateNewsList(List<News> updatedList) {
+    public void updateNewsList(List<Articles> updatedList) {
         newsRecyclerAdapter.updateNewsList(updatedList);
     }
 
@@ -120,7 +128,7 @@ public class NewsFragment extends Fragment {
         newsProvider.setNewsList(newsBus.getNewsList());
 
         newsRv.setLayoutManager(new LinearLayoutManager(context));
-        newsRecyclerAdapter = new NewsRecyclerAdapter(newsProvider.getNewsList(), getContext());
+        newsRecyclerAdapter = new NewsRecyclerAdapter(newsProvider.getArticlesList(), getContext());
         newsRv.setAdapter(newsRecyclerAdapter);
 
         progressBar.setVisibility(View.GONE);

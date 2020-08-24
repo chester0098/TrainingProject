@@ -1,6 +1,6 @@
 package com.fadineg.trainingproject.news.eventBus;
 
-import com.fadineg.trainingproject.news.News;
+import com.fadineg.trainingproject.news.model.News;
 
 import java.util.ArrayList;
 import java.util.List;

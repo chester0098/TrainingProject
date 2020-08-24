@@ -3,11 +3,10 @@ package com.fadineg.trainingproject.news.asyncTask;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.fadineg.trainingproject.news.JsonInArray;
-import com.fadineg.trainingproject.news.News;
 import com.fadineg.trainingproject.news.eventBus.NewsBus;
+import com.fadineg.trainingproject.news.model.News;
 
 import org.greenrobot.eventbus.EventBus;
 

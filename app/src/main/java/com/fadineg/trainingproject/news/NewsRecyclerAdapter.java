@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.ListUpdateCallback;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fadineg.trainingproject.R;
+import com.fadineg.trainingproject.news.model.Articles;
+import com.fadineg.trainingproject.news.model.Phone_numbers;
 
 
 import org.jetbrains.annotations.NotNull;
@@ -27,27 +29,30 @@ import org.threeten.bp.temporal.ChronoUnit;
 import java.util.List;
 
 public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapter.ViewHolder> {
-    private List<News> newsList;
+    private List<Articles> newsList;
     private Context context;
     private static final String DEF_TYPE = "drawable";
-    public static final String EXTRA_TITLE = "Title";
-    public static final String EXTRA_FUND = "Fund";
-    public static final String EXTRA_ADDRESS = "Address";
-    public static final String EXTRA_PHONE = "Phone";
-    public static final String EXTRA_IMAGE = "Image";
-    public static final String EXTRA_DESCRIPTION = "Description";
-    public static final String EXTRA_DATE = "Date";
+    static final String EXTRA_TITLE = "Title";
+    static final String EXTRA_FUND = "Fund";
+    static final String EXTRA_ADDRESS = "Address";
+    static final String EXTRA_PHONE = "Phone";
+    static final String EXTRA_IMAGE = "Image";
+    static final String EXTRA_DESCRIPTION = "Description";
+    static final String EXTRA_DATE = "Date";
 
-    NewsRecyclerAdapter(List<News> helpList, Context context) {
+    private static final String DATE_TYPE_PERIOD = "time_period";
+    private static final String DATE_TYPE_SINGLE = "single_day";
+
+    NewsRecyclerAdapter(List<Articles> helpList, Context context) {
         this.newsList = helpList;
         this.context = context;
     }
 
-    List<News> getNewsList() {
+    private List<Articles> getNewsList() {
         return newsList;
     }
 
-    void setNewsList(List<News> newsList) {
+    private void setNewsList(List<Articles> newsList) {
         this.newsList = newsList;
     }
 
@@ -61,21 +66,26 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NotNull final NewsRecyclerAdapter.ViewHolder holder, final int position) {
-        final News news = newsList.get(position);
+        final Articles articles = newsList.get(position);
 
-        Resources res = holder.itemView.getContext().getResources();
-        int imageId = res.getIdentifier(news.getImage(), DEF_TYPE, context.getPackageName());
+        //Resources res = holder.itemView.getContext().getResources();
+        //int imageId = res.getIdentifier(news.getImage(), DEF_TYPE, context.getPackageName());
 
         String date = null;
-        if (news.getDate() == null) {
-            date = timeStyle_period(news.getDate_start(), news.getDate_end());
-        } else date = timeStyle_date(news.getDate());
+        if (articles.getType().equals(DATE_TYPE_PERIOD)) {
+            date = timeStyle_period(articles.getDate_from(), articles.getDate_to());
+        } else date = timeStyle_date(articles.getDate_to());
 
         int limit = 100;
-        String trimDescr = news.getDescription().length() > limit ? news.getDescription().substring(0, limit) : news.getDescription();
+        String trimDescr = articles.getDescription().length() > limit ? articles.getDescription().substring(0, limit) : articles.getDescription();
 
-        holder.newsImage.setImageResource(imageId);
-        holder.newsTitle.setText(news.getTitle());
+        StringBuilder phone = new StringBuilder();
+        for (Phone_numbers phone_numbers : articles.getPhone_numbers()){
+            phone.append(phone_numbers.getNumber()).append('\n');
+        }
+
+        //holder.newsImage.setImageResource(imageId);
+        holder.newsTitle.setText(articles.getName());
         holder.newsDescription.setText(trimDescr + "...");
         holder.newsDate.setText(date);
 
@@ -84,12 +94,12 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, NewsDescriptionActivity.class);
-                intent.putExtra(EXTRA_TITLE, news.getTitle());
-                intent.putExtra(EXTRA_FUND, news.getFund_name());
-                intent.putExtra(EXTRA_ADDRESS, news.getAddress());
-                intent.putExtra(EXTRA_PHONE, news.getPhone());
-                intent.putExtra(EXTRA_IMAGE, imageId);
-                intent.putExtra(EXTRA_DESCRIPTION, news.getDescription());
+                intent.putExtra(EXTRA_TITLE, articles.getName());
+                intent.putExtra(EXTRA_FUND, articles.getOrg_name());
+                intent.putExtra(EXTRA_ADDRESS, articles.getAddress());
+                intent.putExtra(EXTRA_PHONE, phone.toString());
+                //intent.putExtra(EXTRA_IMAGE, imageId);
+                intent.putExtra(EXTRA_DESCRIPTION, articles.getDescription());
                 intent.putExtra(EXTRA_DATE, finalDate);
                 context.startActivity(intent);
             }
@@ -98,12 +108,12 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
 
     private String timeStyle_date(String dateString) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd MMMM, yyyy");
-        LocalDate localDate = LocalDate.parse(dateString, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+        LocalDate localDate = LocalDate.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"));
         return dtf.format(localDate);
     }
 
     private String timeStyle_period(String dateStart, String dateEnd) {
-        DateTimeFormatter dtfOld = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        DateTimeFormatter dtfOld = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         DateTimeFormatter dtfNew = DateTimeFormatter.ofPattern("dd.MM");
         LocalDate localDateStart = LocalDate.parse(dateStart, dtfOld);
         LocalDate localDateEnd = LocalDate.parse(dateEnd, dtfOld);
@@ -114,11 +124,11 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
                 + dtfNew.format(localDateEnd) + ")";
     }
 
-    void updateNewsList(List<News> updatedNewsList) {
+    void updateNewsList(List<Articles> updatedArticlesList) {
         NewsDiffUtilCallback newsDiffUtilCallback =
-                new NewsDiffUtilCallback(getNewsList(), updatedNewsList);
+                new NewsDiffUtilCallback(getNewsList(), updatedArticlesList);
         DiffUtil.DiffResult newsDiffResult = DiffUtil.calculateDiff(newsDiffUtilCallback);
-        setNewsList(updatedNewsList);
+        setNewsList(updatedArticlesList);
         newsDiffResult.dispatchUpdatesTo(this);
     }
 

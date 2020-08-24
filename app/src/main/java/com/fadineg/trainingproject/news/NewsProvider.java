@@ -2,15 +2,16 @@ package com.fadineg.trainingproject.news;
 
 import androidx.fragment.app.Fragment;
 
+import com.fadineg.trainingproject.news.model.Articles;
+import com.fadineg.trainingproject.news.model.News;
+
 import java.util.List;
 
 public interface NewsProvider {
 
     public void openFilters();
 
-    public List<Filters> getFiltersList();
-
-    public void setFiltersList(List<Filters> filtersList);
+    public List<Articles> getArticlesList();
 
     public List<News> getNewsList();
 

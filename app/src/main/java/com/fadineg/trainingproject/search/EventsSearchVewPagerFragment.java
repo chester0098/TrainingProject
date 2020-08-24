@@ -15,10 +15,16 @@ import android.view.ViewGroup;
 
 import com.fadineg.trainingproject.R;
 import com.fadineg.trainingproject.news.JsonInArray;
+import com.fadineg.trainingproject.news.NewsProvider;
+import com.fadineg.trainingproject.news.model.Articles;
+import com.fadineg.trainingproject.news.model.News;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EventsSearchVewPagerFragment extends Fragment {
     private Context context;
@@ -29,6 +35,7 @@ public class EventsSearchVewPagerFragment extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         this.context = context;
+        NewsProvider newsProvider = (NewsProvider) context;
     }
 
     @Override
@@ -57,9 +64,13 @@ public class EventsSearchVewPagerFragment extends Fragment {
 
         JsonInArray jsonInArray = new JsonInArray();
 
+        List<Articles> articlesList = new ArrayList<>();
+        for (News news:jsonInArray.newsPars(context))
+            articlesList.addAll(news.getArticles());
+
         RecyclerView rvSearch = view.findViewById(R.id.events_rv);
         rvSearch.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new EventsRecyclerAdapter(jsonInArray.newsPars(context));
+        adapter = new EventsRecyclerAdapter(articlesList);
         rvSearch.setAdapter(adapter);
     }
 
