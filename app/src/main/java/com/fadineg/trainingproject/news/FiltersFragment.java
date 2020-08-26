@@ -1,7 +1,6 @@
 package com.fadineg.trainingproject.news;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,15 +18,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.fadineg.trainingproject.R;
-import com.fadineg.trainingproject.news.asyncTask.FiltersParsingTask;
-import com.fadineg.trainingproject.news.eventBus.FiltersBus;
-import com.fadineg.trainingproject.news.intentService.FiltersService;
+import com.fadineg.trainingproject.news.eventBus.NewsBus;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import java.util.concurrent.Executor;
 
 public class FiltersFragment extends Fragment {
     private NewsProvider newsProvider;
@@ -83,7 +78,7 @@ public class FiltersFragment extends Fragment {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.action_check) {
-                    newsProvider.setFiltersList(filtersRecyclerAdapter.getFiltersList());
+                    newsProvider.setNewsList(filtersRecyclerAdapter.getNewsList());
                     newsProvider.updateNewsAdapter();
                     getActivity().onBackPressed();
                 }
@@ -96,46 +91,22 @@ public class FiltersFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (newsProvider.getFiltersList().isEmpty()) {
+        if (newsProvider.getNewsList().size() != 0) {
 
-            Intent filtersServiceIntent = new Intent(getActivity(), FiltersService.class);
-            context.startService(filtersServiceIntent);
-
-            FiltersParsingTask filtersParsingTask = new FiltersParsingTask(context);
-            filtersParsingTask.execute();
-
-            executor.execute(filtersPars);
-
-            chooseCategoryTv.setVisibility(View.GONE);
-            progressBar.setVisibility(View.VISIBLE);
-        } else {
-            filtersRecyclerAdapter = new FiltersRecyclerAdapter(newsProvider.getFiltersList(), context);
+            filtersRecyclerAdapter = new FiltersRecyclerAdapter(newsProvider.getNewsList(), context);
             filtersRv.setAdapter(filtersRecyclerAdapter);
+
         }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(FiltersBus filtersBus) {
-        newsProvider.setFiltersList(filtersBus.getFiltersList());
+    public void onEvent(NewsBus newsBus) {
+        newsProvider.setNewsList(newsBus.getNewsList());
 
-        filtersRecyclerAdapter = new FiltersRecyclerAdapter(newsProvider.getFiltersList(), context);
+        filtersRecyclerAdapter = new FiltersRecyclerAdapter(newsProvider.getNewsList(), context);
         filtersRv.setAdapter(filtersRecyclerAdapter);
 
         chooseCategoryTv.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
     }
-
-    private Runnable filtersPars = () -> {
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        JsonInArray jsonInArray = new JsonInArray();
-        EventBus.getDefault().post(new FiltersBus(jsonInArray.filtersPars(context)));
-    };
-
-    private Executor executor = (runnable) -> {
-        new Thread(runnable).start();
-    };
 }

@@ -5,7 +5,6 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -40,7 +39,6 @@ public class NewsDescriptionActivity extends AppCompatActivity {
         date.setText(intent.getStringExtra(NewsRecyclerAdapter.EXTRA_DATE));
         address.setText(intent.getStringExtra(NewsRecyclerAdapter.EXTRA_ADDRESS));
         phone.setText(intent.getStringExtra(NewsRecyclerAdapter.EXTRA_PHONE));
-        img.setImageResource(intent.getIntExtra(NewsRecyclerAdapter.EXTRA_IMAGE, 0));
         description.setText(intent.getStringExtra(NewsRecyclerAdapter.EXTRA_DESCRIPTION));
 
     }

@@ -11,188 +11,159 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/authorization_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?android:actionBarSize"
-        android:background="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/authorization_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:actionBarSize"
+            android:background="@color/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
+            <TextView
+                android:id="@+id/authorization_tv_toolbar_title"
+                style="@style/ToolBar_TitleTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/authorization_toolbar_title" />
+        </androidx.appcompat.widget.Toolbar>
 
         <TextView
-            android:id="@+id/authorization_tv_toolbar_title"
-            style="@style/ToolBar_TitleTextStyle"
+            android:id="@+id/authorization_text1"
+            style="@style/TextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/authorization_toolbar_title" />
-    </androidx.appcompat.widget.Toolbar>
+            android:layout_marginTop="@dimen/authorization_text1_marginTop"
+            android:gravity="center"
+            android:text="@string/authorization_text1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/authorization_toolbar" />
 
-    <TextView
-        android:id="@+id/authorization_text1"
-        style="@style/TextStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/authorization_text1_marginTop"
-        android:gravity="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/authorization_toolbar"
-        android:text="@string/authorization_text1" />
+        <ImageView
+            android:id="@+id/authorization_iv_vk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/authorization_icon_marginTop"
+            android:layout_marginEnd="@dimen/authorization_icon_margin"
+            app:layout_constraintEnd_toStartOf="@+id/authorization_iv_fb"
+            app:layout_constraintTop_toBottomOf="@+id/authorization_text1"
+            app:srcCompat="@drawable/ic_vk" />
 
-    <ImageView
-        android:id="@+id/authorization_iv_vk"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/authorization_icon_marginTop"
-        android:layout_marginEnd="@dimen/authorization_icon_margin"
-        app:layout_constraintEnd_toStartOf="@+id/authorization_iv_fb"
-        app:layout_constraintTop_toBottomOf="@+id/authorization_text1"
-        app:srcCompat="@drawable/ic_vk" />
+        <ImageView
+            android:id="@+id/authorization_iv_fb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/authorization_icon_marginTop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/authorization_text1"
+            app:srcCompat="@drawable/ic_fb" />
 
-    <ImageView
-        android:id="@+id/authorization_iv_fb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/authorization_icon_marginTop"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/authorization_text1"
-        app:srcCompat="@drawable/ic_fb" />
+        <ImageView
+            android:id="@+id/authorization_iv_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/authorization_icon_margin"
+            android:layout_marginTop="@dimen/authorization_icon_marginTop"
+            app:layout_constraintStart_toEndOf="@+id/authorization_iv_fb"
+            app:layout_constraintTop_toBottomOf="@+id/authorization_text1"
+            app:srcCompat="@drawable/ic_ok" />
 
-    <ImageView
-        android:id="@+id/authorization_iv_ok"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/authorization_icon_margin"
-        android:layout_marginTop="@dimen/authorization_icon_marginTop"
-        app:layout_constraintStart_toEndOf="@+id/authorization_iv_fb"
-        app:layout_constraintTop_toBottomOf="@+id/authorization_text1"
-        app:srcCompat="@drawable/ic_ok" />
+        <TextView
+            android:id="@+id/authorization_text2"
+            style="@style/TextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/authorization_text2_marginTop"
+            android:text="@string/authorization_text2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/authorization_iv_fb" />
 
-    <TextView
-        android:id="@+id/authorization_text2"
-        style="@style/TextStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/authorization_text2_marginTop"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/authorization_iv_fb"
-        android:text="@string/authorization_text2" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/margin_20dp" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="@dimen/profile_guideline_begin" />
+        <TextView
+            android:id="@+id/authorization_tv_email"
+            style="@style/AuthorizationTextStyle"
+            android:text="@string/authorization_tv_email"
+            android:textColor="@color/colorTitleText"
+            android:textSize="@dimen/text_12"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/authorization_text2" />
 
-    <TextView
-        android:id="@+id/authorization_tv_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/authorization_tv_email_marginTop"
-        android:fontFamily="sans-serif"
-        android:textColor="@color/colorTitleText"
-        android:textSize="@dimen/text_12"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/authorization_text2"
-        android:text="@string/authorization_tv_email" />
+        <EditText
+            android:id="@+id/authorization_et_email"
+            style="@style/AuthorizationEditTextStyle"
+            android:hint="@string/authorization_et_email_hint"
+            android:inputType="textEmailAddress"
+            app:layout_constraintEnd_toStartOf="@+id/guideline4"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/authorization_tv_email" />
 
-    <EditText
-        android:id="@+id/authorization_et_email"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/colorTitleText"
-        android:ems="10"
-        android:hint="@string/authorization_et_email_hint"
-        android:inputType="textEmailAddress"
-        android:textColorHint="@color/colorTitleText"
-        app:layout_constraintEnd_toStartOf="@+id/guideline4"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/authorization_tv_email" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/margin_20dp" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="@dimen/profile_guideline_begin" />
+        <TextView
+            android:id="@+id/authorization_tv_password"
+            style="@style/AuthorizationTextStyle"
+            android:text="@string/authorization_tv_password"
+            android:textColor="@color/colorTitleText"
+            android:textSize="@dimen/text_12"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/authorization_et_email" />
 
-    <TextView
-        android:id="@+id/authorization_tv_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/authorization_tv_password_marginTop"
-        android:fontFamily="sans-serif"
-        android:lineSpacingExtra="4sp"
-        android:textColor="@color/colorTitleText"
-        android:textSize="@dimen/text_12"
-        android:textStyle="normal"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/authorization_et_email"
-        android:text="@string/authorization_tv_password" />
+        <EditText
+            android:id="@+id/authorization_et_password"
+            style="@style/AuthorizationEditTextStyle"
+            android:hint="@string/authorization_et_password_hint"
+            android:inputType="textPassword"
+            app:layout_constraintEnd_toStartOf="@+id/guideline4"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/authorization_tv_password" />
 
-    <EditText
-        android:id="@+id/authorization_et_password"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:textColorHint="@color/colorTitleText"
-        android:backgroundTint="@color/colorTitleText"
-        android:hint="@string/authorization_et_password_hint"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toStartOf="@+id/guideline4"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/authorization_tv_password" />
+        <Button
+            android:id="@+id/authorization_btn_join"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/authorization_btn_join_marginTop"
+            android:background="@drawable/btn_inactive_background"
+            android:clickable="false"
+            android:fontFamily="@font/roboto_medium"
+            android:letterSpacing="0.04"
+            android:text="@string/authorization_btn_join"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_16"
+            app:layout_constraintEnd_toStartOf="@+id/guideline4"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/authorization_et_password" />
 
-    <Button
-        android:id="@+id/authorization_btn_join"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/authorization_btn_join"
-        android:textAllCaps="true"
-        android:letterSpacing="0.04"
-        android:textSize="@dimen/text_16"
-        android:fontFamily="@font/roboto_medium"
-        android:textColor="@color/white"
-        android:layout_marginTop="@dimen/authorization_btn_join_marginTop"
-        android:clickable="false"
-        android:background="@drawable/btn_inactive_background"
-        app:layout_constraintEnd_toStartOf="@+id/guideline4"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/authorization_et_password" />
+        <TextView
+            android:id="@+id/authorization_forgot_password"
+            style="@style/AuthorizationTextStyle"
+            android:text="@string/ForgotPassword"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/authorization_btn_join" />
 
-    <TextView
-        android:id="@+id/authorization_forgot_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/authorization_forgot_password_marginTop"
-        android:fontFamily="sans-serif"
-        android:lineSpacingExtra="6sp"
-        android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/text_14"
-        android:textStyle="normal"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/authorization_btn_join"
-        android:text="@string/ForgotPassword" />
-
-    <TextView
-        android:id="@+id/authorization_singUp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/authorization_singUp_marginTop"
-        android:fontFamily="sans-serif"
-        android:gravity="end"
-        android:lineSpacingExtra="6sp"
-        android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/text_14"
-        android:textStyle="normal"
-        app:layout_constraintEnd_toStartOf="@+id/guideline4"
-        app:layout_constraintTop_toBottomOf="@+id/authorization_btn_join"
-        android:text="@string/singUp" />
+        <TextView
+            android:id="@+id/authorization_singUp"
+            style="@style/AuthorizationTextStyle"
+            android:text="@string/singUp"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintEnd_toStartOf="@+id/guideline4"
+            app:layout_constraintTop_toBottomOf="@+id/authorization_btn_join" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

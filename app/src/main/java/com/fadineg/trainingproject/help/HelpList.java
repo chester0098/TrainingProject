@@ -4,7 +4,6 @@ import androidx.annotation.DrawableRes;
 import androidx.annotation.StringRes;
 
 import com.fadineg.trainingproject.R;
-import com.fadineg.trainingproject.news.News;
 
 import java.util.ArrayList;
 import java.util.List;

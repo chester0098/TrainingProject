@@ -2,13 +2,15 @@ package com.fadineg.trainingproject.news;
 
 import androidx.recyclerview.widget.DiffUtil;
 
+import com.fadineg.trainingproject.news.model.Articles;
+
 import java.util.List;
 
 public class NewsDiffUtilCallback extends DiffUtil.Callback {
-    private final List<News> oldList;
-    private final List<News> newList;
+    private final List<Articles> oldList;
+    private final List<Articles> newList;
 
-    public NewsDiffUtilCallback(List<News> oldList, List<News> newList) {
+    public NewsDiffUtilCallback(List<Articles> oldList, List<Articles> newList) {
         this.oldList = oldList;
         this.newList = newList;
     }
@@ -25,16 +27,16 @@ public class NewsDiffUtilCallback extends DiffUtil.Callback {
 
     @Override
     public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-        News oldNews = oldList.get(oldItemPosition);
-        News newNews = newList.get(newItemPosition);
-        return oldNews.getId().equals(newNews.getId());
+        Articles oldNews = oldList.get(oldItemPosition);
+        Articles newNews = newList.get(newItemPosition);
+        return oldNews.getId()==(newNews.getId());
     }
 
     @Override
     public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-        News oldProduct = oldList.get(oldItemPosition);
-        News newProduct = newList.get(newItemPosition);
-        return oldProduct.getTitle().equals(newProduct.getTitle())
+        Articles oldProduct = oldList.get(oldItemPosition);
+        Articles newProduct = newList.get(newItemPosition);
+        return oldProduct.getName().equals(newProduct.getName())
                 && oldProduct.getDescription().equals(newProduct.getDescription());
     }
 }

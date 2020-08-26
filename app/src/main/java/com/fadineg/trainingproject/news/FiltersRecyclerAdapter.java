@@ -11,22 +11,23 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fadineg.trainingproject.R;
+import com.fadineg.trainingproject.news.model.News;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
 public class FiltersRecyclerAdapter extends RecyclerView.Adapter<FiltersRecyclerAdapter.ViewHolder> {
-    private List<Filters> filtersList;
+    private List<News> newsList;
     private Context context;
 
-    FiltersRecyclerAdapter(List<Filters> filtersList, Context context) {
-        this.filtersList = filtersList;
+    FiltersRecyclerAdapter(List<News> newsList, Context context) {
+        this.newsList = newsList;
         this.context = context;
     }
 
-    List<Filters> getFiltersList() {
-        return filtersList;
+    List<News> getNewsList() {
+        return newsList;
     }
 
     @NotNull
@@ -38,13 +39,13 @@ public class FiltersRecyclerAdapter extends RecyclerView.Adapter<FiltersRecycler
 
     @Override
     public void onBindViewHolder(@NotNull final FiltersRecyclerAdapter.ViewHolder holder, final int position) {
-        final Filters filters = filtersList.get(position);
-        holder.category.setText(filters.getCategory());
-        holder.aSwitch.setChecked(filters.getSwitchCheck());
+        final News news = newsList.get(position);
+        holder.category.setText(news.getCategoryName());
+        holder.aSwitch.setChecked(news.getCategorySwitch());
 
         holder.aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                filtersList.get(position).setSwitchCheck(isChecked);
+                newsList.get(position).setCategorySwitch(isChecked);
             }
         });
     }
@@ -52,7 +53,7 @@ public class FiltersRecyclerAdapter extends RecyclerView.Adapter<FiltersRecycler
 
     @Override
     public int getItemCount() {
-        return filtersList.size();
+        return newsList.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

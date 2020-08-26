@@ -13,11 +13,11 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.fadineg.trainingproject.help.HelpFragment;
-import com.fadineg.trainingproject.news.Filters;
 import com.fadineg.trainingproject.news.FiltersFragment;
-import com.fadineg.trainingproject.news.News;
 import com.fadineg.trainingproject.news.NewsFragment;
 import com.fadineg.trainingproject.news.NewsProvider;
+import com.fadineg.trainingproject.news.model.Articles;
+import com.fadineg.trainingproject.news.model.News;
 import com.fadineg.trainingproject.profile.ProfileFragment;
 import com.fadineg.trainingproject.R;
 import com.fadineg.trainingproject.search.SearchFragment;
@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public static final String FILES_DIR = "Pictures";
     public static final String FILE_NAME = "temp.jpg";
     public static final String NEWS_KEY = "News";
-    public static final String FILTERS_KEY = "Filters";
     public static final String ITEM_ID_KEY = "ItemId";
 
     private BottomNavigationView bottomNavigationView;
@@ -51,11 +50,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private NewsFragment newsFragment;
 
     private Type listNewsType;
-    private Type listFiltersType;
 
     int itemId;
 
-    private List<Filters> filtersList = new ArrayList<>();
     private List<News> newsList = new ArrayList<>();
     Gson gson;
 
@@ -66,8 +63,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         AndroidThreeTen.init(this);
 
         listNewsType = new TypeToken<List<News>>() {
-        }.getType();
-        listFiltersType = new TypeToken<List<Filters>>() {
         }.getType();
         gson = new Gson();
 
@@ -114,7 +109,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         super.onSaveInstanceState(outState);
 
         outState.putString(NEWS_KEY, gson.toJson(newsList, listNewsType));
-        outState.putString(FILTERS_KEY, gson.toJson(filtersList, listFiltersType));
         outState.putInt(ITEM_ID_KEY, itemId);
     }
 
@@ -123,9 +117,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         super.onRestoreInstanceState(savedInstanceState);
 
         setNewsList(gson.fromJson(savedInstanceState.getString(NEWS_KEY), listNewsType));
-        setFiltersList(gson.fromJson(savedInstanceState.getString(FILTERS_KEY), listFiltersType));
-
-        bottomNavigationView.getMenu().findItem(savedInstanceState.getInt(ITEM_ID_KEY)).setChecked(true);
+        itemId = savedInstanceState.getInt(ITEM_ID_KEY);
+        bottomNavigationView.getMenu().findItem(itemId).setChecked(true);
     }
 
     public void loadFragment(Fragment fragment) {
@@ -141,39 +134,25 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         ft.commit();
     }
 
-
-    @Override
-    public List<Filters> getFiltersList() {
-        return filtersList;
-    }
-
-    @Override
-    public void setFiltersList(List<Filters> filtersList) {
-        this.filtersList = filtersList;
-    }
-
     @Override
     public void updateNewsAdapter() {
-        newsFragment.updateNewsList(getNewsList());
+        newsFragment.updateNewsList(getArticlesList());
+    }
+
+    @Override
+    public List<Articles> getArticlesList() {
+        Set<Articles> set = new LinkedHashSet<>();
+
+        for (News news : newsList) {
+            if (news.getCategorySwitch())
+                set.addAll(news.getArticles());
+        }
+        return new ArrayList<>(set);
     }
 
     @Override
     public List<News> getNewsList() {
-
-        if (filtersList.size() == 0) return newsList;
-
-        Set<News> set = new LinkedHashSet<>();
-        for (News news : newsList) {
-            for (int i = 0; i < news.getFilters().size(); i++) {
-                for (Filters filters : filtersList) {
-                    if (filters.getSwitchCheck() && filters.getCategory()
-                            .equals(news.getFilters().get(i).getCategory())) {
-                        set.add(news);
-                    }
-                }
-            }
-        }
-        return new ArrayList<>(set);
+        return newsList;
     }
 
     @Override

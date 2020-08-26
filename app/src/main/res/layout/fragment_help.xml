@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".help.HelpFragment"
+    android:background="@color/white"
     android:orientation="vertical"
-    android:background="@color/white">
+    tools:context=".help.HelpFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/profile_toolbar"
-        app:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:layout_width="match_parent"
         android:layout_height="?android:actionBarSize"
-        android:background="@color/colorPrimary">
+        android:background="@color/colorPrimary"
+        app:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
         <TextView
             android:id="@+id/help_tv_toolbar_title"
@@ -26,11 +26,11 @@
 
     <TextView
         android:id="@+id/help_tv_choose"
+        style="@style/TextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/TextStyle"
-        android:text="@string/help_tv_choose"
-        android:layout_marginTop="@dimen/help_tv_choose_marginTop"/>
+        android:layout_marginTop="@dimen/help_tv_choose_marginTop"
+        android:text="@string/help_tv_choose" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/help_rv"

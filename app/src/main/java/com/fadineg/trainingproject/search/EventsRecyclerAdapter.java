@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fadineg.trainingproject.R;
-import com.fadineg.trainingproject.news.News;
 import com.fadineg.trainingproject.news.NewsDiffUtilCallback;
+import com.fadineg.trainingproject.news.model.Articles;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -19,19 +19,19 @@ import java.util.List;
 
 
 public class EventsRecyclerAdapter extends RecyclerView.Adapter<EventsRecyclerAdapter.ViewHolder> {
-    private List<News> eventsList;
-    private List<News> updatedEventList;
+    private List<Articles> eventsList;
+    private List<Articles> updatedEventList;
 
-    EventsRecyclerAdapter(List<News> nkoList) {
+    EventsRecyclerAdapter(List<Articles> nkoList) {
         this.eventsList = nkoList;
         this.updatedEventList = nkoList;
     }
 
-    private List<News> getUpdatedEventList() {
+    private List<Articles> getUpdatedEventList() {
         return updatedEventList;
     }
 
-    private void setUpdatedEventList(List<News> updatedEventList) {
+    private void setUpdatedEventList(List<Articles> updatedEventList) {
         this.updatedEventList = updatedEventList;
     }
 
@@ -44,8 +44,8 @@ public class EventsRecyclerAdapter extends RecyclerView.Adapter<EventsRecyclerAd
 
     @Override
     public void onBindViewHolder(@NotNull final ViewHolder holder, final int position) {
-        final News news = updatedEventList.get(position);
-        holder.tvTitle.setText(news.getTitle());
+        final Articles articles = updatedEventList.get(position);
+        holder.tvTitle.setText(articles.getName());
     }
 
 
@@ -66,7 +66,7 @@ public class EventsRecyclerAdapter extends RecyclerView.Adapter<EventsRecyclerAd
     }
 
 
-    private void updateEventsList(List<News> updatedNewsList) {
+    private void updateEventsList(List<Articles> updatedNewsList) {
         NewsDiffUtilCallback newsDiffUtilCallback =
                 new NewsDiffUtilCallback(getUpdatedEventList(), updatedNewsList);
         DiffUtil.DiffResult newsDiffResult = DiffUtil.calculateDiff(newsDiffUtilCallback);
@@ -75,10 +75,10 @@ public class EventsRecyclerAdapter extends RecyclerView.Adapter<EventsRecyclerAd
     }
 
     void filterResults(String constraint) {
-        List<News> results = new ArrayList<>();
-        for (News news : eventsList) {
-            if (news.getTitle().toLowerCase().contains(constraint)) {
-                results.add(news);
+        List<Articles> results = new ArrayList<>();
+        for (Articles articles : eventsList) {
+            if (articles.getName().toLowerCase().contains(constraint)) {
+                results.add(articles);
             }
         }
         updateEventsList(results);

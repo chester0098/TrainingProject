@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.fadineg.trainingproject.R;
+import com.fadineg.trainingproject.news.NewsProvider;
 import com.google.android.material.tabs.TabLayout;
 
 import org.greenrobot.eventbus.EventBus;
@@ -31,6 +32,8 @@ public class SearchFragment extends Fragment {
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
     private String searchViewString = "";
+    NewsProvider newsProvider;
+    private Context context;
 
     private static final String SEARCH_STRING_KEY = "SearchString";
 
@@ -53,6 +56,7 @@ public class SearchFragment extends Fragment {
         if (savedInstanceState != null) {
             searchViewString = savedInstanceState.getString(SEARCH_STRING_KEY);
         }
+
 
         SearchViewPagerAdapter mFragmentAdapter = new SearchViewPagerAdapter(getChildFragmentManager(), getContext());
 

@@ -21,9 +21,6 @@
         <TextView
             android:id="@+id/profile_tv_toolbar_title"
             style="@style/ToolBar_TitleTextStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:text="@string/profile_toolbar_title" />
     </androidx.appcompat.widget.Toolbar>
 
@@ -45,7 +42,7 @@
                 android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
 
             <androidx.constraintlayout.widget.Guideline
@@ -58,8 +55,6 @@
             <TextView
                 android:id="@+id/profile_tv_userName"
                 style="@style/TextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/profile_tv_userName_marginTop"
                 android:text="@string/profile_userName"
                 android:textSize="@dimen/text_24"
@@ -69,8 +64,6 @@
             <TextView
                 android:id="@+id/profile_tv_title_dateOfBirth"
                 style="@style/TextStyleTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/profile_tv_title_dateOfBirth_marginTop"
                 android:text="@string/profile_dateOfBirth"
                 app:layout_constraintStart_toStartOf="@+id/guideline"
@@ -79,8 +72,6 @@
             <TextView
                 android:id="@+id/profile_tv_dateOfBirth"
                 style="@style/TextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:text="@string/profile_date"
                 app:layout_constraintStart_toStartOf="@+id/guideline"
                 app:layout_constraintTop_toBottomOf="@+id/profile_tv_title_dateOfBirth" />
@@ -88,8 +79,6 @@
             <TextView
                 android:id="@+id/profile_tv_title_fieldOfActivity"
                 style="@style/TextStyleTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/profile_tv_title_fieldOfActivity_marginTop"
                 android:text="@string/profile_title_fieldOfActivity"
                 app:layout_constraintStart_toStartOf="@+id/guideline"
@@ -98,8 +87,6 @@
             <TextView
                 android:id="@+id/profile_tv_fieldOfActivity"
                 style="@style/TextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:text="@string/profile_fieldOfActivity"
                 app:layout_constraintStart_toStartOf="@+id/guideline"
                 app:layout_constraintTop_toBottomOf="@+id/profile_tv_title_fieldOfActivity" />
@@ -107,8 +94,6 @@
             <TextView
                 android:id="@+id/profile_tv_receivePush"
                 style="@style/TextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/profile_tv_receivePush_marginTop"
                 android:text="@string/profile_receivePush"
                 app:layout_constraintEnd_toStartOf="@+id/profile_switch_push"
@@ -139,8 +124,6 @@
             <TextView
                 android:id="@+id/profile_tv_title_yourFriends"
                 style="@style/TextStyleTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/profile_tv_title_yourFriends_marginTop"
                 android:text="@string/profile_title_yourFriends"
                 app:layout_constraintStart_toStartOf="@+id/guideline"
@@ -149,8 +132,6 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/profile_tv_friend1"
                 style="@style/TextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/profile_tv_friend1_marginTop"
                 android:drawablePadding="@dimen/profile_tv_friend_padding"
                 android:gravity="center"
@@ -164,8 +145,6 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/profile_tv_friend2"
                 style="@style/TextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/profile_tv_friend_marginTop"
                 android:drawablePadding="@dimen/profile_tv_friend_padding"
                 android:gravity="center"
@@ -179,8 +158,6 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/profile_tv_friend3"
                 style="@style/TextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/profile_tv_friend_marginTop"
                 android:drawablePadding="@dimen/profile_tv_friend_padding"
                 android:gravity="center"

@@ -2,6 +2,7 @@ package com.fadineg.trainingproject.news;
 
 import android.content.Context;
 
+import com.fadineg.trainingproject.news.model.News;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -12,7 +13,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class JsonInArray {
-    private static final String FILTERS = "filters.json";
     private static final String NEWS = "news.json";
 
     private static String getJsonFromAssets(Context context, String fileName) {
@@ -34,26 +34,17 @@ public class JsonInArray {
         return jsonString;
     }
 
-    public List<Filters> filtersPars(Context context){
-        String jsonFileString = getJsonFromAssets(context, FILTERS);
-
-        Gson gson = new Gson();
-        Type listFiltersType = new TypeToken<List<Filters>>() { }.getType();
-
-        List<Filters> filters = gson.fromJson(jsonFileString, listFiltersType);
-        for (Filters f: filters){
-            f.setSwitchCheck(true);
-        }
-        return filters;
-    }
-
-    public List<News> newsPars(Context context){
+    public List<News> newsPars(Context context) {
         String jsonFileString = getJsonFromAssets(context, NEWS);
 
         Gson gson = new Gson();
-        Type listNewsType = new TypeToken<List<News>>() { }.getType();
+        Type listNewsType = new TypeToken<List<News>>() {
+        }.getType();
 
         List<News> news = gson.fromJson(jsonFileString, listNewsType);
+        for (News n: news) {
+            n.setCategorySwitch(true);
+        }
         return news;
     }
 }

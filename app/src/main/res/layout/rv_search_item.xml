@@ -11,8 +11,6 @@
         android:id="@+id/rv_search_tv_title"
         style="@style/TextStyle"
         android:gravity="start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/rv_search_tv_title_marginTop"
         android:layout_marginBottom="@dimen/rv_search_tv_title_marginBottom"
         tools:text="Пример"
