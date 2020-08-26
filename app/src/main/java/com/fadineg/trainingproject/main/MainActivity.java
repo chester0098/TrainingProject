@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         Set<Articles> set = new LinkedHashSet<>();
 
         for (News news : newsList) {
-            if (news.getCategory_switch())
+            if (news.getCategorySwitch())
                 set.addAll(news.getArticles());
         }
         return new ArrayList<>(set);

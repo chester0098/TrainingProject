@@ -21,13 +21,9 @@
         <TextView
             android:id="@+id/newsDescr_tv_toolbar_title"
             style="@style/ToolBar_TitleTextStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:ellipsize="marquee"
             android:singleLine="true"
-            tools:text="Спонсоры отремонтируют
-школу-интернат" />
+            tools:text="Спонсоры отремонтируют школу-интернат" />
     </androidx.appcompat.widget.Toolbar>
 
     <ScrollView
@@ -43,14 +39,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_begin="@dimen/profile_guideline_begin" />
+                app:layout_constraintGuide_begin="@dimen/margin_20dp" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_end="@dimen/profile_guideline_begin" />
+                app:layout_constraintGuide_end="@dimen/margin_20dp" />
 
             <TextView
                 android:id="@+id/newsDescription_title"

@@ -1,16 +1,14 @@
 package com.fadineg.trainingproject.news.model
 
+import com.google.gson.annotations.SerializedName
+
 data class News(
 
         val articles: List<Articles>,
-        val category_name: String,
-        val category_type: String,
+        @SerializedName("category_name")
+        val categoryName: String,
+        @SerializedName("category_type")
+        val categoryType: String,
         val id: Int,
-        var _category_switch: Boolean
-) {
-    var category_switch: Boolean
-        get() = _category_switch
-        set(value) {
-            _category_switch = value
-        }
-}
+        var categorySwitch: Boolean
+)

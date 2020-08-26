@@ -43,7 +43,7 @@ public class JsonInArray {
 
         List<News> news = gson.fromJson(jsonFileString, listNewsType);
         for (News n: news) {
-            n.set_category_switch(true);
+            n.setCategorySwitch(true);
         }
         return news;
     }

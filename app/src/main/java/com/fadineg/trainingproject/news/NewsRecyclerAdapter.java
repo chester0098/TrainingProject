@@ -68,25 +68,19 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
     public void onBindViewHolder(@NotNull final NewsRecyclerAdapter.ViewHolder holder, final int position) {
         final Articles articles = newsList.get(position);
 
-        //Resources res = holder.itemView.getContext().getResources();
-        //int imageId = res.getIdentifier(news.getImage(), DEF_TYPE, context.getPackageName());
-
         String date = null;
         if (articles.getType().equals(DATE_TYPE_PERIOD)) {
-            date = timeStyle_period(articles.getDate_from(), articles.getDate_to());
-        } else date = timeStyle_date(articles.getDate_to());
+            date = timeStylePeriod(articles.getDate_from(), articles.getDate_to());
+        } else date = timeStyleDate(articles.getDate_to());
 
-        int limit = 100;
-        String trimDescr = articles.getDescription().length() > limit ? articles.getDescription().substring(0, limit) : articles.getDescription();
 
         StringBuilder phone = new StringBuilder();
-        for (Phone_numbers phone_numbers : articles.getPhone_numbers()){
+        for (Phone_numbers phone_numbers : articles.getPhoneNumbers()){
             phone.append(phone_numbers.getNumber()).append('\n');
         }
 
-        //holder.newsImage.setImageResource(imageId);
         holder.newsTitle.setText(articles.getName());
-        holder.newsDescription.setText(trimDescr + "...");
+        holder.newsDescription.setText(articles.getShortDescription());
         holder.newsDate.setText(date);
 
         String finalDate = date;
@@ -95,10 +89,9 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
             public void onClick(View v) {
                 Intent intent = new Intent(context, NewsDescriptionActivity.class);
                 intent.putExtra(EXTRA_TITLE, articles.getName());
-                intent.putExtra(EXTRA_FUND, articles.getOrg_name());
+                intent.putExtra(EXTRA_FUND, articles.getOrgName());
                 intent.putExtra(EXTRA_ADDRESS, articles.getAddress());
                 intent.putExtra(EXTRA_PHONE, phone.toString());
-                //intent.putExtra(EXTRA_IMAGE, imageId);
                 intent.putExtra(EXTRA_DESCRIPTION, articles.getDescription());
                 intent.putExtra(EXTRA_DATE, finalDate);
                 context.startActivity(intent);
@@ -106,13 +99,13 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
         });
     }
 
-    private String timeStyle_date(String dateString) {
+    private String timeStyleDate(String dateString) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd MMMM, yyyy");
         LocalDate localDate = LocalDate.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"));
         return dtf.format(localDate);
     }
 
-    private String timeStyle_period(String dateStart, String dateEnd) {
+    private String timeStylePeriod(String dateStart, String dateEnd) {
         DateTimeFormatter dtfOld = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         DateTimeFormatter dtfNew = DateTimeFormatter.ofPattern("dd.MM");
         LocalDate localDateStart = LocalDate.parse(dateStart, dtfOld);

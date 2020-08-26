@@ -40,12 +40,12 @@ public class FiltersRecyclerAdapter extends RecyclerView.Adapter<FiltersRecycler
     @Override
     public void onBindViewHolder(@NotNull final FiltersRecyclerAdapter.ViewHolder holder, final int position) {
         final News news = newsList.get(position);
-        holder.category.setText(news.getCategory_name());
-        holder.aSwitch.setChecked(news.getCategory_switch());
+        holder.category.setText(news.getCategoryName());
+        holder.aSwitch.setChecked(news.getCategorySwitch());
 
         holder.aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                newsList.get(position).set_category_switch(isChecked);
+                newsList.get(position).setCategorySwitch(isChecked);
             }
         });
     }

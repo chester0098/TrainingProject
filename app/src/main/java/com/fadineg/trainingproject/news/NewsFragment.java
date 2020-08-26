@@ -100,14 +100,6 @@ public class NewsFragment extends Fragment {
 
         if (newsProvider.getNewsList().isEmpty()) {
 
-            /*NewsParsingTask jsonParsingTask = new NewsParsingTask(context);
-            jsonParsingTask.execute();
-
-            Intent newsServiceIntent = new Intent(getActivity(), NewsService.class);
-            context.startService(newsServiceIntent);
-
-            executor.execute(newsPars);*/
-
             RetrofitClient retrofitClient = new RetrofitClient();
             retrofitClient.downloadData(context);
 

@@ -39,7 +39,6 @@ public class NewsDescriptionActivity extends AppCompatActivity {
         date.setText(intent.getStringExtra(NewsRecyclerAdapter.EXTRA_DATE));
         address.setText(intent.getStringExtra(NewsRecyclerAdapter.EXTRA_ADDRESS));
         phone.setText(intent.getStringExtra(NewsRecyclerAdapter.EXTRA_PHONE));
-        //img.setImageResource(intent.getIntExtra(NewsRecyclerAdapter.EXTRA_IMAGE, 0));
         description.setText(intent.getStringExtra(NewsRecyclerAdapter.EXTRA_DESCRIPTION));
 
     }

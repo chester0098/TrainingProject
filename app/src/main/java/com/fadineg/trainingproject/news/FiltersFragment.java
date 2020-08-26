@@ -24,8 +24,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.concurrent.Executor;
-
 public class FiltersFragment extends Fragment {
     private NewsProvider newsProvider;
     private RecyclerView filtersRv;
@@ -95,22 +93,9 @@ public class FiltersFragment extends Fragment {
         super.onResume();
         if (newsProvider.getNewsList().size() != 0) {
 
-            /*Intent filtersServiceIntent = new Intent(getActivity(), FiltersService.class);
-            context.startService(filtersServiceIntent);
-
-            FiltersParsingTask filtersParsingTask = new FiltersParsingTask(context);
-            filtersParsingTask.execute();
-
-            executor.execute(filtersPars);*/
-
-            /*RetrofitClient retrofitClient = new RetrofitClient();
-            retrofitClient.downloadData();*/
-
-            /*chooseCategoryTv.setVisibility(View.GONE);
-            progressBar.setVisibility(View.VISIBLE);*/
-
             filtersRecyclerAdapter = new FiltersRecyclerAdapter(newsProvider.getNewsList(), context);
             filtersRv.setAdapter(filtersRecyclerAdapter);
+
         }
     }
 
@@ -124,8 +109,4 @@ public class FiltersFragment extends Fragment {
         chooseCategoryTv.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
     }
-
-    private Executor executor = (runnable) -> {
-        new Thread(runnable).start();
-    };
 }
