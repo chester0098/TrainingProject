@@ -10,16 +10,19 @@ import com.fadineg.trainingproject.news.model.News
 import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
+import io.realm.Realm
+import io.realm.RealmList
 import org.greenrobot.eventbus.EventBus
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitClient() {
-    private var base_url = "https://practicaltasks-55335.firebaseio.com/";
+    private var baseUrl = "https://practicaltasks-55335.firebaseio.com/";
+    private var realm: Realm = Realm.getDefaultInstance()
 
     private val getInstance: ApiService by lazy {
         val retrofit: Retrofit = Retrofit.Builder()
-                .baseUrl(base_url)
+                .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                 .build()
@@ -27,11 +30,11 @@ class RetrofitClient() {
     }
 
     fun downloadData(context: Context) {
-                getInstance.getNews()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                                { response -> onResponse(response) }, { t -> onFailure(t,context) })
+        getInstance.getNews()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        { response -> onResponse(response) }, { t -> onFailure(t, context) })
     }
 
     @SuppressLint("WrongConstant")
@@ -41,11 +44,17 @@ class RetrofitClient() {
         newsParsingTask.execute()
     }
 
-    private fun onResponse(response: List<News>) {
+    private fun onResponse(response: RealmList<News>) {
         Log.i("net", Thread.currentThread().name)
         for (i in response.indices) {
-            response[i].categorySwitch = true
+            response[i]?.categorySwitch = true
         }
+
+        realm.beginTransaction()
+        realm.deleteAll()
+        realm.copyToRealmOrUpdate(response)
+        realm.commitTransaction()
+
         EventBus.getDefault().post(NewsBus(response))
     }
 }

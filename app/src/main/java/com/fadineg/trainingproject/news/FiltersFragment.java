@@ -19,10 +19,13 @@ import android.widget.TextView;
 
 import com.fadineg.trainingproject.R;
 import com.fadineg.trainingproject.news.eventBus.NewsBus;
+import com.fadineg.trainingproject.news.model.News;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import io.realm.Realm;
 
 public class FiltersFragment extends Fragment {
     private NewsProvider newsProvider;
@@ -31,6 +34,7 @@ public class FiltersFragment extends Fragment {
     private ProgressBar progressBar;
     private Context context;
     private TextView chooseCategoryTv;
+    private Realm realm = Realm.getDefaultInstance();
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -78,7 +82,6 @@ public class FiltersFragment extends Fragment {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.action_check) {
-                    newsProvider.setNewsList(filtersRecyclerAdapter.getNewsList());
                     newsProvider.updateNewsAdapter();
                     getActivity().onBackPressed();
                 }
@@ -91,19 +94,17 @@ public class FiltersFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (newsProvider.getNewsList().size() != 0) {
-
-            filtersRecyclerAdapter = new FiltersRecyclerAdapter(newsProvider.getNewsList(), context);
+        if (!NewsFragment.fistLoad) {
+            filtersRecyclerAdapter = new FiltersRecyclerAdapter(realm.where(News.class).findAll(), context);
             filtersRv.setAdapter(filtersRecyclerAdapter);
-
         }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(NewsBus newsBus) {
-        newsProvider.setNewsList(newsBus.getNewsList());
+        NewsFragment.fistLoad = false;
 
-        filtersRecyclerAdapter = new FiltersRecyclerAdapter(newsProvider.getNewsList(), context);
+        filtersRecyclerAdapter = new FiltersRecyclerAdapter(realm.where(News.class).findAll(), context);
         filtersRv.setAdapter(filtersRecyclerAdapter);
 
         chooseCategoryTv.setVisibility(View.VISIBLE);

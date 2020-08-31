@@ -12,6 +12,8 @@ import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+import io.realm.Realm;
+
 public class JsonInArray {
     private static final String NEWS = "news.json";
 
@@ -42,7 +44,7 @@ public class JsonInArray {
         }.getType();
 
         List<News> news = gson.fromJson(jsonFileString, listNewsType);
-        for (News n: news) {
+        for (News n : news) {
             n.setCategorySwitch(true);
         }
         return news;

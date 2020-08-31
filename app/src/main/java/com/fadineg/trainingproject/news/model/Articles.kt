@@ -1,21 +1,23 @@
 package com.fadineg.trainingproject.news.model
 
 import com.google.gson.annotations.SerializedName
+import io.realm.RealmList
+import io.realm.RealmObject
 
-data class Articles(
-        val address: String,
-        val date_from: String,
-        val date_to: String,
-        val description: String,
-        val id: Int,
-        val name: String,
+open class Articles(
+        var address: String? = null,
+        var date_from: String? = null,
+        var date_to: String? = null,
+        var description: String? = null,
+        var id: Int? = 0,
+        var name: String? = null,
         @SerializedName("org_name")
-        val orgName: String,
+        var orgName: String? = null,
         @SerializedName("org_site")
-        val orgSite: String,
+        var orgSite: String? = null,
         @SerializedName("short_description")
-        val shortDescription: String,
+        var shortDescription: String? = null,
         @SerializedName("phone_numbers")
-        val phoneNumbers : List<Phone_numbers>,
-        val type: String
-)
+        var phoneNumbers: RealmList<PhoneNumbers>? = null,
+        var type: String? = null
+) : RealmObject()

@@ -16,31 +16,23 @@ import com.fadineg.trainingproject.help.HelpFragment;
 import com.fadineg.trainingproject.news.FiltersFragment;
 import com.fadineg.trainingproject.news.NewsFragment;
 import com.fadineg.trainingproject.news.NewsProvider;
-import com.fadineg.trainingproject.news.model.Articles;
-import com.fadineg.trainingproject.news.model.News;
 import com.fadineg.trainingproject.profile.ProfileFragment;
 import com.fadineg.trainingproject.R;
 import com.fadineg.trainingproject.search.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+
+import io.realm.Realm;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, NewsProvider {
     public static final int REQUEST_TAKE_PHOTO = 1;
     public static final int REQUEST_CHOOSE_PHOTO = 2;
     public static final String FILES_DIR = "Pictures";
     public static final String FILE_NAME = "temp.jpg";
-    public static final String NEWS_KEY = "News";
     public static final String ITEM_ID_KEY = "ItemId";
 
     private BottomNavigationView bottomNavigationView;
@@ -49,22 +41,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private SearchFragment searchFragment;
     private NewsFragment newsFragment;
 
-    private Type listNewsType;
-
     int itemId;
-
-    private List<News> newsList = new ArrayList<>();
-    Gson gson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         AndroidThreeTen.init(this);
-
-        listNewsType = new TypeToken<List<News>>() {
-        }.getType();
-        gson = new Gson();
+        Realm.init(this);
 
         profileFragment = new ProfileFragment();
         helpFragment = new HelpFragment();
@@ -108,7 +92,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putString(NEWS_KEY, gson.toJson(newsList, listNewsType));
         outState.putInt(ITEM_ID_KEY, itemId);
     }
 
@@ -116,7 +99,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        setNewsList(gson.fromJson(savedInstanceState.getString(NEWS_KEY), listNewsType));
         itemId = savedInstanceState.getInt(ITEM_ID_KEY);
         bottomNavigationView.getMenu().findItem(itemId).setChecked(true);
     }
@@ -136,28 +118,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     @Override
     public void updateNewsAdapter() {
-        newsFragment.updateNewsList(getArticlesList());
-    }
-
-    @Override
-    public List<Articles> getArticlesList() {
-        Set<Articles> set = new LinkedHashSet<>();
-
-        for (News news : newsList) {
-            if (news.getCategorySwitch())
-                set.addAll(news.getArticles());
-        }
-        return new ArrayList<>(set);
-    }
-
-    @Override
-    public List<News> getNewsList() {
-        return newsList;
-    }
-
-    @Override
-    public void setNewsList(List<News> newsList) {
-        this.newsList = newsList;
+        newsFragment.updateNewsList();
     }
 
     @Override

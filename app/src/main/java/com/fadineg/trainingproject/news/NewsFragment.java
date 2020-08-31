@@ -19,17 +19,21 @@ import android.widget.ProgressBar;
 import com.fadineg.trainingproject.R;
 import com.fadineg.trainingproject.news.eventBus.NewsBus;
 import com.fadineg.trainingproject.news.model.Articles;
-import com.fadineg.trainingproject.news.retrofit.ApiService;
+import com.fadineg.trainingproject.news.model.News;
 import com.fadineg.trainingproject.news.retrofit.RetrofitClient;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.Executor;
 
-import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 public class NewsFragment extends Fragment {
     private NewsRecyclerAdapter newsRecyclerAdapter;
@@ -37,8 +41,9 @@ public class NewsFragment extends Fragment {
     private RecyclerView newsRv;
     private ProgressBar progressBar;
     private Context context;
-    private ApiService apiService;
-    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    static Boolean fistLoad = true;
+    private Realm realm;
+    private static final String FIRST_LOAD_KEY = "fistLoad";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,10 +51,17 @@ public class NewsFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(FIRST_LOAD_KEY, fistLoad);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        if (savedInstanceState != null)
+            fistLoad = savedInstanceState.getBoolean(FIRST_LOAD_KEY);
         return inflater.inflate(R.layout.fragment_news, container, false);
     }
 
@@ -76,6 +88,8 @@ public class NewsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        realm = Realm.getDefaultInstance();
+
         Toolbar toolbar = view.findViewById(R.id.news_toolbar);
         newsRv = view.findViewById(R.id.news_rv);
 
@@ -98,29 +112,30 @@ public class NewsFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        if (newsProvider.getNewsList().isEmpty()) {
-
+        if (fistLoad) {
             RetrofitClient retrofitClient = new RetrofitClient();
             retrofitClient.downloadData(context);
-
             progressBar.setVisibility(View.VISIBLE);
         } else {
+            RealmResults realmResults = realm.where(News.class).findAllAsync();
             newsRv.setLayoutManager(new LinearLayoutManager(context));
-            newsRecyclerAdapter = new NewsRecyclerAdapter(newsProvider.getArticlesList(), context);
+            newsRecyclerAdapter = new NewsRecyclerAdapter(getArticlesList(new ArrayList<>(realmResults)), context);
             newsRv.setAdapter(newsRecyclerAdapter);
         }
     }
 
-    public void updateNewsList(List<Articles> updatedList) {
-        newsRecyclerAdapter.updateNewsList(updatedList);
+    public void updateNewsList() {
+        RealmResults realmResults = realm.where(News.class).findAllAsync();
+        newsRecyclerAdapter.updateNewsList(getArticlesList(new ArrayList<>(realmResults)));
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(NewsBus newsBus) {
-        newsProvider.setNewsList(newsBus.getNewsList());
+
+        fistLoad = false;
 
         newsRv.setLayoutManager(new LinearLayoutManager(context));
-        newsRecyclerAdapter = new NewsRecyclerAdapter(newsProvider.getArticlesList(), getContext());
+        newsRecyclerAdapter = new NewsRecyclerAdapter(getArticlesList(newsBus.getNewsList()), getContext());
         newsRv.setAdapter(newsRecyclerAdapter);
 
         progressBar.setVisibility(View.GONE);
@@ -139,4 +154,13 @@ public class NewsFragment extends Fragment {
     private Executor executor = (runnable) -> {
         new Thread(runnable).start();
     };
+
+    private List<Articles> getArticlesList(List<News> realmList) {
+        Set<Articles> set = new LinkedHashSet<>();
+        for (News news : realmList) {
+            if (news.getCategorySwitch())
+                set.addAll(news.getArticles());
+        }
+        return new ArrayList<>(set);
+    }
 }

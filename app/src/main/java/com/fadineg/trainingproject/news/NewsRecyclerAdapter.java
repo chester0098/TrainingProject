@@ -3,8 +3,6 @@ package com.fadineg.trainingproject.news;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +11,11 @@ import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.ListUpdateCallback;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fadineg.trainingproject.R;
 import com.fadineg.trainingproject.news.model.Articles;
-import com.fadineg.trainingproject.news.model.Phone_numbers;
+import com.fadineg.trainingproject.news.model.PhoneNumbers;
 
 
 import org.jetbrains.annotations.NotNull;
@@ -75,8 +72,8 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
 
 
         StringBuilder phone = new StringBuilder();
-        for (Phone_numbers phone_numbers : articles.getPhoneNumbers()){
-            phone.append(phone_numbers.getNumber()).append('\n');
+        for (PhoneNumbers phoneNumbers : articles.getPhoneNumbers()){
+            phone.append(phoneNumbers.getNumber()).append('\n');
         }
 
         holder.newsTitle.setText(articles.getName());

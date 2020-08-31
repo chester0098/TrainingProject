@@ -1,14 +1,16 @@
 package com.fadineg.trainingproject.news.model
 
 import com.google.gson.annotations.SerializedName
+import io.realm.RealmList
+import io.realm.RealmObject
 
-data class News(
+open class News(
 
-        val articles: List<Articles>,
+        var articles: RealmList<Articles>? = null,
         @SerializedName("category_name")
-        val categoryName: String,
+        var categoryName: String? = null,
         @SerializedName("category_type")
-        val categoryType: String,
-        val id: Int,
-        var categorySwitch: Boolean
-)
+        var categoryType: String? = null,
+        var id: Int? = 0,
+        var categorySwitch: Boolean? = null
+) : RealmObject()
