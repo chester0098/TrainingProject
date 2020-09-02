@@ -43,10 +43,6 @@ public class JsonInArray {
         Type listNewsType = new TypeToken<List<News>>() {
         }.getType();
 
-        List<News> news = gson.fromJson(jsonFileString, listNewsType);
-        for (News n : news) {
-            n.setCategorySwitch(true);
-        }
-        return news;
+        return gson.fromJson(jsonFileString, listNewsType);
     }
 }

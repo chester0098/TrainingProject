@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.fadineg.trainingproject.RealmManager;
 import com.fadineg.trainingproject.help.HelpFragment;
 import com.fadineg.trainingproject.news.FiltersFragment;
 import com.fadineg.trainingproject.news.NewsFragment;
@@ -20,7 +21,6 @@ import com.fadineg.trainingproject.profile.ProfileFragment;
 import com.fadineg.trainingproject.R;
 import com.fadineg.trainingproject.search.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.jakewharton.threetenabp.AndroidThreeTen;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -41,14 +41,17 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private SearchFragment searchFragment;
     private NewsFragment newsFragment;
 
+    private RealmManager realmManager;
+
     int itemId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        AndroidThreeTen.init(this);
-        Realm.init(this);
+
+        realmManager = new RealmManager();
+        realmManager.setInstance();
 
         profileFragment = new ProfileFragment();
         helpFragment = new HelpFragment();
@@ -62,6 +65,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             bottomNavigationView.getMenu().findItem(R.id.bnv_help).setChecked(true);
         }
 
+    }
+
+    @Override
+    public Realm getRealm() {
+        return realmManager.getRealm();
     }
 
     @Override
@@ -139,5 +147,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             }
 
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        realmManager.closeRealm();
     }
 }

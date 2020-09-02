@@ -12,5 +12,5 @@ open class News(
         @SerializedName("category_type")
         var categoryType: String? = null,
         var id: Int? = 0,
-        var categorySwitch: Boolean? = null
+        var categorySwitch: Boolean? = true
 ) : RealmObject()

@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
+import com.fadineg.trainingproject.TrainingApplication
+import com.fadineg.trainingproject.news.JsonInArray
 import com.fadineg.trainingproject.news.asyncTask.NewsParsingTask
 import com.fadineg.trainingproject.news.eventBus.NewsBus
 import com.fadineg.trainingproject.news.model.News
@@ -16,9 +18,9 @@ import org.greenrobot.eventbus.EventBus
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class RetrofitClient() {
-    private var baseUrl = "https://practicaltasks-55335.firebaseio.com/";
-    private var realm: Realm = Realm.getDefaultInstance()
+class RetrofitClient(_realm: Realm) {
+    private var baseUrl = "https://practicaltasks-55335.firebaseio.com/"
+    private val realm:Realm = _realm
 
     private val getInstance: ApiService by lazy {
         val retrofit: Retrofit = Retrofit.Builder()
@@ -40,20 +42,24 @@ class RetrofitClient() {
     @SuppressLint("WrongConstant")
     private fun onFailure(t: Throwable, context: Context) {
         Toast.makeText(context, "Ошибка сети", 1000).show()
-        val newsParsingTask = NewsParsingTask(context)
-        newsParsingTask.execute()
+
+        var newsList : List<News>? = null
+        val jsonInArray = JsonInArray()
+        realm.executeTransactionAsync { realm: Realm ->
+            newsList = jsonInArray.newsPars(context)
+            realm.deleteAll()
+            realm.copyToRealmOrUpdate(newsList)
+        }
+
+        EventBus.getDefault().post(NewsBus(newsList))
     }
 
     private fun onResponse(response: RealmList<News>) {
-        Log.i("net", Thread.currentThread().name)
-        for (i in response.indices) {
-            response[i]?.categorySwitch = true
-        }
 
-        realm.beginTransaction()
-        realm.deleteAll()
-        realm.copyToRealmOrUpdate(response)
-        realm.commitTransaction()
+        realm.executeTransactionAsync { realm ->
+            realm.deleteAll()
+            realm.copyToRealmOrUpdate(response)
+        }
 
         EventBus.getDefault().post(NewsBus(response))
     }

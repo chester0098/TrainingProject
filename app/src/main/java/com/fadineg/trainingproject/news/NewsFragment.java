@@ -32,7 +32,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Executor;
 
-import io.realm.Realm;
 import io.realm.RealmResults;
 
 public class NewsFragment extends Fragment {
@@ -42,8 +41,6 @@ public class NewsFragment extends Fragment {
     private ProgressBar progressBar;
     private Context context;
     static Boolean fistLoad = true;
-    private Realm realm;
-    private static final String FIRST_LOAD_KEY = "fistLoad";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,14 +51,13 @@ public class NewsFragment extends Fragment {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putBoolean(FIRST_LOAD_KEY, fistLoad);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         if (savedInstanceState != null)
-            fistLoad = savedInstanceState.getBoolean(FIRST_LOAD_KEY);
+            fistLoad = false;
         return inflater.inflate(R.layout.fragment_news, container, false);
     }
 
@@ -88,8 +84,6 @@ public class NewsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        realm = Realm.getDefaultInstance();
-
         Toolbar toolbar = view.findViewById(R.id.news_toolbar);
         newsRv = view.findViewById(R.id.news_rv);
 
@@ -113,11 +107,11 @@ public class NewsFragment extends Fragment {
         super.onResume();
 
         if (fistLoad) {
-            RetrofitClient retrofitClient = new RetrofitClient();
+            RetrofitClient retrofitClient = new RetrofitClient(newsProvider.getRealm());
             retrofitClient.downloadData(context);
             progressBar.setVisibility(View.VISIBLE);
         } else {
-            RealmResults realmResults = realm.where(News.class).findAllAsync();
+            RealmResults realmResults = newsProvider.getRealm().where(News.class).findAllAsync();
             newsRv.setLayoutManager(new LinearLayoutManager(context));
             newsRecyclerAdapter = new NewsRecyclerAdapter(getArticlesList(new ArrayList<>(realmResults)), context);
             newsRv.setAdapter(newsRecyclerAdapter);
@@ -125,7 +119,7 @@ public class NewsFragment extends Fragment {
     }
 
     public void updateNewsList() {
-        RealmResults realmResults = realm.where(News.class).findAllAsync();
+        RealmResults realmResults = newsProvider.getRealm().where(News.class).findAllAsync();
         newsRecyclerAdapter.updateNewsList(getArticlesList(new ArrayList<>(realmResults)));
     }
 
