@@ -2,6 +2,12 @@ package com.fadineg.trainingproject.news;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,16 +16,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-
 import com.fadineg.trainingproject.R;
 import com.fadineg.trainingproject.news.eventBus.NewsBus;
-import com.fadineg.trainingproject.news.model.News;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -80,6 +78,7 @@ public class FiltersFragment extends Fragment {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.action_check) {
+                    newsProvider.getRealmManager().setNewsInRealm(filtersRecyclerAdapter.getNewsList());
                     newsProvider.updateNewsAdapter();
                     getActivity().onBackPressed();
                 }
@@ -92,16 +91,19 @@ public class FiltersFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (!NewsFragment.fistLoad) {
-            filtersRecyclerAdapter = new FiltersRecyclerAdapter(newsProvider.getRealm().where(News.class).findAll(), context);
+        if (!NewsFragment.firstLoad) {
+            filtersRecyclerAdapter = new FiltersRecyclerAdapter(newsProvider.getRealmManager().getNewsFromRealm(), context);
             filtersRv.setAdapter(filtersRecyclerAdapter);
         }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(NewsBus newsBus) {
+        NewsFragment.firstLoad = false;
 
-        filtersRecyclerAdapter = new FiltersRecyclerAdapter(newsProvider.getRealm().where(News.class).findAll(), context);
+        newsProvider.getRealmManager().setNewsInRealm(newsBus.getNewsList());
+
+        filtersRecyclerAdapter = new FiltersRecyclerAdapter(newsProvider.getRealmManager().getNewsFromRealm(), context);
         filtersRv.setAdapter(filtersRecyclerAdapter);
 
         chooseCategoryTv.setVisibility(View.VISIBLE);

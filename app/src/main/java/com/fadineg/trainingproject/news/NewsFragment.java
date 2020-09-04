@@ -2,6 +2,11 @@ package com.fadineg.trainingproject.news;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,12 +14,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ProgressBar;
 
 import com.fadineg.trainingproject.R;
 import com.fadineg.trainingproject.news.eventBus.NewsBus;
@@ -32,15 +31,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Executor;
 
-import io.realm.RealmResults;
-
 public class NewsFragment extends Fragment {
     private NewsRecyclerAdapter newsRecyclerAdapter;
     private NewsProvider newsProvider;
     private RecyclerView newsRv;
     private ProgressBar progressBar;
     private Context context;
-    static Boolean fistLoad = true;
+    static Boolean firstLoad = true;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,7 +54,7 @@ public class NewsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         if (savedInstanceState != null)
-            fistLoad = false;
+            firstLoad = false;
         return inflater.inflate(R.layout.fragment_news, container, false);
     }
 
@@ -106,27 +103,27 @@ public class NewsFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        if (fistLoad) {
-            RetrofitClient retrofitClient = new RetrofitClient(newsProvider.getRealm());
+        if (firstLoad) {
+            RetrofitClient retrofitClient = new RetrofitClient();
             retrofitClient.downloadData(context);
             progressBar.setVisibility(View.VISIBLE);
         } else {
-            RealmResults realmResults = newsProvider.getRealm().where(News.class).findAllAsync();
             newsRv.setLayoutManager(new LinearLayoutManager(context));
-            newsRecyclerAdapter = new NewsRecyclerAdapter(getArticlesList(new ArrayList<>(realmResults)), context);
+            newsRecyclerAdapter = new NewsRecyclerAdapter(getArticlesList(new ArrayList<>(newsProvider.getRealmManager().getNewsFromRealm())), context);
             newsRv.setAdapter(newsRecyclerAdapter);
         }
     }
 
     public void updateNewsList() {
-        RealmResults realmResults = newsProvider.getRealm().where(News.class).findAllAsync();
-        newsRecyclerAdapter.updateNewsList(getArticlesList(new ArrayList<>(realmResults)));
+        newsRecyclerAdapter.updateNewsList(getArticlesList(new ArrayList<>(newsProvider.getRealmManager().getNewsFromRealm())));
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(NewsBus newsBus) {
 
-        fistLoad = false;
+        firstLoad = false;
+
+        newsProvider.getRealmManager().setNewsInRealm(newsBus.getNewsList());
 
         newsRv.setLayoutManager(new LinearLayoutManager(context));
         newsRecyclerAdapter = new NewsRecyclerAdapter(getArticlesList(newsBus.getNewsList()), getContext());

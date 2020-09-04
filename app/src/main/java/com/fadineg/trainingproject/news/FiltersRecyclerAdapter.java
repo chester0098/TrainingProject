@@ -15,15 +15,17 @@ import com.fadineg.trainingproject.news.model.News;
 
 import org.jetbrains.annotations.NotNull;
 
-import io.realm.Realm;
-import io.realm.RealmResults;
+import java.util.List;
 
 public class FiltersRecyclerAdapter extends RecyclerView.Adapter<FiltersRecyclerAdapter.ViewHolder> {
-    private RealmResults<News> newsList;
-    private Realm realm = Realm.getDefaultInstance();
+    private List<News> newsList;
 
-    FiltersRecyclerAdapter(RealmResults<News> newsList, Context context) {
+    FiltersRecyclerAdapter(List<News> newsList, Context context) {
         this.newsList = newsList;
+    }
+
+    List<News> getNewsList() {
+        return newsList;
     }
 
     @NotNull
@@ -41,9 +43,7 @@ public class FiltersRecyclerAdapter extends RecyclerView.Adapter<FiltersRecycler
 
         holder.aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                realm.beginTransaction();
                 newsList.get(position).setCategorySwitch(isChecked);
-                realm.commitTransaction();
             }
         });
     }

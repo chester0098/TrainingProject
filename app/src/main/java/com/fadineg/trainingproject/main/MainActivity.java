@@ -1,10 +1,5 @@
 package com.fadineg.trainingproject.main;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,21 +7,25 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.fadineg.trainingproject.R;
 import com.fadineg.trainingproject.RealmManager;
 import com.fadineg.trainingproject.help.HelpFragment;
 import com.fadineg.trainingproject.news.FiltersFragment;
 import com.fadineg.trainingproject.news.NewsFragment;
 import com.fadineg.trainingproject.news.NewsProvider;
 import com.fadineg.trainingproject.profile.ProfileFragment;
-import com.fadineg.trainingproject.R;
 import com.fadineg.trainingproject.search.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.jakewharton.threetenabp.AndroidThreeTen;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-
-import io.realm.Realm;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, NewsProvider {
     public static final int REQUEST_TAKE_PHOTO = 1;
@@ -49,9 +48,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        AndroidThreeTen.init(this);
 
-        realmManager = new RealmManager();
-        realmManager.setInstance();
+        realmManager = new RealmManager(this);
+        realmManager.createInstance();
 
         profileFragment = new ProfileFragment();
         helpFragment = new HelpFragment();
@@ -68,8 +68,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     @Override
-    public Realm getRealm() {
-        return realmManager.getRealm();
+    public RealmManager getRealmManager() {
+        return realmManager;
     }
 
     @Override

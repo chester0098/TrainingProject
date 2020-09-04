@@ -1,6 +1,6 @@
 package com.fadineg.trainingproject.news;
 
-import io.realm.Realm;
+import com.fadineg.trainingproject.RealmManager;
 
 public interface NewsProvider {
 
@@ -8,6 +8,6 @@ public interface NewsProvider {
 
     void updateNewsAdapter();
 
-    public Realm getRealm();
+    public RealmManager getRealmManager();
 
 }
