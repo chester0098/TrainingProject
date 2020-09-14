@@ -2,18 +2,18 @@ package com.fadineg.trainingproject.profile;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import static com.fadineg.trainingproject.R.*;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import static com.fadineg.trainingproject.R.drawable.image_man;
+import static com.fadineg.trainingproject.R.id;
+import static com.fadineg.trainingproject.R.layout;
 
 
 public class ProfileFragment extends Fragment {
@@ -32,20 +32,18 @@ public class ProfileFragment extends Fragment {
         userPhoto = view.findViewById(id.profile_iv_userPhoto);
         userPhoto.setImageResource(image_man);
         ChangeDialogFragment changeDialogFragment = new ChangeDialogFragment();
-        userPhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                changeDialogFragment.setDialogListener(data -> {
-                    userPhoto.setImageResource(data);
-                });
-                changeDialogFragment.show(getChildFragmentManager(), PHOTO_FRAGMENT_TAG);
-            }
+        userPhoto.setOnClickListener((View v) -> {
+            changeDialogFragment.setDialogListener(data -> {
+                userPhoto.setImageResource(data);
+            });
+            changeDialogFragment.show(getChildFragmentManager(), PHOTO_FRAGMENT_TAG);
         });
 
         setHasOptionsMenu(true);
     }
 
-    public void setImageFromCamera(Bitmap bitmap) {
+    public void setUserPhoto(Bitmap bitmap) {
         userPhoto.setImageBitmap(bitmap);
     }
+
 }

@@ -1,6 +1,5 @@
 package com.fadineg.trainingproject.news;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,7 @@ import java.util.List;
 public class FiltersRecyclerAdapter extends RecyclerView.Adapter<FiltersRecyclerAdapter.ViewHolder> {
     private List<News> newsList;
 
-    FiltersRecyclerAdapter(List<News> newsList, Context context) {
+    FiltersRecyclerAdapter(List<News> newsList) {
         this.newsList = newsList;
     }
 
@@ -41,10 +40,8 @@ public class FiltersRecyclerAdapter extends RecyclerView.Adapter<FiltersRecycler
         holder.category.setText(news.getCategoryName());
         holder.aSwitch.setChecked(news.getCategorySwitch());
 
-        holder.aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                newsList.get(position).setCategorySwitch(isChecked);
-            }
+        holder.aSwitch.setOnCheckedChangeListener((CompoundButton buttonView, boolean isChecked) -> {
+            newsList.get(position).setCategorySwitch(isChecked);
         });
     }
 

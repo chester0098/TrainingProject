@@ -17,7 +17,6 @@ import com.fadineg.trainingproject.R;
 import com.fadineg.trainingproject.news.model.Articles;
 import com.fadineg.trainingproject.news.model.PhoneNumbers;
 
-
 import org.jetbrains.annotations.NotNull;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.format.DateTimeFormatter;
@@ -72,7 +71,7 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
 
 
         StringBuilder phone = new StringBuilder();
-        for (PhoneNumbers phoneNumbers : articles.getPhoneNumbers()){
+        for (PhoneNumbers phoneNumbers : articles.getPhoneNumbers()) {
             phone.append(phoneNumbers.getNumber()).append('\n');
         }
 
@@ -81,18 +80,15 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
         holder.newsDate.setText(date);
 
         String finalDate = date;
-        holder.cardViewItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, NewsDescriptionActivity.class);
-                intent.putExtra(EXTRA_TITLE, articles.getName());
-                intent.putExtra(EXTRA_FUND, articles.getOrgName());
-                intent.putExtra(EXTRA_ADDRESS, articles.getAddress());
-                intent.putExtra(EXTRA_PHONE, phone.toString());
-                intent.putExtra(EXTRA_DESCRIPTION, articles.getDescription());
-                intent.putExtra(EXTRA_DATE, finalDate);
-                context.startActivity(intent);
-            }
+        holder.cardViewItem.setOnClickListener((View v) -> {
+            Intent intent = new Intent(context, NewsDescriptionActivity.class);
+            intent.putExtra(EXTRA_TITLE, articles.getName());
+            intent.putExtra(EXTRA_FUND, articles.getOrgName());
+            intent.putExtra(EXTRA_ADDRESS, articles.getAddress());
+            intent.putExtra(EXTRA_PHONE, phone.toString());
+            intent.putExtra(EXTRA_DESCRIPTION, articles.getDescription());
+            intent.putExtra(EXTRA_DATE, finalDate);
+            context.startActivity(intent);
         });
     }
 

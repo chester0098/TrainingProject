@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,11 +18,8 @@ import com.fadineg.trainingproject.R;
 import com.fadineg.trainingproject.news.eventBus.NewsBus;
 import com.fadineg.trainingproject.news.model.Articles;
 import com.fadineg.trainingproject.news.model.News;
-import com.fadineg.trainingproject.news.retrofit.RetrofitClient;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -35,9 +31,16 @@ public class NewsFragment extends Fragment {
     private NewsRecyclerAdapter newsRecyclerAdapter;
     private NewsProvider newsProvider;
     private RecyclerView newsRv;
-    private ProgressBar progressBar;
-    private Context context;
-    static Boolean firstLoad = true;
+    private List<News> newsList;
+    private Runnable newsPars = () -> {
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        JsonInArray jsonInArray = new JsonInArray();
+        EventBus.getDefault().post(new NewsBus(jsonInArray.newsPars(getContext())));
+    };
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,55 +49,36 @@ public class NewsFragment extends Fragment {
     }
 
     @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        if (savedInstanceState != null)
-            firstLoad = false;
         return inflater.inflate(R.layout.fragment_news, container, false);
     }
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        this.context = context;
         newsProvider = (NewsProvider) context;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
+    public NewsFragment(List<News> newsList) {
+        this.newsList = newsList;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        newsRecyclerAdapter = new NewsRecyclerAdapter(getArticlesList(newsList), getContext());
+
         Toolbar toolbar = view.findViewById(R.id.news_toolbar);
         newsRv = view.findViewById(R.id.news_rv);
+        newsRv.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        progressBar = view.findViewById(R.id.news_progressBar);
-        progressBar.setVisibility(View.GONE);
-
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                if (item.getItemId() == R.id.action_filter) {
-                    newsProvider.openFilters();
-                }
-                return false;
+        toolbar.setOnMenuItemClickListener((MenuItem item) -> {
+            if (item.getItemId() == R.id.action_filter) {
+                newsProvider.openFilters();
             }
+            return false;
         });
 
     }
@@ -102,45 +86,12 @@ public class NewsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
-        if (firstLoad) {
-            RetrofitClient retrofitClient = new RetrofitClient();
-            retrofitClient.downloadData(context);
-            progressBar.setVisibility(View.VISIBLE);
-        } else {
-            newsRv.setLayoutManager(new LinearLayoutManager(context));
-            newsRecyclerAdapter = new NewsRecyclerAdapter(getArticlesList(new ArrayList<>(newsProvider.getRealmManager().getNewsFromRealm())), context);
-            newsRv.setAdapter(newsRecyclerAdapter);
-        }
-    }
-
-    public void updateNewsList() {
-        newsRecyclerAdapter.updateNewsList(getArticlesList(new ArrayList<>(newsProvider.getRealmManager().getNewsFromRealm())));
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(NewsBus newsBus) {
-
-        firstLoad = false;
-
-        newsProvider.getRealmManager().setNewsInRealm(newsBus.getNewsList());
-
-        newsRv.setLayoutManager(new LinearLayoutManager(context));
-        newsRecyclerAdapter = new NewsRecyclerAdapter(getArticlesList(newsBus.getNewsList()), getContext());
         newsRv.setAdapter(newsRecyclerAdapter);
-
-        progressBar.setVisibility(View.GONE);
     }
 
-    private Runnable newsPars = () -> {
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        JsonInArray jsonInArray = new JsonInArray();
-        EventBus.getDefault().post(new NewsBus(jsonInArray.newsPars(context)));
-    };
+    public void updateNewsList(List<News> newNewsList) {
+        newsRecyclerAdapter.updateNewsList(getArticlesList(newNewsList));
+    }
 
     private Executor executor = (runnable) -> {
         new Thread(runnable).start();
