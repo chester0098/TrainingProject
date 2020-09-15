@@ -1,9 +1,13 @@
 package com.fadineg.trainingproject.news.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import io.realm.RealmList
 import io.realm.RealmObject
+import kotlinx.android.parcel.Parcelize
+import kotlinx.android.parcel.RawValue
 
+@Parcelize
 open class Articles(
         var address: String? = null,
         var date_from: String? = null,
@@ -18,6 +22,6 @@ open class Articles(
         @SerializedName("short_description")
         var shortDescription: String? = null,
         @SerializedName("phone_numbers")
-        var phoneNumbers: RealmList<PhoneNumbers>? = null,
+        var phoneNumbers: @RawValue RealmList<PhoneNumbers>? = null,
         var type: String? = null
-) : RealmObject()
+) : RealmObject(), Parcelable
