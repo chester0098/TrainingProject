@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fadineg.trainingproject.R;
+import com.fadineg.trainingproject.main.MainActivity;
 import com.fadineg.trainingproject.news.eventBus.NewsBus;
 import com.fadineg.trainingproject.news.model.Articles;
 import com.fadineg.trainingproject.news.model.News;
@@ -60,13 +61,11 @@ public class NewsFragment extends Fragment {
         newsProvider = (NewsProvider) context;
     }
 
-    public NewsFragment(List<News> newsList) {
-        this.newsList = newsList;
-    }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        newsList = (List<News>) getArguments().getSerializable(MainActivity.NEWS_BUNDLE_KEY);
 
         newsRecyclerAdapter = new NewsRecyclerAdapter(getArticlesList(newsList), getContext());
 

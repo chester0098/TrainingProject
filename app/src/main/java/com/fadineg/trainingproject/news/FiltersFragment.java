@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fadineg.trainingproject.R;
+import com.fadineg.trainingproject.main.MainActivity;
 import com.fadineg.trainingproject.news.eventBus.NewsBus;
 import com.fadineg.trainingproject.news.model.News;
 
@@ -27,10 +28,6 @@ public class FiltersFragment extends Fragment {
     private FiltersRecyclerAdapter filtersRecyclerAdapter;
     private List<News> newsList;
 
-    public FiltersFragment(List<News> newsList) {
-        this.newsList = newsList;
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -40,6 +37,8 @@ public class FiltersFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        newsList = (List<News>) getArguments().getSerializable(MainActivity.NEWS_BUNDLE_KEY);
 
         filtersRecyclerAdapter = new FiltersRecyclerAdapter(newsList);
 

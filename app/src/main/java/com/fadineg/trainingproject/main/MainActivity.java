@@ -32,6 +32,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.io.Serializable;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, NewsProvider {
     public static final int REQUEST_TAKE_PHOTO = 1;
@@ -39,10 +40,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public static final String FILES_DIR = "Pictures";
     public static final String FILE_NAME = "temp.jpg";
     public static final String ITEM_ID_KEY = "ItemId";
+    public static final String NEWS_BUNDLE_KEY = "newsList";
     public final String PROFILE_FRAGMENT_TAG = "profile";
     public final String NEWS_FRAGMENT_TAG = "news";
     public final String SEARCH_FRAGMENT_TAG = "search";
     public final String HELP_FRAGMENT_TAG = "help";
+
 
     private BottomNavigationView bottomNavigationView;
     private FragmentTransaction fragmentTransaction;
@@ -101,7 +104,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 loadFragment(new SearchFragment(), SEARCH_FRAGMENT_TAG);
                 break;
             case R.id.bnv_news:
-                loadFragment(new NewsFragment(realmManager.getNewsFromRealm()), NEWS_FRAGMENT_TAG);
+                NewsFragment newsFragment = new NewsFragment();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(NEWS_BUNDLE_KEY, (Serializable) realmManager.getNewsFromRealm());
+                newsFragment.setArguments(bundle);
+                loadFragment(newsFragment, NEWS_FRAGMENT_TAG);
                 break;
         }
         return false;
@@ -130,8 +137,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     @Override
     public void openFilters() {
+        FiltersFragment filtersFragment = new FiltersFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(NEWS_BUNDLE_KEY, (Serializable) realmManager.getNewsFromRealm());
+        filtersFragment.setArguments(bundle);
+
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fl_content, new FiltersFragment(realmManager.getNewsFromRealm())).addToBackStack(null);
+        fragmentTransaction.replace(R.id.fl_content, filtersFragment).addToBackStack(null);
         fragmentTransaction.commit();
     }
 
