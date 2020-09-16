@@ -37,12 +37,7 @@ public class FiltersRecyclerAdapter extends RecyclerView.Adapter<FiltersRecycler
     @Override
     public void onBindViewHolder(@NotNull final FiltersRecyclerAdapter.ViewHolder holder, final int position) {
         final News news = newsList.get(position);
-        holder.category.setText(news.getCategoryName());
-        holder.aSwitch.setChecked(news.getCategorySwitch());
-
-        holder.aSwitch.setOnCheckedChangeListener((CompoundButton buttonView, boolean isChecked) -> {
-            newsList.get(position).setCategorySwitch(isChecked);
-        });
+        holder.bind(news, newsList);
     }
 
 
@@ -59,6 +54,15 @@ public class FiltersRecyclerAdapter extends RecyclerView.Adapter<FiltersRecycler
             super(itemView);
             category = itemView.findViewById(R.id.rv_filters_title);
             aSwitch = itemView.findViewById(R.id.rv_filters_switch);
+        }
+
+        void bind(News news, List<News> newsList) {
+            category.setText(news.getCategoryName());
+            aSwitch.setChecked(news.getCategorySwitch());
+
+            aSwitch.setOnCheckedChangeListener((CompoundButton buttonView, boolean isChecked) -> {
+                newsList.get(getAdapterPosition()).setCategorySwitch(isChecked);
+            });
         }
     }
 }

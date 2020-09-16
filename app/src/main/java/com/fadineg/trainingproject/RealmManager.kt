@@ -1,15 +1,12 @@
 package com.fadineg.trainingproject
 
-import android.content.Context
 import com.fadineg.trainingproject.news.model.News
 import io.realm.Realm
 
-class RealmManager(_context: Context) {
-    var context: Context = _context
+class RealmManager() {
     var realm: Realm? = null
 
     fun createInstance() {
-        Realm.init(context)
         realm = Realm.getDefaultInstance()
     }
 

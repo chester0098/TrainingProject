@@ -31,8 +31,7 @@ public class HelpRecyclerAdapter extends RecyclerView.Adapter<HelpRecyclerAdapte
     @Override
     public void onBindViewHolder(@NotNull final ViewHolder holder, final int position) {
         final Help help = helpList.get(position);
-        holder.tvCategory.setText(help.getCategoryText());
-        holder.ivCategoryImage.setImageResource(help.getCategoryImage());
+        holder.bind(help);
     }
 
 
@@ -49,6 +48,11 @@ public class HelpRecyclerAdapter extends RecyclerView.Adapter<HelpRecyclerAdapte
             super(itemView);
             tvCategory = itemView.findViewById(R.id.rv_help_category);
             ivCategoryImage = itemView.findViewById(R.id.rv_help_image);
+        }
+
+        void bind(Help help) {
+            tvCategory.setText(help.getCategoryText());
+            ivCategoryImage.setImageResource(help.getCategoryImage());
         }
     }
 }

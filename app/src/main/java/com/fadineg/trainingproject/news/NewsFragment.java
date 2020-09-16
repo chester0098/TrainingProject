@@ -1,6 +1,7 @@
 package com.fadineg.trainingproject.news;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -21,6 +22,7 @@ import com.fadineg.trainingproject.news.model.Articles;
 import com.fadineg.trainingproject.news.model.News;
 
 import org.greenrobot.eventbus.EventBus;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -28,11 +30,12 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Executor;
 
-public class NewsFragment extends Fragment {
+public class NewsFragment extends Fragment implements ItemClickListener {
     private NewsRecyclerAdapter newsRecyclerAdapter;
     private NewsProvider newsProvider;
     private RecyclerView newsRv;
     private List<News> newsList;
+    private ItemClickListener itemClickListener;
     private Runnable newsPars = () -> {
         try {
             Thread.sleep(5000);
@@ -59,6 +62,7 @@ public class NewsFragment extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         newsProvider = (NewsProvider) context;
+        itemClickListener = this;
     }
 
     @Override
@@ -67,7 +71,7 @@ public class NewsFragment extends Fragment {
 
         newsList = (List<News>) getArguments().getSerializable(MainActivity.NEWS_BUNDLE_KEY);
 
-        newsRecyclerAdapter = new NewsRecyclerAdapter(getArticlesList(newsList), getContext());
+        newsRecyclerAdapter = new NewsRecyclerAdapter(getArticlesList(newsList), itemClickListener);
 
         Toolbar toolbar = view.findViewById(R.id.news_toolbar);
         newsRv = view.findViewById(R.id.news_rv);
@@ -103,5 +107,12 @@ public class NewsFragment extends Fragment {
                 set.addAll(news.getArticles());
         }
         return new ArrayList<>(set);
+    }
+
+    @Override
+    public void onItemClick(@NotNull Bundle bundle) {
+        Intent intent = new Intent(getContext(), NewsDescriptionActivity.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 }

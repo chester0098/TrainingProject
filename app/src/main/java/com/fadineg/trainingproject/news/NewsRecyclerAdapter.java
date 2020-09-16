@@ -1,8 +1,7 @@
 package com.fadineg.trainingproject.news;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +25,8 @@ import java.util.List;
 
 public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapter.ViewHolder> {
     private List<Articles> newsList;
-    private Context context;
+    private ItemClickListener listener;
+
     private static final String DEF_TYPE = "drawable";
     static final String EXTRA_TITLE = "Title";
     static final String EXTRA_FUND = "Fund";
@@ -39,9 +39,9 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
     private static final String DATE_TYPE_PERIOD = "time_period";
     private static final String DATE_TYPE_SINGLE = "single_day";
 
-    NewsRecyclerAdapter(List<Articles> helpList, Context context) {
+    NewsRecyclerAdapter(List<Articles> helpList, ItemClickListener listener) {
         this.newsList = helpList;
-        this.context = context;
+        this.listener = listener;
     }
 
     private List<Articles> getNewsList() {
@@ -59,55 +59,30 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
         return new NewsRecyclerAdapter.ViewHolder(v);
     }
 
-    @SuppressLint("SetTextI18n")
-    @Override
-    public void onBindViewHolder(@NotNull final NewsRecyclerAdapter.ViewHolder holder, final int position) {
-        final Articles articles = newsList.get(position);
-
-        String date = null;
-        if (articles.getType().equals(DATE_TYPE_PERIOD)) {
-            date = timeStylePeriod(articles.getDate_from(), articles.getDate_to());
-        } else date = timeStyleDate(articles.getDate_to());
-
-
-        StringBuilder phone = new StringBuilder();
-        for (PhoneNumbers phoneNumbers : articles.getPhoneNumbers()) {
-            phone.append(phoneNumbers.getNumber()).append('\n');
-        }
-
-        holder.newsTitle.setText(articles.getName());
-        holder.newsDescription.setText(articles.getShortDescription());
-        holder.newsDate.setText(date);
-
-        String finalDate = date;
-        holder.cardViewItem.setOnClickListener((View v) -> {
-            Intent intent = new Intent(context, NewsDescriptionActivity.class);
-            intent.putExtra(EXTRA_TITLE, articles.getName());
-            intent.putExtra(EXTRA_FUND, articles.getOrgName());
-            intent.putExtra(EXTRA_ADDRESS, articles.getAddress());
-            intent.putExtra(EXTRA_PHONE, phone.toString());
-            intent.putExtra(EXTRA_DESCRIPTION, articles.getDescription());
-            intent.putExtra(EXTRA_DATE, finalDate);
-            context.startActivity(intent);
-        });
-    }
-
-    private String timeStyleDate(String dateString) {
+    private static void timeStyleDate(String dateString, TextView dateTextView) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd MMMM, yyyy");
         LocalDate localDate = LocalDate.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"));
-        return dtf.format(localDate);
+        dateTextView.setText(dtf.format(localDate));
     }
 
-    private String timeStylePeriod(String dateStart, String dateEnd) {
+    private static void timeStylePeriod(String dateStart, String dateEnd, TextView dateTextView) {
         DateTimeFormatter dtfOld = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         DateTimeFormatter dtfNew = DateTimeFormatter.ofPattern("dd.MM");
         LocalDate localDateStart = LocalDate.parse(dateStart, dtfOld);
         LocalDate localDateEnd = LocalDate.parse(dateEnd, dtfOld);
         int days = (int) ChronoUnit.DAYS.between(LocalDate.now(), localDateEnd);
 
-        return context.getString(R.string.Left) + " " + days + " " + context.getString(R.string.days)
+        dateTextView.setText(dateTextView.getContext().getString(R.string.Left) + " " + days + " " + dateTextView.getContext().getString(R.string.days)
                 + dtfNew.format(localDateStart) + " - "
-                + dtfNew.format(localDateEnd) + ")";
+                + dtfNew.format(localDateEnd) + ")");
+    }
+
+    @SuppressLint("SetTextI18n")
+    @Override
+    public void onBindViewHolder(@NotNull final NewsRecyclerAdapter.ViewHolder holder, final int position) {
+        final Articles articles = newsList.get(position);
+        holder.bind(articles, listener);
+
     }
 
     void updateNewsList(List<Articles> updatedArticlesList) {
@@ -117,7 +92,6 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
         setNewsList(updatedArticlesList);
         newsDiffResult.dispatchUpdatesTo(this);
     }
-
 
     @Override
     public int getItemCount() {
@@ -138,6 +112,32 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
             newsTitle = itemView.findViewById(R.id.rv_news_title);
             newsDescription = itemView.findViewById(R.id.rv_news_description);
             newsDate = itemView.findViewById(R.id.rv_news_date);
+        }
+
+        void bind(Articles articles, ItemClickListener listener) {
+            if (articles.getType().equals(DATE_TYPE_PERIOD)) {
+                timeStylePeriod(articles.getDate_from(), articles.getDate_to(), newsDate);
+            } else timeStyleDate(articles.getDate_to(), newsDate);
+
+
+            StringBuilder phone = new StringBuilder();
+            for (PhoneNumbers phoneNumbers : articles.getPhoneNumbers()) {
+                phone.append(phoneNumbers.getNumber()).append('\n');
+            }
+
+            newsTitle.setText(articles.getName());
+            newsDescription.setText(articles.getShortDescription());
+
+            cardViewItem.setOnClickListener(v -> {
+                Bundle bundle = new Bundle();
+                bundle.putString(EXTRA_TITLE, articles.getName());
+                bundle.putString(EXTRA_FUND, articles.getOrgName());
+                bundle.putString(EXTRA_ADDRESS, articles.getAddress());
+                bundle.putString(EXTRA_PHONE, phone.toString());
+                bundle.putString(EXTRA_DESCRIPTION, articles.getDescription());
+                bundle.putString(EXTRA_DATE, newsDate.getText().toString());
+                listener.onItemClick(bundle);
+            });
         }
     }
 }

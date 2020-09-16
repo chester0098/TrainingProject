@@ -1,5 +1,6 @@
 package com.fadineg.trainingproject.splash;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,6 +13,10 @@ import com.fadineg.trainingproject.authorization.AuthorizationActivity;
 public class SplashActivity extends AppCompatActivity {
     private final int SPLASH_SCREEN_DURATION = 2000;
 
+    private static Intent newInstance(Context context) {
+        return new Intent(context, AuthorizationActivity.class);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,8 +25,7 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashActivity.this, AuthorizationActivity.class);
-                startActivity(intent);
+                startActivity(newInstance(getApplicationContext()));
                 finish();
             }
         }, SPLASH_SCREEN_DURATION);

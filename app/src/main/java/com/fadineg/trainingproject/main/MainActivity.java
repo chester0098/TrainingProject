@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.fadineg.trainingproject.R;
 import com.fadineg.trainingproject.RealmManager;
@@ -23,7 +22,6 @@ import com.fadineg.trainingproject.news.retrofit.RetrofitClient;
 import com.fadineg.trainingproject.profile.ProfileFragment;
 import com.fadineg.trainingproject.search.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.jakewharton.threetenabp.AndroidThreeTen;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -45,10 +43,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public final String NEWS_FRAGMENT_TAG = "news";
     public final String SEARCH_FRAGMENT_TAG = "search";
     public final String HELP_FRAGMENT_TAG = "help";
+    public final String FILTERS_FRAGMENT_TAG = "filters";
 
 
     private BottomNavigationView bottomNavigationView;
-    private FragmentTransaction fragmentTransaction;
 
     private RealmManager realmManager;
 
@@ -58,9 +56,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        AndroidThreeTen.init(this);
 
-        realmManager = new RealmManager(this);
+        realmManager = new RealmManager();
         realmManager.createInstance();
 
         RetrofitClient retrofitClient = new RetrofitClient();
@@ -70,7 +67,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         if (savedInstanceState == null) {
             retrofitClient.downloadData(this);
-
             bottomNavigationView.setSelectedItemId(R.id.bnv_help);
             bottomNavigationView.getMenu().findItem(R.id.bnv_help).setChecked(true);
         }
@@ -92,23 +88,24 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottomNavigationView.getMenu().findItem(item.getItemId()).setChecked(true);
         switch (item.getItemId()) {
             case R.id.bnv_profile:
-                loadFragment(new ProfileFragment(), PROFILE_FRAGMENT_TAG);
+                replaceFragment(new ProfileFragment(), PROFILE_FRAGMENT_TAG);
                 break;
             case R.id.bnv_history:
                 //будет реализовано позднее
                 break;
             case R.id.bnv_help:
-                loadFragment(new HelpFragment(), HELP_FRAGMENT_TAG);
+                replaceFragment(new HelpFragment(), HELP_FRAGMENT_TAG);
                 break;
             case R.id.bnv_search:
-                loadFragment(new SearchFragment(), SEARCH_FRAGMENT_TAG);
+                replaceFragment(new SearchFragment(), SEARCH_FRAGMENT_TAG);
                 break;
             case R.id.bnv_news:
                 NewsFragment newsFragment = new NewsFragment();
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(NEWS_BUNDLE_KEY, (Serializable) realmManager.getNewsFromRealm());
                 newsFragment.setArguments(bundle);
-                loadFragment(newsFragment, NEWS_FRAGMENT_TAG);
+
+                replaceFragment(newsFragment, NEWS_FRAGMENT_TAG);
                 break;
         }
         return false;
@@ -117,22 +114,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-
         outState.putInt(ITEM_ID_KEY, itemId);
     }
 
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-
         itemId = savedInstanceState.getInt(ITEM_ID_KEY);
         bottomNavigationView.getMenu().findItem(itemId).setChecked(true);
-    }
-
-    public void loadFragment(Fragment fragment, String fragmentTag) {
-        fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fl_content, fragment, fragmentTag);
-        fragmentTransaction.commit();
     }
 
     @Override
@@ -142,9 +131,22 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bundle.putSerializable(NEWS_BUNDLE_KEY, (Serializable) realmManager.getNewsFromRealm());
         filtersFragment.setArguments(bundle);
 
-        fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fl_content, filtersFragment).addToBackStack(null);
-        fragmentTransaction.commit();
+        addFragment(filtersFragment, FILTERS_FRAGMENT_TAG);
+    }
+
+    private void replaceFragment(Fragment fragment, String fragmentTag) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fl_content, fragment, fragmentTag)
+                .commit();
+    }
+
+    private void addFragment(Fragment fragment, String fragmentTag) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.fl_content, fragment, fragmentTag)
+                .addToBackStack(null)
+                .commit();
     }
 
     @Override

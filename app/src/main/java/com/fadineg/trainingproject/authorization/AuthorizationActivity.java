@@ -1,30 +1,21 @@
 package com.fadineg.trainingproject.authorization;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.fadineg.trainingproject.R;
 import com.fadineg.trainingproject.main.MainActivity;
-import com.fadineg.trainingproject.splash.SplashActivity;
-import com.jakewharton.rxbinding4.widget.RxTextView;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.core.Scheduler;
 import io.reactivex.rxjava3.functions.BiFunction;
-import io.reactivex.rxjava3.functions.Function;
 import io.reactivex.rxjava3.observers.DisposableObserver;
-import io.reactivex.rxjava3.schedulers.Schedulers;
-import io.reactivex.rxjava3.subjects.PublishSubject;
 
 public class AuthorizationActivity extends AppCompatActivity {
     private EditText password;
@@ -33,6 +24,10 @@ public class AuthorizationActivity extends AppCompatActivity {
 
     private final static String EDIT_EMAIL = "EMail";
     private final static String EDIT_PASSWORD = "Password";
+
+    private static Intent newInstance(Context context) {
+        return new Intent(context, MainActivity.class);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,14 +39,11 @@ public class AuthorizationActivity extends AppCompatActivity {
 
         join = findViewById(R.id.authorization_btn_join);
         join.setEnabled(false);
-        join.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AuthorizationActivity.this, MainActivity.class);
-                startActivity(intent);
+        join.setOnClickListener((View v) -> {
+            startActivity(newInstance(getApplicationContext()));
                 finish();
-            }
         });
+
 
         Observable<String> emailObservable = RxEditText.editTextObservable(email);
         Observable<String> passwordObservable = RxEditText.editTextObservable(password);

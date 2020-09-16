@@ -30,6 +30,7 @@ class RetrofitClient() {
 
     private fun onResponse(response: RealmList<News>, context: Context) {
         Toast.makeText(context, "Данные загружены", Toast.LENGTH_SHORT).show()
+
         EventBus.getDefault().post(NewsBus(response))
 
     }
