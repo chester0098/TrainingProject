@@ -1,4 +1,4 @@
-package com.fadineg.trainingproject.news;
+package com.fadineg.trainingproject.news.filters_fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,24 +9,25 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.arellomobile.mvp.MvpAppCompatFragment;
+import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.fadineg.trainingproject.R;
-import com.fadineg.trainingproject.main.MainActivity;
-import com.fadineg.trainingproject.news.eventBus.NewsBus;
+import com.fadineg.trainingproject.main.MainPresenter;
 import com.fadineg.trainingproject.news.model.News;
 
-import org.greenrobot.eventbus.EventBus;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
 
-public class FiltersFragment extends Fragment {
+public class FiltersFragment extends MvpAppCompatFragment implements FiltersFragmentView {
     private RecyclerView filtersRv;
-    private FiltersRecyclerAdapter filtersRecyclerAdapter;
-    private List<News> newsList;
+
+    @InjectPresenter
+    FiltersFragmentPresenter filtersFragmentPresenter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,9 +39,7 @@ public class FiltersFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        newsList = (List<News>) getArguments().getSerializable(MainActivity.NEWS_BUNDLE_KEY);
-
-        filtersRecyclerAdapter = new FiltersRecyclerAdapter(newsList);
+        filtersFragmentPresenter.createAdapter((List<News>) getArguments().getSerializable(MainPresenter.NEWS_BUNDLE_KEY));
 
         filtersRv = view.findViewById(R.id.filters_rv);
         filtersRv.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -53,7 +52,7 @@ public class FiltersFragment extends Fragment {
         toolbar.setOnMenuItemClickListener((MenuItem item) -> {
             if (item.getItemId() == R.id.action_check) {
                 getActivity().onBackPressed();
-                EventBus.getDefault().post(new NewsBus(filtersRecyclerAdapter.getNewsList()));
+                filtersFragmentPresenter.postNewsList();
             }
             return false;
         });
@@ -61,8 +60,7 @@ public class FiltersFragment extends Fragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void setRecyclerAdapter(@NotNull FiltersRecyclerAdapter filtersRecyclerAdapter) {
         filtersRv.setAdapter(filtersRecyclerAdapter);
     }
 }

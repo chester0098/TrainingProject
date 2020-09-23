@@ -1,14 +1,15 @@
 package com.fadineg.trainingproject.news;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.fadineg.trainingproject.R;
+import com.fadineg.trainingproject.news.news_fragment.NewsRecyclerAdapter;
 
 public class NewsDescriptionActivity extends AppCompatActivity {
 

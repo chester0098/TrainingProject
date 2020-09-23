@@ -1,4 +1,4 @@
-package com.fadineg.trainingproject.news;
+package com.fadineg.trainingproject.news.news_fragment;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -28,13 +28,13 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
     private ItemClickListener listener;
 
     private static final String DEF_TYPE = "drawable";
-    static final String EXTRA_TITLE = "Title";
-    static final String EXTRA_FUND = "Fund";
-    static final String EXTRA_ADDRESS = "Address";
-    static final String EXTRA_PHONE = "Phone";
-    static final String EXTRA_IMAGE = "Image";
-    static final String EXTRA_DESCRIPTION = "Description";
-    static final String EXTRA_DATE = "Date";
+    public static final String EXTRA_TITLE = "Title";
+    public static final String EXTRA_FUND = "Fund";
+    public static final String EXTRA_ADDRESS = "Address";
+    public static final String EXTRA_PHONE = "Phone";
+    public static final String EXTRA_IMAGE = "Image";
+    public static final String EXTRA_DESCRIPTION = "Description";
+    public static final String EXTRA_DATE = "Date";
 
     private static final String DATE_TYPE_PERIOD = "time_period";
     private static final String DATE_TYPE_SINGLE = "single_day";

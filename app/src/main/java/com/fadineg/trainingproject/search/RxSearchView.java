@@ -7,7 +7,7 @@ import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observable;
 
 public class RxSearchView {
-    static Observable<String> searchViewObservable(@NonNull SearchView searchView) {
+    public static Observable<String> searchViewObservable(@NonNull SearchView searchView) {
         return Observable.create(emitter -> {
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override

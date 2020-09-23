@@ -14,7 +14,7 @@ import androidx.core.content.FileProvider;
 import androidx.fragment.app.DialogFragment;
 
 import com.fadineg.trainingproject.R;
-import com.fadineg.trainingproject.main.MainActivity;
+import com.fadineg.trainingproject.main.MainPresenter;
 
 import java.io.File;
 
@@ -45,17 +45,17 @@ public class ChangeDialogFragment extends DialogFragment {
         view.findViewById(R.id.choose_photo).setOnClickListener((View v) -> {
             Intent intent = new Intent(Intent.ACTION_PICK);
             intent.setType("image/*");
-            getActivity().startActivityForResult(intent, MainActivity.REQUEST_CHOOSE_PHOTO);
+            getActivity().startActivityForResult(intent, MainPresenter.REQUEST_CHOOSE_PHOTO);
             dismiss();
         });
 
         view.findViewById(R.id.take_photo).setOnClickListener((View v) -> {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            File file = new File(getContext().getExternalFilesDir(MainActivity.FILES_DIR),
-                    MainActivity.FILE_NAME);
+            File file = new File(getContext().getExternalFilesDir(MainPresenter.FILES_DIR),
+                    MainPresenter.FILE_NAME);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(getContext(),
                     getActivity().getPackageName() + FILE_PROVIDER, file));
-            getActivity().startActivityForResult(intent, MainActivity.REQUEST_TAKE_PHOTO);
+            getActivity().startActivityForResult(intent, MainPresenter.REQUEST_TAKE_PHOTO);
             dismiss();
         });
 

@@ -1,23 +1,22 @@
-package com.fadineg.trainingproject.search;
+package com.fadineg.trainingproject.search.search_fragment;
 
 import android.content.Context;
 import android.os.Parcelable;
-import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.fadineg.trainingproject.R;
+import com.fadineg.trainingproject.search.events_search_fragment.EventsSearchFragment;
 
 import org.jetbrains.annotations.NotNull;
 
 
 public class SearchViewPagerAdapter extends FragmentPagerAdapter {
     private Context context;
-    private EventsSearchVewPagerFragment page1;
-    private EventsSearchVewPagerFragment page2;
+    private EventsSearchFragment page1;
+    private EventsSearchFragment page2;
 
 
     @Override public Parcelable saveState() {
@@ -27,8 +26,8 @@ public class SearchViewPagerAdapter extends FragmentPagerAdapter {
     SearchViewPagerAdapter(FragmentManager supportFragmentManager, Context context) {
         super(supportFragmentManager, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         this.context = context;
-        page1 = new EventsSearchVewPagerFragment();
-        page2 = new EventsSearchVewPagerFragment();
+        page1 = new EventsSearchFragment();
+        page2 = new EventsSearchFragment();
     }
 
     @NotNull

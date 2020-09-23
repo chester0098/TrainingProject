@@ -1,4 +1,4 @@
-package com.fadineg.trainingproject.news;
+package com.fadineg.trainingproject.news.filters_fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;

@@ -1,12 +1,13 @@
 package com.fadineg.trainingproject.search;
 
-class SearchStringBus {
-    private String searchString;
-    SearchStringBus(String searchString){
+public class SearchStringBus {
+    public String searchString;
+
+    public SearchStringBus(String searchString) {
         this.searchString = searchString;
     }
 
-    String getSearchString() {
+    public String getSearchString() {
         return searchString;
     }
 }

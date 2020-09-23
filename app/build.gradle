@@ -52,6 +52,9 @@ dependencies {
     implementation "io.reactivex.rxjava3:rxjava:3.0.5"
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
     implementation 'com.jakewharton.rxbinding4:rxbinding:4.0.0'
+    implementation 'tech.schoolhelper:moxy-x:1.7.0'
+    implementation 'tech.schoolhelper:moxy-x-androidx:1.7.0'
+    kapt 'tech.schoolhelper:moxy-x-compiler:1.7.0'
 }
 repositories {
     mavenCentral()

@@ -1,4 +1,4 @@
-package com.fadineg.trainingproject.search;
+package com.fadineg.trainingproject.search.events_search_fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fadineg.trainingproject.R;
-import com.fadineg.trainingproject.news.NewsDiffUtilCallback;
 import com.fadineg.trainingproject.news.model.Articles;
+import com.fadineg.trainingproject.news.news_fragment.NewsDiffUtilCallback;
 
 import org.jetbrains.annotations.NotNull;
 

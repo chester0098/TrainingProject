@@ -1,4 +1,4 @@
-package com.fadineg.trainingproject.news
+package com.fadineg.trainingproject.news.news_fragment
 
 import android.os.Bundle
 

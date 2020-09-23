@@ -18,7 +18,7 @@ import static com.fadineg.trainingproject.R.layout;
 
 public class ProfileFragment extends Fragment {
     private ImageView userPhoto;
-    static final String PHOTO_FRAGMENT_TAG = "PhotoFragmentDialog";
+    private static final String PHOTO_FRAGMENT_TAG = "PhotoFragmentDialog";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
