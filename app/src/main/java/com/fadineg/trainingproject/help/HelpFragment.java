@@ -17,7 +17,7 @@ import com.fadineg.trainingproject.R;
 public class HelpFragment extends MvpAppCompatFragment implements HelpView {
     @InjectPresenter
     HelpPresenter helpPresenter;
-
+    private HelpRecyclerAdapter helpRecyclerAdapter;
     private RecyclerView helpRv;
 
     @Override
@@ -29,12 +29,17 @@ public class HelpFragment extends MvpAppCompatFragment implements HelpView {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        helpRecyclerAdapter = new HelpRecyclerAdapter(helpPresenter.getHelpList());
+
         helpRv = view.findViewById(R.id.help_rv);
         helpRv.setHasFixedSize(true);
         helpRv.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+
+        setRecyclerAdapter();
+
     }
 
-    public void setRecyclerAdapter(HelpRecyclerAdapter helpRecyclerAdapter) {
+    public void setRecyclerAdapter() {
         helpRv.setAdapter(helpRecyclerAdapter);
     }
 }

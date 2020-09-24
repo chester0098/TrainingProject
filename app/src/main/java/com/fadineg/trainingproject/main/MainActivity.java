@@ -11,17 +11,30 @@ import androidx.fragment.app.Fragment;
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.fadineg.trainingproject.R;
+import com.fadineg.trainingproject.help.HelpFragment;
 import com.fadineg.trainingproject.news.NewsProvider;
+import com.fadineg.trainingproject.news.filters_fragment.FiltersFragment;
 import com.fadineg.trainingproject.news.model.News;
 import com.fadineg.trainingproject.news.news_fragment.NewsFragment;
-import com.fadineg.trainingproject.profile.ProfileFragment;
+import com.fadineg.trainingproject.profile.profile_fragment.ProfileFragment;
+import com.fadineg.trainingproject.search.search_fragment.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Serializable;
 import java.util.List;
 
+
 public class MainActivity extends MvpAppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, NewsProvider, MainView {
+    public static final int REQUEST_TAKE_PHOTO = 1;
+    public static final int REQUEST_CHOOSE_PHOTO = 2;
+    public static final String NEWS_BUNDLE_KEY = "newsList";
+    public final String PROFILE_FRAGMENT_TAG = "profile";
+    public final String NEWS_FRAGMENT_TAG = "news";
+    public final String SEARCH_FRAGMENT_TAG = "search";
+    public final String HELP_FRAGMENT_TAG = "help";
+    public final String FILTERS_FRAGMENT_TAG = "filters";
 
     @InjectPresenter
     MainPresenter mainPresenter;
@@ -46,16 +59,40 @@ public class MainActivity extends MvpAppCompatActivity implements BottomNavigati
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         bottomNavigationView.getMenu().findItem(item.getItemId()).setChecked(true);
-        mainPresenter.onNavigationItemSelected(item.getItemId());
+        switch (item.getItemId()) {
+            case R.id.bnv_profile:
+                replaceFragment(new ProfileFragment(), PROFILE_FRAGMENT_TAG);
+                break;
+            case R.id.bnv_history:
+                //будет реализовано позднее
+                break;
+            case R.id.bnv_help:
+                replaceFragment(new HelpFragment(), HELP_FRAGMENT_TAG);
+                break;
+            case R.id.bnv_search:
+                replaceFragment(new SearchFragment(), SEARCH_FRAGMENT_TAG);
+                break;
+            case R.id.bnv_news:
+                NewsFragment newsFragment = new NewsFragment();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(NEWS_BUNDLE_KEY, (Serializable) mainPresenter.getNews());
+                newsFragment.setArguments(bundle);
+
+                replaceFragment(newsFragment, NEWS_FRAGMENT_TAG);
+                break;
+        }
         return false;
     }
 
     @Override
     public void openFilters() {
-        mainPresenter.openFilters();
+        FiltersFragment filtersFragment = new FiltersFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(NEWS_BUNDLE_KEY, (Serializable) mainPresenter.getNews());
+        filtersFragment.setArguments(bundle);
+        addFragment(filtersFragment, FILTERS_FRAGMENT_TAG);
     }
 
-    @Override
     public void replaceFragment(@NotNull Fragment fragment, @NotNull String fragmentTag) {
         getSupportFragmentManager()
                 .beginTransaction()
@@ -63,7 +100,6 @@ public class MainActivity extends MvpAppCompatActivity implements BottomNavigati
                 .commit();
     }
 
-    @Override
     public void addFragment(Fragment fragment, String fragmentTag) {
         getSupportFragmentManager()
                 .beginTransaction()
@@ -75,12 +111,16 @@ public class MainActivity extends MvpAppCompatActivity implements BottomNavigati
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        mainPresenter.onActivityResult(requestCode, data, getApplicationContext());
+        if (requestCode == REQUEST_TAKE_PHOTO) {
+            mainPresenter.takePhoto(data, getApplicationContext());
+        } else if (requestCode == REQUEST_CHOOSE_PHOTO) {
+            mainPresenter.choosePhoto(data, getApplicationContext());
+        }
     }
 
     @Override
-    public void changeUserPhoto(Bitmap userPhoto) {
-        Fragment profileFragment = getSupportFragmentManager().findFragmentByTag(MainPresenter.PROFILE_FRAGMENT_TAG);
+    public void updateUserPhoto(@NotNull Bitmap userPhoto) {
+        Fragment profileFragment = getSupportFragmentManager().findFragmentByTag(PROFILE_FRAGMENT_TAG);
         if (profileFragment != null) {
             ((ProfileFragment) profileFragment).setUserPhoto(userPhoto);
         }
@@ -88,7 +128,7 @@ public class MainActivity extends MvpAppCompatActivity implements BottomNavigati
 
     @Override
     public void updateNewsFragment(@NotNull List<? extends News> newsList) {
-        Fragment newsFragment = getSupportFragmentManager().findFragmentByTag(MainPresenter.NEWS_FRAGMENT_TAG);
+        Fragment newsFragment = getSupportFragmentManager().findFragmentByTag(NEWS_FRAGMENT_TAG);
         if (newsFragment != null && newsFragment.isVisible()) {
             ((NewsFragment) newsFragment).updateNewsList((List<News>) newsList);
         }

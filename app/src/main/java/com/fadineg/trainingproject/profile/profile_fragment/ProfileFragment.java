@@ -1,4 +1,4 @@
-package com.fadineg.trainingproject.profile;
+package com.fadineg.trainingproject.profile.profile_fragment;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -9,14 +9,19 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
-import static com.fadineg.trainingproject.R.drawable.image_man;
+import com.arellomobile.mvp.MvpAppCompatFragment;
+import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.fadineg.trainingproject.profile.change_dialog_fragment.ChangeDialogFragment;
+
 import static com.fadineg.trainingproject.R.id;
 import static com.fadineg.trainingproject.R.layout;
 
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends MvpAppCompatFragment implements ProfileView {
+    @InjectPresenter
+    ProfilePresenter profilePresenter;
+
     private ImageView userPhoto;
     private static final String PHOTO_FRAGMENT_TAG = "PhotoFragmentDialog";
 
@@ -30,7 +35,6 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         userPhoto = view.findViewById(id.profile_iv_userPhoto);
-        userPhoto.setImageResource(image_man);
         ChangeDialogFragment changeDialogFragment = new ChangeDialogFragment();
         userPhoto.setOnClickListener((View v) -> {
             changeDialogFragment.setDialogListener(data -> {

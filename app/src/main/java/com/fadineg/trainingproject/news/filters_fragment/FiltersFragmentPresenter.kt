@@ -8,18 +8,7 @@ import org.greenrobot.eventbus.EventBus
 
 @InjectViewState
 class FiltersFragmentPresenter : MvpPresenter<FiltersFragmentView>() {
-    private lateinit var filtersRecyclerAdapter: FiltersRecyclerAdapter
-
-    override fun onFirstViewAttach() {
-        super.onFirstViewAttach()
-        viewState.setRecyclerAdapter(filtersRecyclerAdapter)
-    }
-
-    fun postNewsList() {
-        EventBus.getDefault().post(NewsBus(filtersRecyclerAdapter.newsList))
-    }
-
-    fun createAdapter(newsList: List<News>) {
-        filtersRecyclerAdapter = FiltersRecyclerAdapter(newsList)
+    fun postNewsList(newsList: List<News>) {
+        EventBus.getDefault().post(NewsBus(newsList))
     }
 }

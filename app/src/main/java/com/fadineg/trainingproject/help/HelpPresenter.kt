@@ -5,10 +5,9 @@ import com.arellomobile.mvp.MvpPresenter
 
 @InjectViewState
 class HelpPresenter : MvpPresenter<HelpView>() {
-    override fun onFirstViewAttach() {
-        super.onFirstViewAttach()
-        val createHelpList = CreateHelpList()
-        val adapter = HelpRecyclerAdapter(createHelpList.getHelpList())
-        viewState.setRecyclerAdapter(adapter)
+    private lateinit var createHelpList: CreateHelpList
+    fun getHelpList(): MutableList<Help> {
+        createHelpList = CreateHelpList()
+        return createHelpList.getHelpList()
     }
 }

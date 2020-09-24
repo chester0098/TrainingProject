@@ -11,20 +11,18 @@ import org.greenrobot.eventbus.ThreadMode
 
 @InjectViewState
 class EventsSearchFragmentPresenter : MvpPresenter<EventsSearchFragmentView>() {
-    var articlesList = mutableListOf<Articles>()
-    lateinit var eventsRecyclerAdapter: EventsRecyclerAdapter
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
-
         EventBus.getDefault().register(this)
+    }
 
-
+    fun getArticles(): List<Articles> {
+        val articlesList = mutableListOf<Articles>()
         for (news in MainPresenter.realmManager.getNewsFromRealm()!!) {
             news.articles?.let { articlesList.addAll(it) }
         }
-        eventsRecyclerAdapter = EventsRecyclerAdapter(articlesList)
-        viewState.setSearchRecyclerView(eventsRecyclerAdapter)
+        return articlesList
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -33,7 +31,7 @@ class EventsSearchFragmentPresenter : MvpPresenter<EventsSearchFragmentView>() {
             viewState.setPlugVisible()
         else {
             viewState.setPlugGone()
-            eventsRecyclerAdapter.filterResults(searchStringBus.searchString)
+            viewState.updateAdapter(searchStringBus.searchString)
         }
     }
 

@@ -17,8 +17,9 @@ import com.fadineg.trainingproject.R;
 public class EventsSearchFragment extends MvpAppCompatFragment implements EventsSearchFragmentView {
     @InjectPresenter
     EventsSearchFragmentPresenter eventsSearchFragmentPresenter;
+
     private ConstraintLayout plug;
-    private RecyclerView rvSearch;
+    private EventsRecyclerAdapter eventsRecyclerAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -30,15 +31,18 @@ public class EventsSearchFragment extends MvpAppCompatFragment implements Events
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        eventsRecyclerAdapter = new EventsRecyclerAdapter(eventsSearchFragmentPresenter.getArticles());
+
         plug = view.findViewById(R.id.search_plug);
 
-        rvSearch = view.findViewById(R.id.events_rv);
+        RecyclerView rvSearch = view.findViewById(R.id.events_rv);
         rvSearch.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rvSearch.setAdapter(eventsRecyclerAdapter);
     }
 
     @Override
-    public void setSearchRecyclerView(EventsRecyclerAdapter eventsRecyclerAdapter) {
-        rvSearch.setAdapter(eventsRecyclerAdapter);
+    public void updateAdapter(String searchString) {
+        eventsRecyclerAdapter.filterResults(searchString);
     }
 
     @Override
