@@ -34,6 +34,10 @@ public class NewsFragment extends MvpAppCompatFragment implements NewsFragmentVi
     private MainView mainView;
     private NewsRecyclerAdapter newsRecyclerAdapter;
 
+    private static Intent newInstance(Context context) {
+        return new Intent(context, NewsDescriptionActivity.class);
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,32 +56,6 @@ public class NewsFragment extends MvpAppCompatFragment implements NewsFragmentVi
         mainView = (MainView) context;
     }
 
-    private static Intent newInstance(Context context) {
-        return new Intent(context, NewsDescriptionActivity.class);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        ItemClickListener itemClickListener = this;
-        List<News> newsList = (List<News>) getArguments().getSerializable(MainActivity.NEWS_BUNDLE_KEY);
-        newsRecyclerAdapter = new NewsRecyclerAdapter(newsFragmentPresenter.getArticlesList(newsList), itemClickListener);
-
-        Toolbar toolbar = view.findViewById(R.id.news_toolbar);
-        RecyclerView newsRv = view.findViewById(R.id.news_rv);
-        newsRv.setLayoutManager(new LinearLayoutManager(getContext()));
-        newsRv.setAdapter(newsRecyclerAdapter);
-
-        toolbar.setOnMenuItemClickListener((MenuItem item) -> {
-            if (item.getItemId() == R.id.action_filter) {
-                mainView.openFilters();
-            }
-            return false;
-        });
-
-    }
-
     @Override
     public void updateNewsList(@NotNull List<? extends News> newNewsList) {
         newsRecyclerAdapter.updateNewsList(newsFragmentPresenter.getArticlesList((List<News>) newNewsList));
@@ -86,5 +64,26 @@ public class NewsFragment extends MvpAppCompatFragment implements NewsFragmentVi
     @Override
     public void onItemClick(@NotNull Bundle bundle) {
         startActivity(newInstance(getContext()).putExtras(bundle));
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        List<News> newsList = (List<News>) getArguments().getSerializable(MainActivity.NEWS_BUNDLE_KEY);
+        newsRecyclerAdapter = new NewsRecyclerAdapter(newsFragmentPresenter.getArticlesList(newsList), this);
+
+        RecyclerView newsRv = view.findViewById(R.id.news_rv);
+        newsRv.setLayoutManager(new LinearLayoutManager(getContext()));
+        newsRv.setAdapter(newsRecyclerAdapter);
+
+        Toolbar toolbar = view.findViewById(R.id.news_toolbar);
+        toolbar.setOnMenuItemClickListener((MenuItem item) -> {
+            if (item.getItemId() == R.id.action_filter) {
+                mainView.openFilters();
+            }
+            return false;
+        });
+
     }
 }

@@ -1,4 +1,4 @@
-package com.fadineg.trainingproject.presentation.authorization;
+package com.fadineg.trainingproject.domain.rxjava;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -7,8 +7,8 @@ import android.widget.EditText;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observable;
 
-class RxEditText {
-    static Observable<String> editTextObservable(@NonNull EditText editText) {
+public class RxEditText {
+    public static Observable<String> editTextObservable(@NonNull EditText editText) {
 
         return Observable.create(emitter -> {
 

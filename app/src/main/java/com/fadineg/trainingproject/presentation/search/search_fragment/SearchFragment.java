@@ -58,13 +58,6 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchFragme
             searchViewString = savedInstanceState.getString(SEARCH_STRING_KEY);
         }
 
-
-        SearchViewPagerAdapter mFragmentAdapter = new SearchViewPagerAdapter(getChildFragmentManager(), getContext());
-
-        mViewPager = view.findViewById(R.id.search_viewPager);
-        mTabLayout = view.findViewById(R.id.search_tabLayout);
-
-
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
         mSearchView = view.findViewById(R.id.searchView);
         mSearchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
@@ -72,7 +65,9 @@ public class SearchFragment extends MvpAppCompatFragment implements SearchFragme
         mSearchView.setIconified(false);
         mSearchView.clearFocus();
 
-
+        SearchViewPagerAdapter mFragmentAdapter = new SearchViewPagerAdapter(getChildFragmentManager());
+        mViewPager = view.findViewById(R.id.search_viewPager);
+        mTabLayout = view.findViewById(R.id.search_tabLayout);
         mViewPager.setAdapter(mFragmentAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
 

@@ -19,11 +19,6 @@ import javax.inject.Inject
 
 @InjectViewState
 class MainPresenter() : MvpPresenter<MainView>() {
-    companion object {
-        const val FILES_DIR = "Pictures"
-        const val FILE_NAME = "temp.jpg"
-    }
-
     init {
         TrainingApplication.appComponent.inject(this)
     }
@@ -67,9 +62,13 @@ class MainPresenter() : MvpPresenter<MainView>() {
         }
     }
 
-
     override fun onDestroy() {
         super.onDestroy()
         EventBus.getDefault().unregister(this)
+    }
+
+    companion object {
+        const val FILES_DIR = "Pictures"
+        const val FILE_NAME = "temp.jpg"
     }
 }

@@ -39,7 +39,6 @@ public class FiltersFragment extends MvpAppCompatFragment implements FiltersFrag
 
         FiltersRecyclerAdapter filtersRecyclerAdapter =
                 new FiltersRecyclerAdapter((List<News>) getArguments().getSerializable(MainActivity.NEWS_BUNDLE_KEY));
-
         filtersRv = view.findViewById(R.id.filters_rv);
         filtersRv.setLayoutManager(new LinearLayoutManager(getContext()));
         filtersRv.setAdapter(filtersRecyclerAdapter);

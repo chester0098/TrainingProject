@@ -10,6 +10,7 @@ import android.widget.EditText;
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.fadineg.trainingproject.R;
+import com.fadineg.trainingproject.domain.rxjava.RxEditText;
 import com.fadineg.trainingproject.presentation.main.MainActivity;
 
 import io.reactivex.rxjava3.annotations.NonNull;
@@ -27,24 +28,6 @@ public class AuthorizationActivity extends MvpAppCompatActivity implements Autho
 
     private static Intent newInstance(Context context) {
         return new Intent(context, MainActivity.class);
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_authorization);
-
-        password = findViewById(R.id.authorization_et_password);
-        email = findViewById(R.id.authorization_et_email);
-        join = findViewById(R.id.authorization_btn_join);
-
-        subscribe();
-
-        join.setEnabled(false);
-        join.setOnClickListener((View v) -> {
-            startActivity(newInstance(getApplicationContext()));
-            finish();
-        });
     }
 
     public void updateButton(boolean valid) {
@@ -84,5 +67,23 @@ public class AuthorizationActivity extends MvpAppCompatActivity implements Autho
             public void onComplete() {
             }
         });
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_authorization);
+
+        password = findViewById(R.id.authorization_et_password);
+        email = findViewById(R.id.authorization_et_email);
+
+        join = findViewById(R.id.authorization_btn_join);
+        join.setEnabled(false);
+        join.setOnClickListener((View v) -> {
+            startActivity(newInstance(getApplicationContext()));
+            finish();
+        });
+
+        subscribe();
     }
 }

@@ -44,37 +44,11 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
         this.listener = listener;
     }
 
-    private List<Articles> getNewsList() {
-        return newsList;
-    }
-
-    private void setNewsList(List<Articles> newsList) {
-        this.newsList = newsList;
-    }
-
     @NotNull
     @Override
     public NewsRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_news_item, parent, false);
         return new NewsRecyclerAdapter.ViewHolder(v);
-    }
-
-    private static void timeStyleDate(String dateString, TextView dateTextView) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd MMMM, yyyy");
-        LocalDate localDate = LocalDate.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"));
-        dateTextView.setText(dtf.format(localDate));
-    }
-
-    private static void timeStylePeriod(String dateStart, String dateEnd, TextView dateTextView) {
-        DateTimeFormatter dtfOld = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        DateTimeFormatter dtfNew = DateTimeFormatter.ofPattern("dd.MM");
-        LocalDate localDateStart = LocalDate.parse(dateStart, dtfOld);
-        LocalDate localDateEnd = LocalDate.parse(dateEnd, dtfOld);
-        int days = (int) ChronoUnit.DAYS.between(LocalDate.now(), localDateEnd);
-
-        dateTextView.setText(dateTextView.getContext().getString(R.string.Left) + " " + days + " " + dateTextView.getContext().getString(R.string.days)
-                + dtfNew.format(localDateStart) + " - "
-                + dtfNew.format(localDateEnd) + ")");
     }
 
     @SuppressLint("SetTextI18n")
@@ -83,14 +57,6 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
         final Articles articles = newsList.get(position);
         holder.bind(articles, listener);
 
-    }
-
-    void updateNewsList(List<Articles> updatedArticlesList) {
-        NewsDiffUtilCallback newsDiffUtilCallback =
-                new NewsDiffUtilCallback(getNewsList(), updatedArticlesList);
-        DiffUtil.DiffResult newsDiffResult = DiffUtil.calculateDiff(newsDiffUtilCallback);
-        setNewsList(updatedArticlesList);
-        newsDiffResult.dispatchUpdatesTo(this);
     }
 
     @Override
@@ -139,5 +105,39 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
                 listener.onItemClick(bundle);
             });
         }
+    }
+
+    private static void timeStyleDate(String dateString, TextView dateTextView) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd MMMM, yyyy");
+        LocalDate localDate = LocalDate.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"));
+        dateTextView.setText(dtf.format(localDate));
+    }
+
+    private static void timeStylePeriod(String dateStart, String dateEnd, TextView dateTextView) {
+        DateTimeFormatter dtfOld = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        DateTimeFormatter dtfNew = DateTimeFormatter.ofPattern("dd.MM");
+        LocalDate localDateStart = LocalDate.parse(dateStart, dtfOld);
+        LocalDate localDateEnd = LocalDate.parse(dateEnd, dtfOld);
+        int days = (int) ChronoUnit.DAYS.between(LocalDate.now(), localDateEnd);
+
+        dateTextView.setText(dateTextView.getContext().getString(R.string.Left) + " " + days + " " + dateTextView.getContext().getString(R.string.days)
+                + dtfNew.format(localDateStart) + " - "
+                + dtfNew.format(localDateEnd) + ")");
+    }
+
+    void updateNewsList(List<Articles> updatedArticlesList) {
+        NewsDiffUtilCallback newsDiffUtilCallback =
+                new NewsDiffUtilCallback(getNewsList(), updatedArticlesList);
+        DiffUtil.DiffResult newsDiffResult = DiffUtil.calculateDiff(newsDiffUtilCallback);
+        setNewsList(updatedArticlesList);
+        newsDiffResult.dispatchUpdatesTo(this);
+    }
+
+    private List<Articles> getNewsList() {
+        return newsList;
+    }
+
+    private void setNewsList(List<Articles> newsList) {
+        this.newsList = newsList;
     }
 }

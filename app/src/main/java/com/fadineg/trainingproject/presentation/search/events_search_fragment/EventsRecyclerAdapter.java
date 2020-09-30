@@ -27,14 +27,6 @@ public class EventsRecyclerAdapter extends RecyclerView.Adapter<EventsRecyclerAd
         this.updatedEventList = nkoList;
     }
 
-    private List<Articles> getUpdatedEventList() {
-        return updatedEventList;
-    }
-
-    private void setUpdatedEventList(List<Articles> updatedEventList) {
-        this.updatedEventList = updatedEventList;
-    }
-
     @NotNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -65,6 +57,15 @@ public class EventsRecyclerAdapter extends RecyclerView.Adapter<EventsRecyclerAd
         }
     }
 
+    void filterResults(String constraint) {
+        List<Articles> results = new ArrayList<>();
+        for (Articles articles : eventsList) {
+            if (articles.getName().toLowerCase().contains(constraint)) {
+                results.add(articles);
+            }
+        }
+        updateEventsList(results);
+    }
 
     private void updateEventsList(List<Articles> updatedNewsList) {
         NewsDiffUtilCallback newsDiffUtilCallback =
@@ -74,13 +75,11 @@ public class EventsRecyclerAdapter extends RecyclerView.Adapter<EventsRecyclerAd
         newsDiffResult.dispatchUpdatesTo(this);
     }
 
-    void filterResults(String constraint) {
-        List<Articles> results = new ArrayList<>();
-        for (Articles articles : eventsList) {
-            if (articles.getName().toLowerCase().contains(constraint)) {
-                results.add(articles);
-            }
-        }
-        updateEventsList(results);
+    private List<Articles> getUpdatedEventList() {
+        return updatedEventList;
+    }
+
+    private void setUpdatedEventList(List<Articles> updatedEventList) {
+        this.updatedEventList = updatedEventList;
     }
 }

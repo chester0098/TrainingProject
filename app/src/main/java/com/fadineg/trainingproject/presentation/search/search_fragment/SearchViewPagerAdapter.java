@@ -1,6 +1,5 @@
 package com.fadineg.trainingproject.presentation.search.search_fragment;
 
-import android.content.Context;
 import android.os.Parcelable;
 
 import androidx.fragment.app.Fragment;
@@ -14,7 +13,6 @@ import org.jetbrains.annotations.NotNull;
 
 
 public class SearchViewPagerAdapter extends FragmentPagerAdapter {
-    private Context context;
     private EventsSearchFragment page1;
     private EventsSearchFragment page2;
 
@@ -23,9 +21,8 @@ public class SearchViewPagerAdapter extends FragmentPagerAdapter {
         return null;
     }
 
-    SearchViewPagerAdapter(FragmentManager supportFragmentManager, Context context) {
+    SearchViewPagerAdapter(FragmentManager supportFragmentManager) {
         super(supportFragmentManager, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        this.context = context;
         page1 = new EventsSearchFragment();
         page2 = new EventsSearchFragment();
     }
@@ -47,10 +44,10 @@ public class SearchViewPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
-                return context.getString(R.string.pageTitle1);
+                return page1.getContext().getString(R.string.pageTitle1);
 
             case 1:
-                return context.getString(R.string.pageTitle2);
+                return page2.getContext().getString(R.string.pageTitle2);
 
             default:
                 return null;

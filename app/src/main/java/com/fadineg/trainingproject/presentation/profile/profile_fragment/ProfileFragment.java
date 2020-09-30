@@ -34,8 +34,10 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        userPhoto = view.findViewById(id.profile_iv_userPhoto);
+
         ChangeDialogFragment changeDialogFragment = new ChangeDialogFragment();
+
+        userPhoto = view.findViewById(id.profile_iv_userPhoto);
         userPhoto.setOnClickListener((View v) -> {
             changeDialogFragment.setDialogListener(data -> {
                 userPhoto.setImageResource(data);

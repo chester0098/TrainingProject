@@ -23,7 +23,7 @@ public class FiltersRecyclerAdapter extends RecyclerView.Adapter<FiltersRecycler
         this.newsList = newsList;
     }
 
-    List<News> getNewsList() {
+    public List<News> getNewsList() {
         return newsList;
     }
 

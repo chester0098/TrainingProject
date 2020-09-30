@@ -39,7 +39,7 @@ public class HelpFragment extends MvpAppCompatFragment implements HelpView {
 
     }
 
-    public void setRecyclerAdapter() {
+    private void setRecyclerAdapter() {
         helpRv.setAdapter(helpRecyclerAdapter);
     }
 }

@@ -7,13 +7,14 @@ import com.jakewharton.threetenabp.AndroidThreeTen
 import io.realm.Realm
 
 class TrainingApplication : Application() {
-    companion object {
-        lateinit var appComponent: AppComponent
-    }
     override fun onCreate() {
         super.onCreate()
         Realm.init(this)
         AndroidThreeTen.init(this)
         appComponent = DaggerAppComponent.create()
+    }
+
+    companion object {
+        lateinit var appComponent: AppComponent
     }
 }

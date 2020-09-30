@@ -16,6 +16,16 @@ import java.util.List;
 public class AssetsRepository implements AssetsRepositoryInterface {
     private static final String NEWS = "news.json";
 
+    public List<News> getNewsFromAssets(Context context) {
+        String jsonFileString = getJsonFromAssets(context, NEWS);
+
+        Gson gson = new Gson();
+        Type listNewsType = new TypeToken<List<News>>() {
+        }.getType();
+
+        return gson.fromJson(jsonFileString, listNewsType);
+    }
+
     private static String getJsonFromAssets(Context context, String fileName) {
         String jsonString;
         try {
@@ -33,15 +43,5 @@ public class AssetsRepository implements AssetsRepositoryInterface {
         }
 
         return jsonString;
-    }
-
-    public List<News> getNewsFromAssets(Context context) {
-        String jsonFileString = getJsonFromAssets(context, NEWS);
-
-        Gson gson = new Gson();
-        Type listNewsType = new TypeToken<List<News>>() {
-        }.getType();
-
-        return gson.fromJson(jsonFileString, listNewsType);
     }
 }

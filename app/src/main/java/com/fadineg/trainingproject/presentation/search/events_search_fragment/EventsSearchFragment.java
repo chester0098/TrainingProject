@@ -31,10 +31,10 @@ public class EventsSearchFragment extends MvpAppCompatFragment implements Events
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        eventsRecyclerAdapter = new EventsRecyclerAdapter(eventsSearchFragmentPresenter.getArticles());
 
         plug = view.findViewById(R.id.search_plug);
 
+        eventsRecyclerAdapter = new EventsRecyclerAdapter(eventsSearchFragmentPresenter.getArticles());
         RecyclerView rvSearch = view.findViewById(R.id.events_rv);
         rvSearch.setLayoutManager(new LinearLayoutManager(getActivity()));
         rvSearch.setAdapter(eventsRecyclerAdapter);
