@@ -11,7 +11,8 @@ import kotlinx.android.parcel.RawValue
 open class Articles(
         var address: String? = null,
         var date_from: String? = null,
-        var date_to: String? = null,
+        @SerializedName("date_to")
+        var dateTo: String? = null,
         var description: String? = null,
         var id: Int? = 0,
         var name: String? = null,

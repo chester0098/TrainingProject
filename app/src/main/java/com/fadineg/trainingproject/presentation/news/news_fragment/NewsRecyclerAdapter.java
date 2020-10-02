@@ -82,8 +82,8 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
 
         void bind(Articles articles, ItemClickListener listener) {
             if (articles.getType().equals(DATE_TYPE_PERIOD)) {
-                timeStylePeriod(articles.getDate_from(), articles.getDate_to(), newsDate);
-            } else timeStyleDate(articles.getDate_to(), newsDate);
+                timeStylePeriod(articles.getDate_from(), articles.getDateTo(), newsDate);
+            } else timeStyleDate(articles.getDateTo(), newsDate);
 
 
             StringBuilder phone = new StringBuilder();
